@@ -1,3 +1,9 @@
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
 .card {
   background: #fff;
   border: 1px solid #f0ece5;
@@ -5,6 +11,12 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.cardLink:hover .card {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
 }
 
 .thumbWrap {

@@ -1,0 +1,835 @@
+.page {
+    background: #fbf9f6;
+    min-height: 80vh;
+  }
+  
+  /* ---------- Top bar ---------- */
+  
+  .topBar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #1a1a1a;
+    padding: 14px 24px;
+    flex-wrap: wrap;
+  }
+  
+  .backLink {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #fff;
+    font-size: 13.5px;
+    font-weight: 600;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  
+  .backLink:hover {
+    color: #ffb877;
+  }
+  
+  .lectureTitleText {
+    color: #ccc;
+    font-size: 13px;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .markCompleteBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px solid #444;
+    color: #ccc;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  
+  .markCompleteBtn:hover {
+    border-color: #ff7a00;
+    color: #ff7a00;
+  }
+  
+  .markCompleteBtnActive {
+    background: #ff7a00;
+    border-color: #ff7a00;
+    color: #fff;
+  }
+  
+  .markCompleteBtnActive:hover {
+    color: #fff;
+  }
+  
+  /* ---------- Layout ---------- */
+  
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    align-items: start;
+  }
+  
+  @media (max-width: 960px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* ---------- Player column ---------- */
+  
+  .playerArea {
+    background: #000;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .videoWrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(135deg, #2b2b2b, #1a1a1a);
+  }
+  
+  .video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    background: #000;
+    cursor: pointer;
+  }
+  
+  .videoPlaceholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #aaa;
+    font-size: 13.5px;
+  }
+  
+  .upNextOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.72);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .upNextCard {
+    background: #1f1f1f;
+    border-radius: 12px;
+    padding: 24px 28px;
+    text-align: center;
+    max-width: 320px;
+  }
+  
+  .upNextLabel {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #ff7a00;
+    font-weight: 700;
+  }
+  
+  .upNextTitle {
+    color: #fff;
+    font-size: 15px;
+    margin: 8px 0 18px;
+  }
+  
+  .upNextActions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .upNextPlayBtn {
+    background: #ff7a00;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  
+  .upNextPlayBtn:hover {
+    background: #e56e00;
+  }
+  
+  .upNextCancelBtn {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 12.5px;
+    cursor: pointer;
+  }
+  
+  .upNextCancelBtn:hover {
+    color: #ccc;
+  }
+  
+  /* ---------- Controls ---------- */
+  
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #141414;
+    padding: 10px 16px;
+    flex-wrap: wrap;
+  }
+  
+  .controlBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: #eee;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+  
+  .controlBtn:hover:not(:disabled) {
+    color: #ff7a00;
+  }
+  
+  .controlBtn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  
+  .timeText {
+    color: #ccc;
+    font-size: 12px;
+    min-width: 92px;
+    flex-shrink: 0;
+  }
+  
+  .seekBar {
+    flex: 1;
+    min-width: 80px;
+    accent-color: #ff7a00;
+    cursor: pointer;
+  }
+  
+  .volumeBar {
+    width: 70px;
+    accent-color: #ff7a00;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  
+  .rateBtn {
+    background: #262626;
+    border: none;
+    color: #eee;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  
+  .rateBtn:hover:not(:disabled) {
+    color: #ff7a00;
+  }
+  
+  .rateBtn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  
+  .ccBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #262626;
+    border: none;
+    color: #999;
+    padding: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  
+  .ccBtnActive {
+    color: #ff7a00;
+  }
+  
+  /* ---------- Prev/next nav ---------- */
+  
+  .navRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #1a1a1a;
+    padding: 12px 20px;
+    border-top: 1px solid #262626;
+  }
+  
+  .navBtn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #ccc;
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  .navBtn:hover {
+    color: #ff7a00;
+  }
+  
+  .navBtnDisabled {
+    color: #555;
+    pointer-events: none;
+  }
+  
+  .lectureCounter {
+    color: #888;
+    font-size: 12px;
+  }
+  
+  /* ---------- Side panel ---------- */
+  
+  .sidePanel {
+    background: #fff;
+    border-left: 1px solid #f0ece5;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+  
+  .tabsRow {
+    display: flex;
+    border-bottom: 1px solid #f0ece5;
+  }
+  
+  .tabBtn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    padding: 12px 6px;
+    color: #999;
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+  }
+  
+  .tabBtn:hover {
+    color: #ff7a00;
+  }
+  
+  .tabBtnActive {
+    color: #ff7a00;
+    border-bottom-color: #ff7a00;
+  }
+  
+  .tabContent {
+    padding: 16px;
+    overflow-y: auto;
+    max-height: 640px;
+  }
+  
+  /* ---------- Curriculum ---------- */
+  
+  .accordion {
+    border: 1px solid #f0ece5;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .sectionBlock {
+    border-bottom: 1px solid #f0ece5;
+  }
+  
+  .sectionBlock:last-child {
+    border-bottom: none;
+  }
+  
+  .sectionHead {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #faf7f2;
+    border: none;
+    padding: 12px 14px;
+    cursor: pointer;
+    text-align: left;
+  }
+  
+  .ring {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .ringInner {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+  
+  .sectionHeadText {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  
+  .sectionTitle {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+  
+  .sectionMeta {
+    font-size: 11px;
+    color: #999;
+    margin-top: 2px;
+  }
+  
+  .lectureList {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .lectureRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-top: 1px solid #f5f2ec;
+  }
+  
+  .lectureRowActive {
+    background: #fdecdc;
+  }
+  
+  .lectureRowLink {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    text-decoration: none;
+    color: #1a1a1a;
+  }
+  
+  .lectureIcon {
+    color: #bbb;
+    flex-shrink: 0;
+  }
+  
+  .lectureDoneIcon {
+    color: #4caf50;
+    flex-shrink: 0;
+  }
+  
+  .lectureRowTitle {
+    font-size: 12.5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .lectureRowDuration {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 11px;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 2px 4px;
+  }
+  
+  .lectureRowDuration:hover {
+    color: #ff7a00;
+  }
+  
+  .overviewLink {
+    display: inline-block;
+    margin: 16px 0 12px;
+    color: #ff7a00;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  .overviewLink:hover {
+    text-decoration: underline;
+  }
+  
+  .miniCourseCard {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #f0ece5;
+    border-radius: 10px;
+    padding: 10px;
+  }
+  
+  .miniThumb {
+    width: 56px;
+    height: 40px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #ffd9b0, #ff7a00);
+    flex-shrink: 0;
+  }
+  
+  .miniInfo {
+    min-width: 0;
+  }
+  
+  .miniTitle {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .miniInstructor {
+    font-size: 11px;
+    color: #999;
+    margin: 0;
+  }
+  
+  /* ---------- Notes ---------- */
+  
+  .subTabs {
+    display: flex;
+    gap: 6px;
+    background: #faf7f2;
+    padding: 4px;
+    border-radius: 8px;
+    margin-bottom: 14px;
+  }
+  
+  .subTab {
+    flex: 1;
+    padding: 7px 8px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #777;
+    cursor: pointer;
+  }
+  
+  .subTabActive {
+    background: #ff7a00;
+    color: #fff;
+  }
+  
+  .noteForm {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .noteTextarea {
+    border: 1px solid #ece6dd;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 12.5px;
+    font-family: inherit;
+    resize: vertical;
+    background: #fbf9f5;
+  }
+  
+  .noteTextarea:focus {
+    outline: none;
+    border-color: #ff7a00;
+  }
+  
+  .addNoteBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: #ff7a00;
+    color: #fff;
+    border: none;
+    padding: 9px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  
+  .addNoteBtn:hover:not(:disabled) {
+    background: #e56e00;
+  }
+  
+  .addNoteBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .notesList,
+  .notesGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .notesGroup {
+    margin-bottom: 18px;
+  }
+  
+  .notesGroupTitle {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 8px;
+  }
+  
+  .noteItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    border: 1px solid #f0ece5;
+    border-radius: 8px;
+    padding: 8px 10px;
+  }
+  
+  .noteTimestampBtn {
+    background: #fdecdc;
+    color: #ff7a00;
+    border: none;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 7px;
+    border-radius: 5px;
+    cursor: pointer;
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+  
+  .noteText {
+    flex: 1;
+    font-size: 12.5px;
+    color: #444;
+    margin: 0;
+    line-height: 1.5;
+  }
+  
+  .noteDeleteBtn {
+    background: none;
+    border: none;
+    color: #bbb;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 2px;
+  }
+  
+  .noteDeleteBtn:hover {
+    color: #c0392b;
+  }
+  
+  .emptyText {
+    font-size: 12.5px;
+    color: #999;
+    line-height: 1.5;
+    margin: 0 0 12px;
+  }
+  
+  .courseNotesArea {
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid #f0ece5;
+  }
+  
+  .courseNotesTextarea {
+    width: 100%;
+    border: 1px solid #ece6dd;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 12.5px;
+    font-family: inherit;
+    resize: vertical;
+    background: #fbf9f5;
+  }
+  
+  .courseNotesTextarea:focus {
+    outline: none;
+    border-color: #ff7a00;
+  }
+  
+  /* ---------- Quiz ---------- */
+  
+  .quizEmpty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    padding: 32px 12px;
+    color: #999;
+  }
+  
+  .quizEmpty p {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #555;
+    margin: 4px 0 0;
+  }
+  
+  .quizEmpty span {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  
+  .quizHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  
+  .quizTitle {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+  }
+  
+  .quizScore {
+    font-size: 12px;
+    font-weight: 700;
+    color: #ff7a00;
+  }
+  
+  .question {
+    margin-bottom: 20px;
+  }
+  
+  .questionText {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 10px;
+    line-height: 1.5;
+  }
+  
+  .optionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #f0ece5;
+    border-radius: 8px;
+    padding: 9px 10px;
+    font-size: 12.5px;
+    color: #444;
+    cursor: pointer;
+  }
+  
+  .option:hover {
+    border-color: #ff7a00;
+  }
+  
+  .optionSelected {
+    border-color: #ff7a00;
+    background: #fdecdc;
+  }
+  
+  .optionCorrect {
+    border-color: #4caf50;
+    background: #eaf7ec;
+    color: #2e7d32;
+  }
+  
+  .optionIncorrect {
+    border-color: #c0392b;
+    background: #fbeaea;
+    color: #c0392b;
+  }
+  
+  .explanation {
+    font-size: 12px;
+    color: #777;
+    margin: 8px 0 0;
+    line-height: 1.5;
+    font-style: italic;
+  }
+  
+  .submitBtn,
+  .retryBtn {
+    width: 100%;
+    background: #ff7a00;
+    color: #fff;
+    border: none;
+    padding: 11px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 4px;
+  }
+  
+  .submitBtn:hover:not(:disabled) {
+    background: #e56e00;
+  }
+  
+  .submitBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .retryBtn {
+    background: #fff;
+    color: #ff7a00;
+    border: 1.5px solid #ff7a00;
+  }
+  
+  .retryBtn:hover {
+    background: #fdecdc;
+  }
