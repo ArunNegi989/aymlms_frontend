@@ -1,0 +1,82 @@
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: #ffffff;
+  border-right: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 14px;
+  z-index: 20;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 16px;
+}
+
+.logoIcon {
+  font-size: 22px;
+}
+
+.logoTitle {
+  font-weight: 700;
+  font-size: 15px;
+  color: #1a1a1a;
+  line-height: 1;
+}
+
+.logoSubtitle {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #999;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.bottomNav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 10px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  color: #555;
+  font-size: 13.5px;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+}
+
+.navItem:hover {
+  background: #fff4ea;
+  color: #ff7a00;
+}
+
+.navItem.active {
+  background: #ff7a00;
+  color: #ffffff;
+  font-weight: 600;
+}

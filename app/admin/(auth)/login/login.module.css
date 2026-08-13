@@ -1,0 +1,318 @@
+/*
+  AYM Yoga School — Login
+  Tokens
+  ------
+  Color:
+    --cream        #FFFDF9  page background
+    --peach-soft    #FCEFE4  page background gradient stop
+    --panel         #FFFFFF  form panel
+    --ink           #26221E  primary text
+    --ink-soft      #6E6A64  secondary text
+    --border        #ECE6DD  hairlines, inputs
+    --sunset-1      #F2733D  gradient start (button, accents)
+    --sunset-2      #C44E1F  gradient end
+    --error         #C0392B
+  Type:
+    Poppins, single family for everything (wordmark, headings, body/UI)
+*/
+
+.page {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(16px, 4vw, 48px);
+    background:
+      radial-gradient(circle at 15% 20%, rgba(242, 115, 61, 0.08), transparent 45%),
+      linear-gradient(180deg, #fffdf9 0%, #fcefe4 100%);
+    font-family: var(--font-body), -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+    color: #26221e;
+  }
+  
+  .shell {
+    width: 100%;
+    max-width: 1180px;
+  }
+  
+  .card {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    grid-template-areas: 'form hero';
+    width: 100%;
+    min-height: 640px;
+    background: #fff;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 30px 70px -25px rgba(150, 80, 40, 0.35),
+      0 2px 8px rgba(38, 34, 30, 0.04);
+  }
+  
+  /* ---------- Left: form panel ---------- */
+  
+  .formCol {
+    grid-area: form;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    min-width: 0;
+  }
+  
+  .formWrap {
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    padding: clamp(32px, 6vw, 56px) 28px;
+  }
+  
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: clamp(28px, 6vh, 48px);
+  }
+  
+  .brandText {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+  }
+  
+  .brandName {
+    font-family: var(--font-body), sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 0.08em;
+    color: #26221e;
+  }
+  
+  .brandSub {
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #8a8580;
+    margin-top: 2px;
+  }
+  
+  .heading {
+    margin-bottom: 28px;
+  }
+  
+  .title {
+    font-family: var(--font-body), sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.7rem, 3vw, 2rem);
+    margin: 0 0 8px;
+    color: #26221e;
+  }
+  
+  .subtitle {
+    margin: 0;
+    color: #6e6a64;
+    font-size: 0.95rem;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #26221e;
+  }
+  
+  .input.input {
+    height: 50px;
+    border-radius: 12px;
+    border: 1px solid #ece6dd;
+    background: #fbf9f5;
+    padding: 0 16px;
+    font-size: 0.95rem;
+    color: #26221e;
+    box-shadow: none;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  
+  .input.input::placeholder {
+    color: #a9a49c;
+  }
+  
+  .input.input:focus {
+    outline: none;
+    border-color: #f2733d;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(242, 115, 61, 0.14);
+  }
+  
+  .passwordRow {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .passwordRow .input {
+    width: 100%;
+    padding-right: 44px;
+  }
+  
+  .toggleVisibility {
+    position: absolute;
+    right: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 4px;
+    color: #a9a49c;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+  
+  .toggleVisibility:hover {
+    color: #6e6a64;
+  }
+  
+  .toggleVisibility:focus-visible {
+    outline: 2px solid #f2733d;
+    outline-offset: 2px;
+  }
+  
+  .metaRow {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -6px;
+  }
+  
+  .link {
+    color: #e8672a;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  
+  .link:hover {
+    text-decoration: underline;
+  }
+  
+  .error {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #c0392b;
+  }
+  
+  .submit {
+    height: 52px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f2854a, #d9591f);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.98rem;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    box-shadow: 0 12px 24px -10px rgba(217, 89, 31, 0.55);
+  }
+  
+  .submit:hover:not(:disabled) {
+    filter: brightness(1.04);
+    transform: translateY(-1px);
+  }
+  
+  .submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  .submit:focus-visible {
+    outline: 2px solid #26221e;
+    outline-offset: 3px;
+  }
+  
+  .signupRow {
+    text-align: center;
+    margin: 6px 0 0;
+    font-size: 0.88rem;
+    color: #6e6a64;
+  }
+  
+  /* ---------- Right: hero image ---------- */
+  
+  .heroCol {
+    grid-area: hero;
+    position: relative;
+    min-height: 100%;
+  }
+  
+  .heroImage {
+    object-fit: cover;
+  }
+  
+  .heroOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      0deg,
+      rgba(38, 25, 15, 0.55) 0%,
+      rgba(38, 25, 15, 0.05) 38%,
+      rgba(38, 25, 15, 0) 60%
+    );
+  }
+  
+  .heroCaption {
+    position: absolute;
+    left: 32px;
+    bottom: 28px;
+    right: 32px;
+    margin: 0;
+  }
+  
+  .heroCaptionLine {
+    font-family: var(--font-body), sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+  }
+  
+  /* ---------- Responsive ---------- */
+  
+  @media (max-width: 480px) {
+    .formWrap {
+      padding: 24px 18px 32px;
+    }
+  
+    .brandName {
+      font-size: 1.2rem;
+    }
+  
+    .title {
+      font-size: 1.4rem;
+    }
+  
+    .heroCaption {
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .submit {
+      transition: none;
+    }
+  }
