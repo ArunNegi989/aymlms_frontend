@@ -22,6 +22,7 @@ import {
 import type { CourseDetail } from "@/app/types/CourseDetail";
 import styles from "./page.module.css";
 
+
 // Dummy data - replace with a fetch by params.id
 const course: CourseDetail = {
   id: "1",
