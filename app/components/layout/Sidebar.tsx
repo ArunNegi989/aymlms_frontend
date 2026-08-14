@@ -16,6 +16,7 @@ import {
   User,
   Settings,
   LogOut,
+  X,
 } from "lucide-react";
 import styles from "./Sidebar.module.css";
 
@@ -37,54 +38,73 @@ const bottomItems = [
   { label: "Settings", href: "/settings", icon: Settings },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) {
   const pathname = usePathname();
 
   return (
-    <aside className={styles.sidebar}>
-      <div className={styles.logo}>
-        <span className={styles.logoIcon}>🪷</span>
-        <div>
-          <div className={styles.logoTitle}>AYM</div>
-          <div className={styles.logoSubtitle}>YOGA SCHOOL</div>
+    <>
+      {isOpen && (
+        <div className={styles.overlay} onClick={onClose} aria-hidden="true" />
+      )}
+
+      <aside className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
+        <div className={styles.logo}>
+          <span className={styles.logoIcon}>🪷</span>
+          <div>
+            <div className={styles.logoTitle}>AYM</div>
+            <div className={styles.logoSubtitle}>YOGA SCHOOL</div>
+          </div>
+          <button
+            className={styles.closeToggle}
+            onClick={onClose}
+            aria-label="Close menu"
+          >
+            <X size={20} />
+          </button>
         </div>
-      </div>
 
-      <nav className={styles.nav}>
-        {navItems.map(({ label, href, icon: Icon }) => {
-          const active = pathname === href;
-          return (
-            <Link
-              key={href}
-              href={href}
-              className={`${styles.navItem} ${active ? styles.active : ""}`}
-            >
-              <Icon size={18} />
-              <span>{label}</span>
-            </Link>
-          );
-        })}
-      </nav>
+        <nav className={styles.nav}>
+          {navItems.map(({ label, href, icon: Icon }) => {
+            const active = pathname === href;
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={`${styles.navItem} ${active ? styles.active : ""}`}
+              >
+                <Icon size={18} />
+                <span>{label}</span>
+              </Link>
+            );
+          })}
+        </nav>
 
-      <div className={styles.bottomNav}>
-        {bottomItems.map(({ label, href, icon: Icon }) => {
-          const active = pathname === href;
-          return (
-            <Link
-              key={href}
-              href={href}
-              className={`${styles.navItem} ${active ? styles.active : ""}`}
-            >
-              <Icon size={18} />
-              <span>{label}</span>
-            </Link>
-          );
-        })}
-        <button className={styles.navItem} onClick={() => console.log("logout")}>
-          <LogOut size={18} />
-          <span>Logout</span>
-        </button>
-      </div>
-    </aside>
+        <div className={styles.bottomNav}>
+          {bottomItems.map(({ label, href, icon: Icon }) => {
+            const active = pathname === href;
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={`${styles.navItem} ${active ? styles.active : ""}`}
+              >
+                <Icon size={18} />
+                <span>{label}</span>
+              </Link>
+            );
+          })}
+          <button className={styles.navItem} onClick={() => console.log("logout")}>
+            <LogOut size={18} />
+            <span>Logout</span>
+          </button>
+        </div>
+      </aside>
+    </>
   );
 }

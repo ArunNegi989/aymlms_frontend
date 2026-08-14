@@ -22,7 +22,6 @@ import {
 import type { CourseDetail } from "@/app/types/CourseDetail";
 import styles from "./page.module.css";
 
-
 // Dummy data - replace with a fetch by params.id
 const course: CourseDetail = {
   id: "1",
@@ -466,6 +465,15 @@ export default function CourseDetailPage() {
             </ul>
           </div>
         </aside>
+      </div>
+
+      {/* Mobile-only sticky purchase bar */}
+      <div className={styles.mobileActionBar}>
+        <div className={styles.mobileActionPrice}>
+          <span className={styles.mobileActionNow}>₹{course.price.toLocaleString()}</span>
+          <span className={styles.mobileActionOld}>₹{course.originalPrice.toLocaleString()}</span>
+        </div>
+        <button className={styles.mobileEnrollBtn}>Enroll Now</button>
       </div>
     </div>
   );

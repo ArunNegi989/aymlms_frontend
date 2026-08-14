@@ -1,28 +1,52 @@
-export interface QuizOption {
+export interface Lecture {
     id: string;
-    text: string;
+    title: string;
+    duration: string;
+    preview?: boolean;
+    type?: "video" | "quiz" | "notes" | "assignment" | "reading";
+    completed?: boolean;
+    videoUrl?: string;
+    thumbnail?: string;
+    description?: string;
+    resources?: {
+      title: string;
+      url: string;
+      type: "pdf" | "doc" | "video" | "link";
+    }[];
+  }
+  
+  export interface Section {
+    id: string;
+    title: string;
+    lectureCount: number;
+    duration: string;
+    lectures: Lecture[];
   }
   
   export interface QuizQuestion {
     id: string;
     question: string;
-    options: QuizOption[];
-    correctOptionId: string;
+    options: string[];
+    correctAnswer: number;
     explanation?: string;
+    points?: number;
   }
   
-  export interface LectureQuiz {
-    lectureId: string;
-    title: string;
-    questions: QuizQuestion[];
-  }
-  
-  export interface LectureNote {
+  export interface Note {
     id: string;
     lectureId: string;
-    lectureTitle: string;
-    timestampSeconds: number;
-    timestampLabel: string;
-    text: string;
+    content: string;
+    timestamp: number;
     createdAt: string;
+    updatedAt?: string;
+  }
+  
+  export interface CourseProgress {
+    userId: string;
+    courseId: string;
+    completedLectures: string[];
+    quizScores: Record<string, number>;
+    notes: Note[];
+    lastAccessed: string;
+    overallProgress: number;
   }

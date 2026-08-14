@@ -1,667 +1,873 @@
 .page {
-    background: #fbf9f6;
-    min-height: 100vh;
-  }
-  
-  /* ---------- Header band ---------- */
-  
+  background: #fbf9f6;
+  min-height: 100vh;
+}
+
+/* ---------- Header band ---------- */
+
+.headerBand {
+  background: #1a1a1a;
+  padding: 28px 0 24px;
+}
+
+.headerInner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.breadcrumb {
+  font-size: 12.5px;
+  color: #bbb;
+  margin-bottom: 14px;
+}
+
+.crumbLink {
+  color: #ffb877;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.crumbLink:hover {
+  text-decoration: underline;
+}
+
+.crumbSep {
+  margin: 0 6px;
+  color: #666;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 10px;
+  max-width: 640px;
+  line-height: 1.3;
+}
+
+.subtitle {
+  font-size: 14.5px;
+  color: #cfcfcf;
+  margin: 0 0 16px;
+  max-width: 620px;
+  line-height: 1.5;
+}
+
+.badgeRow {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.badge {
+  background: #fdecdc;
+  color: #ff7a00;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.instructorLine {
+  font-size: 13px;
+  color: #ccc;
+  margin: 0 0 10px;
+}
+
+.metaRow {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: #aaa;
+}
+
+/* ---------- Body layout ---------- */
+
+.body {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 32px 60px;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 28px;
+  align-items: start;
+}
+
+.mainCol {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+/* ---------- Rating strip ---------- */
+
+.ratingStrip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  background: #fff;
+  border: 1px solid #f0ece5;
+  border-radius: 14px;
+  padding: 16px 20px;
+}
+
+.ratingScore {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.stars {
+  display: flex;
+  gap: 1px;
+}
+
+.ratingCount {
+  font-size: 13px;
+  color: #ff7a00;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.ratingCount:hover {
+  text-decoration: underline;
+}
+
+.studentsCount {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #777;
+  margin-left: auto;
+}
+
+/* ---------- Generic panel ---------- */
+
+.panel {
+  background: #fff;
+  border: 1px solid #f0ece5;
+  border-radius: 14px;
+  padding: 22px;
+}
+
+.panelTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 16px;
+}
+
+.showMoreBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 14px;
+  background: none;
+  border: none;
+  color: #ff7a00;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* ---------- What you'll learn ---------- */
+
+.learnGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 24px;
+}
+
+.learnItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  color: #333;
+  line-height: 1.5;
+}
+
+.checkIcon {
+  color: #4caf50;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ---------- Topics ---------- */
+
+.topicsRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.topicPill {
+  background: #fff;
+  border: 1px solid #f0ece5;
+  color: #444;
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 20px;
+}
+
+/* ---------- Includes ---------- */
+
+.includesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 24px;
+}
+
+.includeItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  color: #444;
+}
+
+.includeItem svg {
+  color: #ff7a00;
+  flex-shrink: 0;
+}
+
+/* ---------- Curriculum ---------- */
+
+.curriculumHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.curriculumHeader .panelTitle {
+  margin-bottom: 0;
+}
+
+.linkBtn {
+  background: none;
+  border: none;
+  color: #ff7a00;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.curriculumMeta {
+  font-size: 12.5px;
+  color: #999;
+  margin: 6px 0 16px;
+}
+
+.accordion {
+  border: 1px solid #f0ece5;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.accordionSection {
+  border-bottom: 1px solid #f0ece5;
+}
+
+.accordionSection:last-child {
+  border-bottom: none;
+}
+
+.accordionHead {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #faf7f2;
+  border: none;
+  padding: 13px 16px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.accordionHeadLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #1a1a1a;
+}
+
+.accordionTitle {
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.accordionMeta {
+  font-size: 12px;
+  color: #999;
+  flex-shrink: 0;
+}
+
+.lectureList {
+  display: flex;
+  flex-direction: column;
+}
+
+.lectureRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px 11px 42px;
+  border-top: 1px solid #f5f2ec;
+  font-size: 13px;
+  color: #444;
+}
+
+.lectureIcon {
+  color: #bbb;
+  flex-shrink: 0;
+}
+
+.lectureTitle {
+  flex: 1;
+}
+
+.previewTag {
+  color: #ff7a00;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.lectureDuration {
+  color: #999;
+  font-size: 12.5px;
+  min-width: 44px;
+  text-align: right;
+}
+
+/* ---------- Requirements / description ---------- */
+
+.plainList {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13.5px;
+  color: #444;
+  line-height: 1.5;
+}
+
+.description {
+  font-size: 13.5px;
+  color: #444;
+  line-height: 1.65;
+}
+
+.description p {
+  margin: 0 0 12px;
+}
+
+.description p:last-child {
+  margin-bottom: 0;
+}
+
+.clamped {
+  max-height: 88px;
+  overflow: hidden;
+}
+
+/* ---------- Instructor ---------- */
+
+.instructorCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.instructorAvatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #ff7a00;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.instructorName {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #ff7a00;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.instructorName:hover {
+  text-decoration: underline;
+}
+
+.instructorRole {
+  font-size: 12.5px;
+  color: #888;
+  margin: 2px 0 0;
+}
+
+/* ---------- Related / students also bought ---------- */
+
+.relatedList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.relatedRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.relatedThumb {
+  width: 88px;
+  height: 62px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ffd9b0, #ff7a00);
+  flex-shrink: 0;
+}
+
+.relatedInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.relatedTitle {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 6px;
+}
+
+.relatedMeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 11.5px;
+  color: #888;
+}
+
+.relatedRating {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: #444;
+  font-weight: 600;
+}
+
+.miniBadge {
+  background: #fdecdc;
+  color: #ff7a00;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.relatedPrice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.priceNow {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.priceOld {
+  font-size: 12px;
+  color: #aaa;
+  text-decoration: line-through;
+}
+
+/* ---------- Sidebar ---------- */
+
+.sidebar {
+  position: sticky;
+  top: 70px;
+  align-self: start;
+  height: fit-content;
+}
+
+.sidebarCard {
+  background: #fff;
+  border: 1px solid #f0ece5;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.previewThumb {
+  position: relative;
+  height: 160px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2b2b2b, #1a1a1a);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.previewPlay {
+  color: #fff;
+  opacity: 0.9;
+}
+
+.previewLabel {
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.priceBlock {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.priceNowBig {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.priceOldBig {
+  font-size: 14px;
+  color: #aaa;
+  text-decoration: line-through;
+}
+
+.discountTag {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ff7a00;
+}
+
+.enrollBtn {
+  background: #ff7a00;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.enrollBtn:hover {
+  background: #e56e00;
+}
+
+.cartBtn {
+  background: #fff;
+  color: #ff7a00;
+  border: 1.5px solid #ff7a00;
+  padding: 11px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cartBtn:hover {
+  background: #fdecdc;
+}
+
+.sidebarActions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.iconTextBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: #555;
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.iconTextBtn:hover {
+  color: #ff7a00;
+}
+
+.includesMini {
+  list-style: none;
+  margin: 0;
+  padding: 14px 0 0;
+  border-top: 1px solid #f0ece5;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.includesMini li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
+  color: #555;
+}
+
+.includesMini svg {
+  color: #ff7a00;
+  flex-shrink: 0;
+}
+
+/* ---------- Mobile sticky action bar (hidden by default, shown ≤960px) ---------- */
+
+.mobileActionBar {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  background: #fff;
+  border-top: 1px solid #f0ece5;
+  padding: 10px 16px;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.mobileActionPrice {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.mobileActionNow {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.mobileActionOld {
+  font-size: 12.5px;
+  color: #aaa;
+  text-decoration: line-through;
+}
+
+.mobileEnrollBtn {
+  background: #ff7a00;
+  color: #fff;
+  border: none;
+  padding: 11px 22px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  flex: 1;
+  max-width: 200px;
+}
+
+.mobileEnrollBtn:hover {
+  background: #e56e00;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 960px) {
   .headerBand {
-    background: #1a1a1a;
-    padding: 28px 0 24px;
+    padding: 22px 0 20px;
   }
-  
+
   .headerInner {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 0 32px;
+    padding: 0 20px;
   }
-  
-  .breadcrumb {
-    font-size: 12.5px;
-    color: #bbb;
-    margin-bottom: 14px;
-  }
-  
-  .crumbLink {
-    color: #ffb877;
-    cursor: pointer;
-    text-decoration: none;
-  }
-  
-  .crumbLink:hover {
-    text-decoration: underline;
-  }
-  
-  .crumbSep {
-    margin: 0 6px;
-    color: #666;
-  }
-  
-  .title {
-    font-size: 26px;
-    font-weight: 700;
-    color: #fff;
-    margin: 0 0 10px;
-    max-width: 640px;
-    line-height: 1.3;
-  }
-  
-  .subtitle {
-    font-size: 14.5px;
-    color: #cfcfcf;
-    margin: 0 0 16px;
-    max-width: 620px;
-    line-height: 1.5;
-  }
-  
-  .badgeRow {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 14px;
-  }
-  
-  .badge {
-    background: #fdecdc;
-    color: #ff7a00;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 6px;
-  }
-  
-  .instructorLine {
-    font-size: 13px;
-    color: #ccc;
-    margin: 0 0 10px;
-  }
-  
-  .metaRow {
-    display: flex;
-    gap: 18px;
-    flex-wrap: wrap;
-  }
-  
-  .metaItem {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12.5px;
-    color: #aaa;
-  }
-  
-  /* ---------- Body layout ---------- */
-  
+
   .body {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 28px 32px 60px;
-    display: grid;
-    grid-template-columns: 1fr 360px;
-    gap: 28px;
-    align-items: start;
+    grid-template-columns: 1fr;
+    padding: 20px 20px 90px; /* extra bottom padding for mobileActionBar */
+    gap: 18px;
   }
-  
-  .mainCol {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    min-width: 0;
-  }
-  
-  /* ---------- Rating strip ---------- */
-  
-  .ratingStrip {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    background: #fff;
-    border: 1px solid #f0ece5;
-    border-radius: 14px;
-    padding: 16px 20px;
-  }
-  
-  .ratingScore {
-    font-size: 18px;
-    font-weight: 700;
-    color: #1a1a1a;
-  }
-  
-  .stars {
-    display: flex;
-    gap: 1px;
-  }
-  
-  .ratingCount {
-    font-size: 13px;
-    color: #ff7a00;
-    cursor: pointer;
-    text-decoration: none;
-  }
-  
-  .ratingCount:hover {
-    text-decoration: underline;
-  }
-  
-  .studentsCount {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    color: #777;
-    margin-left: auto;
-  }
-  
-  /* ---------- Generic panel ---------- */
-  
-  .panel {
-    background: #fff;
-    border: 1px solid #f0ece5;
-    border-radius: 14px;
-    padding: 22px;
-  }
-  
-  .panelTitle {
-    font-size: 17px;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin: 0 0 16px;
-  }
-  
-  .showMoreBtn {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    margin-top: 14px;
-    background: none;
-    border: none;
-    color: #ff7a00;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 0;
-  }
-  
-  /* ---------- What you'll learn ---------- */
-  
-  .learnGrid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px 24px;
-  }
-  
-  .learnItem {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 13.5px;
-    color: #333;
-    line-height: 1.5;
-  }
-  
-  .checkIcon {
-    color: #4caf50;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-  
-  /* ---------- Topics ---------- */
-  
-  .topicsRow {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  
-  .topicPill {
-    background: #fff;
-    border: 1px solid #f0ece5;
-    color: #444;
-    font-size: 12.5px;
-    font-weight: 500;
-    padding: 7px 14px;
-    border-radius: 20px;
-  }
-  
-  /* ---------- Includes ---------- */
-  
-  .includesGrid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px 24px;
-  }
-  
-  .includeItem {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13.5px;
-    color: #444;
-  }
-  
-  .includeItem svg {
-    color: #ff7a00;
-    flex-shrink: 0;
-  }
-  
-  /* ---------- Curriculum ---------- */
-  
-  .curriculumHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 4px;
-  }
-  
-  .curriculumHeader .panelTitle {
-    margin-bottom: 0;
-  }
-  
-  .linkBtn {
-    background: none;
-    border: none;
-    color: #ff7a00;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  
-  .curriculumMeta {
-    font-size: 12.5px;
-    color: #999;
-    margin: 6px 0 16px;
-  }
-  
-  .accordion {
-    border: 1px solid #f0ece5;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  
-  .accordionSection {
-    border-bottom: 1px solid #f0ece5;
-  }
-  
-  .accordionSection:last-child {
-    border-bottom: none;
-  }
-  
-  .accordionHead {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #faf7f2;
-    border: none;
-    padding: 13px 16px;
-    cursor: pointer;
-    text-align: left;
-  }
-  
-  .accordionHeadLeft {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #1a1a1a;
-  }
-  
-  .accordionTitle {
-    font-size: 13.5px;
-    font-weight: 600;
-  }
-  
-  .accordionMeta {
-    font-size: 12px;
-    color: #999;
-    flex-shrink: 0;
-  }
-  
-  .lectureList {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .lectureRow {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 11px 16px 11px 42px;
-    border-top: 1px solid #f5f2ec;
-    font-size: 13px;
-    color: #444;
-  }
-  
-  .lectureIcon {
-    color: #bbb;
-    flex-shrink: 0;
-  }
-  
-  .lectureTitle {
-    flex: 1;
-  }
-  
-  .previewTag {
-    color: #ff7a00;
-    font-size: 11.5px;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-  
-  .lectureDuration {
-    color: #999;
-    font-size: 12.5px;
-    min-width: 44px;
-    text-align: right;
-  }
-  
-  /* ---------- Requirements / description ---------- */
-  
-  .plainList {
-    margin: 0;
-    padding-left: 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    font-size: 13.5px;
-    color: #444;
-    line-height: 1.5;
-  }
-  
-  .description {
-    font-size: 13.5px;
-    color: #444;
-    line-height: 1.65;
-  }
-  
-  .description p {
-    margin: 0 0 12px;
-  }
-  
-  .description p:last-child {
-    margin-bottom: 0;
-  }
-  
-  .clamped {
-    max-height: 88px;
-    overflow: hidden;
-  }
-  
-  /* ---------- Instructor ---------- */
-  
-  .instructorCard {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  
-  .instructorAvatar {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: #ff7a00;
-    color: #fff;
-    font-size: 16px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  
-  .instructorName {
-    font-size: 14.5px;
-    font-weight: 700;
-    color: #ff7a00;
-    cursor: pointer;
-    text-decoration: none;
-  }
-  
-  .instructorName:hover {
-    text-decoration: underline;
-  }
-  
-  .instructorRole {
-    font-size: 12.5px;
-    color: #888;
-    margin: 2px 0 0;
-  }
-  
-  /* ---------- Related / students also bought ---------- */
-  
-  .relatedList {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  
-  .relatedRow {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  
-  .relatedThumb {
-    width: 88px;
-    height: 62px;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #ffd9b0, #ff7a00);
-    flex-shrink: 0;
-  }
-  
-  .relatedInfo {
-    flex: 1;
-    min-width: 0;
-  }
-  
-  .relatedTitle {
-    font-size: 13.5px;
-    font-weight: 600;
-    color: #1a1a1a;
-    margin: 0 0 6px;
-  }
-  
-  .relatedMeta {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    font-size: 11.5px;
-    color: #888;
-  }
-  
-  .relatedRating {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    color: #444;
-    font-weight: 600;
-  }
-  
-  .miniBadge {
-    background: #fdecdc;
-    color: #ff7a00;
-    font-weight: 700;
-    padding: 2px 6px;
-    border-radius: 4px;
-  }
-  
-  .relatedPrice {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    flex-shrink: 0;
-  }
-  
-  .priceNow {
-    font-size: 14px;
-    font-weight: 700;
-    color: #1a1a1a;
-  }
-  
-  .priceOld {
-    font-size: 12px;
-    color: #aaa;
-    text-decoration: line-through;
-  }
-  
-  /* ---------- Sidebar ---------- */
-  
+
+  /* Move purchase card above the main content on mobile so the
+     preview + price + Enroll button aren't buried at the bottom */
   .sidebar {
-    position: relative;
+    position: static;
+    align-self: auto;
+    height: auto;
+    order: -1;
   }
-  
+
+  .mainCol {
+    order: 2;
+  }
+
   .sidebarCard {
-    position: sticky;
-    top: 24px;
-    background: #fff;
-    border: 1px solid #f0ece5;
-    border-radius: 14px;
-    padding: 16px;
+    position: static;
+  }
+
+  .learnGrid,
+  .includesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .title {
+    font-size: 22px;
+    max-width: 100%;
+  }
+
+  .subtitle {
+    max-width: 100%;
+  }
+
+  .ratingStrip {
+    padding: 14px 16px;
+  }
+
+  .studentsCount {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .panel {
+    padding: 18px;
+  }
+
+  .relatedRow {
+    align-items: flex-start;
+  }
+
+  .mobileActionBar {
     display: flex;
-    flex-direction: column;
-    gap: 14px;
   }
-  
-  .previewThumb {
-    position: relative;
-    height: 160px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #2b2b2b, #1a1a1a);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    overflow: hidden;
+}
+
+@media (max-width: 700px) {
+  .metaRow {
+    gap: 10px 16px;
   }
-  
-  .previewPlay {
-    color: #fff;
-    opacity: 0.9;
-  }
-  
-  .previewLabel {
-    color: #fff;
-    font-size: 12.5px;
-    font-weight: 600;
-  }
-  
-  .priceBlock {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
+
+  .badgeRow {
     flex-wrap: wrap;
   }
-  
-  .priceNowBig {
-    font-size: 24px;
-    font-weight: 700;
-    color: #1a1a1a;
+
+  .curriculumHeader {
+    flex-wrap: wrap;
+    gap: 8px;
   }
-  
-  .priceOldBig {
-    font-size: 14px;
-    color: #aaa;
-    text-decoration: line-through;
+
+  .accordionHead {
+    padding: 12px 14px;
+    gap: 8px;
   }
-  
-  .discountTag {
-    font-size: 12px;
-    font-weight: 700;
-    color: #ff7a00;
+
+  .accordionMeta {
+    font-size: 11px;
   }
-  
-  .enrollBtn {
-    background: #ff7a00;
-    color: #fff;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
+
+  .lectureRow {
+    padding: 10px 14px 10px 32px;
+    flex-wrap: wrap;
   }
-  
-  .enrollBtn:hover {
-    background: #e56e00;
+
+  .lectureDuration {
+    min-width: unset;
   }
-  
-  .cartBtn {
-    background: #fff;
-    color: #ff7a00;
-    border: 1.5px solid #ff7a00;
-    padding: 11px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
+
+  .relatedRow {
+    flex-wrap: wrap;
   }
-  
-  .cartBtn:hover {
-    background: #fdecdc;
+
+  .relatedThumb {
+    width: 72px;
+    height: 52px;
   }
-  
-  .sidebarActions {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .iconTextBtn {
-    display: flex;
-    align-items: center;
+
+  .relatedPrice {
+    flex-direction: row;
+    align-items: baseline;
     gap: 6px;
-    background: none;
-    border: none;
-    color: #555;
-    font-size: 12.5px;
-    font-weight: 500;
-    cursor: pointer;
+    width: 100%;
+    justify-content: flex-end;
   }
-  
-  .iconTextBtn:hover {
-    color: #ff7a00;
+}
+
+@media (max-width: 520px) {
+  .headerInner {
+    padding: 0 16px;
   }
-  
-  .includesMini {
-    list-style: none;
-    margin: 0;
-    padding: 14px 0 0;
-    border-top: 1px solid #f0ece5;
-    display: flex;
+
+  .title {
+    font-size: 19px;
+  }
+
+  .subtitle {
+    font-size: 13.5px;
+  }
+
+  .body {
+    padding: 16px 16px 88px;
+  }
+
+  .panel {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .ratingStrip {
     flex-direction: column;
-    gap: 10px;
+    align-items: flex-start;
+    gap: 8px;
   }
-  
-  .includesMini li {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 12.5px;
-    color: #555;
+
+  .instructorCard {
+    gap: 12px;
   }
-  
-  .includesMini svg {
-    color: #ff7a00;
-    flex-shrink: 0;
+
+  .instructorAvatar {
+    width: 44px;
+    height: 44px;
+    font-size: 14px;
   }
-  
-  /* ---------- Responsive ---------- */
-  
-  @media (max-width: 960px) {
-    .body {
-      grid-template-columns: 1fr;
-    }
-  
-    .sidebarCard {
-      position: static;
-    }
-  
-    .learnGrid,
-    .includesGrid {
-      grid-template-columns: 1fr;
-    }
-  
-    .title {
-      font-size: 22px;
-    }
+
+  .previewThumb {
+    height: 130px;
   }
+
+  .priceNowBig {
+    font-size: 20px;
+  }
+
+  .sidebarActions {
+    gap: 12px;
+  }
+}

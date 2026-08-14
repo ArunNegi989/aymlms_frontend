@@ -4,6 +4,21 @@ import { useState } from "react";
 import CourseCard from "@/app/components/courses/CourseCard";
 import type { Course } from "@/app/types/course";
 import styles from "./page.module.css";
+import {
+  PlayCircle,
+  FileText,
+  ClipboardList,
+  HelpCircle,
+  Award,
+} from "lucide-react";
+
+const quickAccess = [
+  { label: "Recorded Classes", icon: PlayCircle },
+  { label: "Notes", icon: FileText },
+  { label: "Assignments", icon: ClipboardList },
+  { label: "Quizzes", icon: HelpCircle },
+  { label: "My Certificates", icon: Award },
+];
 
 const dummyCourses: Course[] = [
   {
@@ -38,7 +53,7 @@ export default function MyCoursesPage() {
   const filtered = dummyCourses.filter((c) => c.status === tab);
 
   return (
-    <div>
+    <div className={styles.container}>
       <h1 className={styles.title}>My Courses</h1>
 
       <div className={styles.tabs}>
@@ -65,6 +80,39 @@ export default function MyCoursesPage() {
           ))}
         </div>
       )}
+
+      <div className={styles.quickAccessSection}>
+        <h4 className={styles.sectionTitle}>Quick Access</h4>
+        <div className={styles.quickGrid}>
+          {quickAccess.map(({ label, icon: Icon }) => (
+            <button key={label} className={styles.quickItem}>
+              <Icon size={20} />
+              <span>{label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.activitySection}>
+        <h4 className={styles.sectionTitle}>Recent Activity</h4>
+        <div className={styles.activityCard}>
+          <div className={styles.activityRow}>
+            <span className={styles.activityDot} />
+            <span>You completed the class "Pranayama for Beginners"</span>
+            <span className={styles.activityTime}>2 days ago</span>
+          </div>
+          <div className={styles.activityRow}>
+            <span className={styles.activityDot} style={{ background: "#ff7a00" }} />
+            <span>You started "200 Hour Yoga Teacher Training"</span>
+            <span className={styles.activityTime}>3 days ago</span>
+          </div>
+          <div className={styles.activityRow}>
+            <span className={styles.activityDot} style={{ background: "#2196f3" }} />
+            <span>You completed the quiz "Module 1 Quiz"</span>
+            <span className={styles.activityTime}>5 days ago</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
