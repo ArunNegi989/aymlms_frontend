@@ -1,115 +1,70 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { Search, PlayCircle } from "lucide-react";
-import type { ClassItem } from "@/app/types/classItem";
+import { PlayCircle, Clock, Layers } from "lucide-react";
+import { recordedClasses } from "@/app/data/recordedClasses";
 import styles from "./page.module.css";
 
-const dummyClasses: ClassItem[] = [
-  {
-    id: "1",
-    title: "Introduction to Yoga",
-    module: "Module 1 - Basic Concepts",
-    duration: "20:45",
-    thumbnail: "/images/class1.jpg",
-    videoUrl: "/videos/class1.mp4",
-    description: "",
-    attachments: [],
-  },
-  {
-    id: "2",
-    title: "Surya Namaskar - Step by Step",
-    module: "Module 2 - Asanas",
-    duration: "28:10",
-    thumbnail: "/images/class2.jpg",
-    videoUrl: "/videos/class2.mp4",
-    description:
-      "Learn the benefits and detailed steps of Surya Namaskar. This sequence is perfect to energize your body and calm your mind.",
-    attachments: [
-      { label: "Class Notes (PDF)", url: "#" },
-      { label: "Step Guide (PDF)", url: "#" },
-    ],
-  },
-  {
-    id: "3",
-    title: "Standing Asanas",
-    module: "Module 2 - Asanas",
-    duration: "35:20",
-    thumbnail: "/images/class3.jpg",
-    videoUrl: "/videos/class3.mp4",
-    description: "",
-    attachments: [],
-  },
-  {
-    id: "4",
-    title: "Pranayama for Beginners",
-    module: "Module 3 - Pranayama",
-    duration: "22:30",
-    thumbnail: "/images/class4.jpg",
-    videoUrl: "/videos/class4.mp4",
-    description: "",
-    attachments: [],
-  },
-  {
-    id: "5",
-    title: "Meditation Techniques",
-    module: "Module 4 - Meditation",
-    duration: "26:15",
-    thumbnail: "/images/class5.jpg",
-    videoUrl: "/videos/class5.mp4",
-    description: "",
-    attachments: [],
-  },
-];
-
 export default function RecordedClassesPage() {
-  const [search, setSearch] = useState("");
-
-  const filtered = dummyClasses.filter((c) =>
-    c.title.toLowerCase().includes(search.toLowerCase())
-  );
+  const courses = Object.values(recordedClasses);
 
   return (
-    <div>
-      <h1 className={styles.title}>Recorded Classes</h1>
+    <div className={styles.page}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>Recorded Classes</h1>
+        <p className={styles.subtitle}>
+          Missed a live session? Watch the recorded Zoom classes anytime.
+        </p>
+      </div>
 
-      <div className={styles.toolbar}>
-        <div className={styles.searchBox}>
-          <Search size={16} />
-          <input
-            type="text"
-            placeholder="Search for classes..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+      {courses.length === 0 ? (
+        <div className={styles.empty}>
+          <PlayCircle size={40} />
+          <p>No recorded classes available yet.</p>
         </div>
-        <select className={styles.moduleFilter}>
-          <option>All Modules</option>
-          <option>Module 1 - Basic Concepts</option>
-          <option>Module 2 - Asanas</option>
-          <option>Module 3 - Pranayama</option>
-          <option>Module 4 - Meditation</option>
-        </select>
-      </div>
+      ) : (
+        <div className={styles.grid}>
+          {courses.map((course) => (
+            <Link
+              key={course.id}
+              href={`/recorded-classes/${course.id}`}
+              className={styles.card}
+            >
+              <div className={styles.thumbWrap}>
+                <img
+                  src={course.thumbnail}
+                  alt={course.title}
+                  className={styles.thumb}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = "none";
+                  }}
+                />
+                <div className={styles.thumbOverlay}>
+                  <PlayCircle size={44} />
+                </div>
+              </div>
 
-      <div className={styles.list}>
-        {filtered.map((item) => (
-          <div key={item.id} className={styles.row}>
-            <div className={styles.thumb}>
-              <PlayCircle size={22} />
-            </div>
-            <div className={styles.info}>
-              <h4 className={styles.classTitle}>{item.title}</h4>
-              <p className={styles.classModule}>{item.module}</p>
-            </div>
-            <span className={styles.duration}>{item.duration}</span>
-            <Link href={`/recorded-classes/${item.id}`} className={styles.watchBtn}>
-              Watch Now
+              <div className={styles.cardBody}>
+                <h3 className={styles.cardTitle}>{course.title}</h3>
+                {course.subtitle && (
+                  <p className={styles.cardSubtitle}>{course.subtitle}</p>
+                )}
+
+                <div className={styles.cardMeta}>
+                  <span className={styles.metaItem}>
+                    <Layers size={14} />
+                    {course.modules.length} classes
+                  </span>
+                  <span className={styles.metaItem}>
+                    <Clock size={14} />
+                    {course.totalHours}
+                  </span>
+                </div>
+              </div>
             </Link>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

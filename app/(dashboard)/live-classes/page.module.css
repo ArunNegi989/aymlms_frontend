@@ -44,13 +44,13 @@
 .card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
-  border-color: #ffd7ad;
+  border-color: #ffc4c4;
 }
 
 .thumbWrap {
   position: relative;
   aspect-ratio: 16 / 10;
-  background: linear-gradient(135deg, #ffb066, #ff7a00);
+  background: linear-gradient(135deg, #ff8a8a, #e53935);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,6 +79,28 @@
   background: rgba(0, 0, 0, 0.3);
 }
 
+.liveNowBadge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #e53935;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  animation: pulse 1.6s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
 .cardBody {
   display: flex;
   flex-direction: column;
@@ -101,22 +123,25 @@
 
 .cardMeta {
   display: flex;
-  gap: 14px;
+  align-items: center;
+  gap: 12px;
   margin-top: 6px;
+  flex-wrap: wrap;
 }
 
 .metaItem {
-  display: flex;
-  align-items: center;
-  gap: 6px;
   font-size: 12px;
   color: #777;
   font-weight: 500;
 }
 
-.metaItem svg {
-  color: #ff7a00;
-  flex-shrink: 0;
+.upcomingBadge {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1565c0;
+  background: #e3f0ff;
+  padding: 3px 10px;
+  border-radius: 20px;
 }
 
 .empty {

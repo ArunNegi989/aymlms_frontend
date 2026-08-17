@@ -1,0 +1,283 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #777;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 8px 0;
+  align-self: flex-start;
+  transition: color 0.2s;
+}
+
+.backBtn:hover {
+  color: #e53935;
+}
+
+.headerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #999;
+  margin: 0;
+}
+
+.classList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.classCard {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  background: #fff;
+  border: 1px solid #f0ece5;
+  border-radius: 14px;
+  padding: 20px;
+  flex-wrap: wrap;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.classCard.live {
+  border-color: #ffcdd2;
+  background: #fff8f8;
+}
+
+.classCard:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+.classLeft {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  min-width: 0;
+  flex: 1;
+}
+
+.platformIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #ffebee;
+  color: #e53935;
+  flex-shrink: 0;
+}
+
+.classInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.classTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.liveBadge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #e53935;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 9px;
+  border-radius: 20px;
+  animation: pulse 1.6s infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+.endedBadge {
+  font-size: 10px;
+  font-weight: 700;
+  color: #999;
+  background: #f0ece5;
+  padding: 3px 9px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.classDescription {
+  font-size: 13px;
+  color: #999;
+  margin: 0;
+}
+
+.classMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 2px;
+  align-items: center;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #777;
+  font-weight: 500;
+}
+
+.metaItem svg {
+  color: #e53935;
+  flex-shrink: 0;
+}
+
+.platformTag {
+  font-size: 11px;
+  font-weight: 700;
+  color: #555;
+  background: #f5f2ec;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.credentials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.credentialItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #faf7f2;
+  border: 1px solid #f0ece5;
+  color: #555;
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.credentialItem:hover {
+  background: #f0ece5;
+  color: #1a1a1a;
+}
+
+.joinBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.joinBtn:hover {
+  background: #333;
+}
+
+.joinBtnLive {
+  background: #e53935;
+}
+
+.joinBtnLive:hover {
+  background: #c62828;
+}
+
+.joinBtnEnded {
+  background: #f5f2ec;
+  color: #999;
+}
+
+.joinBtnEnded:hover {
+  background: #e8e4dd;
+}
+
+.notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 80px 20px;
+  color: #777;
+}
+
+@media (max-width: 768px) {
+  .classCard {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .joinBtn {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 18px;
+  }
+
+  .classCard {
+    padding: 16px;
+  }
+
+  .classTitle {
+    font-size: 14px;
+  }
+}

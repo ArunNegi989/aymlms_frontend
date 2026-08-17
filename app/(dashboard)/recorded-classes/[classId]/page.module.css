@@ -1,101 +1,353 @@
-.backLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  color: #777;
-  text-decoration: none;
-  margin-bottom: 14px;
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.playerHeader {
+/* Header */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.backBtn {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #777;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 8px 0;
+  align-self: flex-start;
+  transition: color 0.2s;
+}
+
+.backBtn:hover {
+  color: #ff7a00;
+}
+
+.headerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .title {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
   color: #1a1a1a;
   margin: 0;
 }
 
-.completeBtn {
-  background: #ff7a00;
-  color: #fff;
-  border: none;
-  padding: 9px 18px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.videoWrap {
-  width: 100%;
-  background: #000;
-  border-radius: 14px;
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-
-.video {
-  width: 100%;
-  display: block;
-  max-height: 480px;
-}
-
-.bottomGrid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
-}
-
-.aboutCard,
-.attachCard {
-  background: #fff;
-  border: 1px solid #f0ece5;
-  border-radius: 12px;
-  padding: 18px;
-}
-
-.cardHeading {
+.subtitle {
   font-size: 14px;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin: 0 0 10px;
-}
-
-.description {
-  font-size: 13px;
-  color: #666;
-  line-height: 1.6;
+  color: #999;
   margin: 0;
 }
 
-.attachRow {
+.headerMeta {
+  display: flex;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #777;
+  font-weight: 500;
+}
+
+.metaItem svg {
+  color: #ff7a00;
+  flex-shrink: 0;
+}
+
+/* Module list */
+.moduleList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.moduleCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #fff;
+  border: 1px solid #f0ece5;
+  border-radius: 14px;
+  padding: 18px 20px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.moduleCard:hover {
+  border-color: #ffd7ad;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+.moduleLeft {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  min-width: 0;
+}
+
+.moduleIndex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #fff3e0;
+  color: #ff7a00;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.moduleInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.moduleTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.moduleDescription {
+  font-size: 13px;
+  color: #999;
+  margin: 0;
+}
+
+.moduleMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 4px;
+}
+
+.watchBtn {
   display: flex;
   align-items: center;
   gap: 8px;
+  background: #ff7a00;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.watchBtn:hover {
+  background: #e56e00;
+}
+
+/* Not found */
+.notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 80px 20px;
+  color: #777;
+}
+
+/* Modal */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 860px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 20px;
+  border-bottom: 1px solid #f0ece5;
+  flex-shrink: 0;
+}
+
+.modalTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.closeBtn:hover {
+  background: #f5f2ec;
+  color: #333;
+}
+
+/* Video (modal) */
+.videoWrapper {
+  position: relative;
+  background: #1a1a1a;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.videoPlayer {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  cursor: pointer;
+  background: #000;
+}
+
+.videoControls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  padding: 20px 20px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.videoWrapper:hover .videoControls {
+  opacity: 1;
+}
+
+.controlBtn {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.controlBtn:hover {
+  transform: scale(1.1);
+}
+
+.timeDisplay {
+  color: #fff;
   font-size: 13px;
-  color: #444;
-  text-decoration: none;
-  padding: 8px 0;
-  border-bottom: 1px solid #f5f5f5;
+  font-weight: 500;
+  min-width: 80px;
+  flex-shrink: 0;
 }
 
-.attachRow:last-child {
-  border-bottom: none;
+.progressBar {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+  min-width: 60px;
 }
 
-.attachRow:hover {
-  color: #ff7a00;
+.progressFill {
+  height: 100%;
+  background: #ff7a00;
+  border-radius: 2px;
+  transition: width 0.1s;
 }
 
-@media (max-width: 900px) {
-  .bottomGrid {
-    grid-template-columns: 1fr;
+.modalFooter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px 20px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .moduleCard {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .watchBtn {
+    justify-content: center;
+  }
+
+  .modalOverlay {
+    padding: 0;
+  }
+
+  .modalContent {
+    max-height: 100vh;
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 18px;
+  }
+
+  .moduleCard {
+    padding: 14px 16px;
+  }
+
+  .moduleTitle {
+    font-size: 14px;
   }
 }
