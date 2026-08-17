@@ -1,57 +1,41 @@
 "use client";
 
-import { useState } from "react";
-import { FileText, Download } from "lucide-react";
-import type { NoteItem } from "@/app/types/classItem";
+import Link from "next/link";
+import { FileText } from "lucide-react";
+import type { CourseSummary } from "@/app/types/classItem";
 import styles from "./page.module.css";
 
-const dummyNotes: NoteItem[] = [
-  { id: "1", title: "Yoga Philosophy - Introduction", module: "Module 1 - Yoga Concepts", sizeMb: 2.4, fileUrl: "#", downloaded: true },
-  { id: "2", title: "Ashtanga Yoga Notes", module: "Module 2 - Asanas", sizeMb: 3.1, fileUrl: "#", downloaded: false },
-  { id: "3", title: "Pranayama Guide", module: "Module 3 - Pranayama", sizeMb: 1.8, fileUrl: "#", downloaded: true },
-  { id: "4", title: "Meditation Notes", module: "Module 4 - Meditation", sizeMb: 2.2, fileUrl: "#", downloaded: false },
+const dummyCourses: CourseSummary[] = [
+  { courseId: "c1", courseName: "Yoga Philosophy", thumbnail: "/thumbs/yoga-philosophy.jpg", notesCount: 2 },
+  { courseId: "c2", courseName: "Ashtanga Yoga", thumbnail: "/thumbs/ashtanga.jpg", notesCount: 2 },
+  { courseId: "c3", courseName: "Pranayama", thumbnail: "/thumbs/pranayama.jpg", notesCount: 1 },
+  { courseId: "c4", courseName: "Meditation", thumbnail: "/thumbs/meditation.jpg", notesCount: 1 },
 ];
 
-export default function NotesPage() {
-  const [tab, setTab] = useState<"all" | "downloaded">("all");
-
-  const filtered =
-    tab === "all" ? dummyNotes : dummyNotes.filter((n) => n.downloaded);
-
+export default function NotesCoursesPage() {
   return (
     <div>
       <h1 className={styles.title}>Course Notes</h1>
+      <p className={styles.subtitle}>Select a course to view its notes</p>
 
-      <div className={styles.tabs}>
-        <button
-          className={`${styles.tab} ${tab === "all" ? styles.activeTab : ""}`}
-          onClick={() => setTab("all")}
-        >
-          All Notes
-        </button>
-        <button
-          className={`${styles.tab} ${tab === "downloaded" ? styles.activeTab : ""}`}
-          onClick={() => setTab("downloaded")}
-        >
-          Downloaded
-        </button>
-      </div>
-
-      <div className={styles.list}>
-        {filtered.map((note) => (
-          <div key={note.id} className={styles.row}>
-            <div className={styles.iconWrap}>
-              <FileText size={18} />
+      <div className={styles.grid}>
+        {dummyCourses.map((course) => (
+          <Link
+            key={course.courseId}
+            href={`/notes/${course.courseId}`}
+            className={styles.card}
+          >
+            <div className={styles.thumbWrap}>
+              <img src={course.thumbnail} alt={course.courseName} className={styles.thumb} />
             </div>
-            <div className={styles.info}>
-              <h4 className={styles.noteTitle}>{note.title}</h4>
-              <p className={styles.noteModule}>{note.module}</p>
+            <div className={styles.cardBody}>
+              <h4 className={styles.courseName}>{course.courseName}</h4>
+              <span className={styles.notesCount}>
+                <FileText size={13} />
+                {course.notesCount} note{course.notesCount !== 1 ? "s" : ""}
+              </span>
             </div>
-            <span className={styles.size}>{note.sizeMb} MB</span>
-            <a href={note.fileUrl} className={styles.downloadBtn}>
-              <Download size={16} />
-            </a>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

@@ -2,102 +2,63 @@
   font-size: 20px;
   font-weight: 700;
   color: #1a1a1a;
-  margin: 0 0 18px;
+  margin: 0 0 4px;
 }
 
-.tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 20px;
-  background: #fff;
-  padding: 4px;
-  border-radius: 10px;
-  width: fit-content;
-  border: 1px solid #f0ece5;
-}
-
-.tab {
-  padding: 8px 18px;
-  border: none;
-  background: transparent;
-  border-radius: 8px;
+.subtitle {
   font-size: 13px;
-  font-weight: 500;
-  color: #777;
-  cursor: pointer;
+  color: #999;
+  margin: 0 0 20px;
 }
 
-.activeTab {
-  background: #ff7a00;
-  color: #fff;
-  font-weight: 600;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
 }
 
-.list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+.card {
   background: #fff;
   border: 1px solid #f0ece5;
-  border-radius: 12px;
-  padding: 12px 16px;
+  border-radius: 14px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-.iconWrap {
-  width: 38px;
-  height: 38px;
-  border-radius: 8px;
-  background: #fdecdc;
-  color: #ff7a00;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+.card:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
 }
 
-.info {
-  flex: 1;
+.thumbWrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #f5f0e8;
 }
 
-.noteTitle {
+.thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cardBody {
+  padding: 12px 14px;
+}
+
+.courseName {
   font-size: 13.5px;
-  font-weight: 600;
+  font-weight: 700;
   color: #1a1a1a;
-  margin: 0 0 2px;
+  margin: 0 0 6px;
 }
 
-.noteModule {
-  font-size: 12px;
-  color: #999;
-  margin: 0;
-}
-
-.size {
-  font-size: 12.5px;
-  color: #777;
-  min-width: 50px;
-  text-align: right;
-}
-
-.downloadBtn {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  border: 1px solid #f0ece5;
+.notesCount {
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: #555;
-}
-
-.downloadBtn:hover {
-  background: #ff7a00;
-  border-color: #ff7a00;
-  color: #fff;
+  gap: 6px;
+  font-size: 12px;
+  color: #ff7a00;
+  font-weight: 600;
 }

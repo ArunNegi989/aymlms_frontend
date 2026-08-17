@@ -79,6 +79,15 @@ import {
       status: "enrolled",
       isEnrolled: false,
     },
+    {
+      id: "7",
+      title: "Vinyasa Flow Teacher Training",
+      instructor: "Kiran Patel",
+      thumbnail: THUMBNAIL,
+      progress: 0,
+      status: "enrolled",
+      isEnrolled: false,
+    },
   ];
   
   export interface TrendingCourse {

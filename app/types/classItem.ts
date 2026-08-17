@@ -12,8 +12,13 @@ export interface ClassItem {
 export interface NoteItem {
   id: string;
   title: string;
-  module: string;
   sizeMb: number;
   fileUrl: string;
-  downloaded: boolean;
+}
+
+export interface CourseSummary {
+  courseId: string;
+  courseName: string;
+  thumbnail: string;
+  notesCount: number;
 }
