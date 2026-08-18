@@ -235,7 +235,7 @@
 
 .courseThumbnail {
   position: relative;
-  height: 180px;
+  height: 280px;
   background: #f5f2ec;
   overflow: hidden;
   flex-shrink: 0;
@@ -356,6 +356,20 @@
   color: #666;
 }
 
+/* Course card action row: Demo + View Course side by side */
+.courseActions {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.viewBtnLink {
+  flex: 1;
+  display: flex;
+  text-decoration: none;
+}
+
 .viewBtn {
   width: 100%;
   padding: 10px;
@@ -367,12 +381,39 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
-  margin-top: auto;
 }
 
 .viewBtn:hover {
   background: #ff7a00;
   color: #fff;
+}
+
+.demoBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px 12px;
+  background: #f5f2ec;
+  color: #444;
+  border: 1.5px solid transparent;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.demoBtn:hover {
+  background: #fff;
+  border-color: #ff7a00;
+  color: #ff7a00;
+}
+
+.demoBtn svg {
+  flex-shrink: 0;
 }
 
 /* Filter */
@@ -701,6 +742,15 @@
 
   .courseMeta {
     gap: 8px;
+  }
+
+  /* Stack Demo + View Course on very tight cards */
+  .courseActions {
+    flex-direction: column;
+  }
+
+  .demoBtn {
+    width: 100%;
   }
 }
 

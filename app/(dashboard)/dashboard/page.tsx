@@ -4,6 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import ProgressBar from "@/app/components/ui/ProgressBar";
+import CourseDemoModal, {
+  DemoModalCourse,
+} from "@/app/components/CourseDemoModal/CourseDemoModal";
 import {
   Lock,
   TrendingUp,
@@ -15,9 +18,9 @@ import {
   X,
   Clock,
   BookOpen,
+  PlayCircle,
 } from "lucide-react";
 import {
-  
   enrolledCourses,
   recommendedCourses,
   trendingCourses,
@@ -26,10 +29,20 @@ import {
 } from "@/app/data/dashboard";
 import styles from "./page.module.css";
 
+// Any course object from your data lists — this lets us build a
+// DemoModalCourse regardless of whether the list has rating/level/etc.
+type AnyCourse = Record<string, unknown> & {
+  id: string;
+  title: string;
+  instructor: string;
+  thumbnail: string;
+};
+
 export default function DashboardPage() {
   const [filterOpen, setFilterOpen] = useState(false);
   const [selectedLevel, setSelectedLevel] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const [demoCourse, setDemoCourse] = useState<DemoModalCourse | null>(null);
 
   // Filter trending courses
   const filteredTrending = trendingCourses.filter((course) => {
@@ -42,6 +55,27 @@ export default function DashboardPage() {
 
   // Calculate total enrolled courses
   const totalEnrolled = enrolledCourses.length;
+
+  // Build a DemoModalCourse from whatever fields the source course has.
+  // Add `demoVideoUrl`, `overview`, and `isFree` to your course data
+  // (app/data/dashboard.ts) whenever you have real content for them —
+  // the modal falls back gracefully if they're missing.
+  const openDemo = (course: AnyCourse) => {
+    setDemoCourse({
+      id: course.id,
+      title: course.title,
+      instructor: course.instructor,
+      thumbnail: course.thumbnail,
+      level: course.level as string | undefined,
+      rating: course.rating as number | undefined,
+      students: course.students as number | undefined,
+      isFree: (course.isFree as boolean | undefined) ?? false,
+      price: course.price as number | undefined,
+      originalPrice: course.originalPrice as number | undefined,
+      demoVideoUrl: course.demoVideoUrl as string | undefined,
+      overview: course.overview as string | undefined,
+    });
+  };
 
   return (
     <div className={styles.container}>
@@ -86,8 +120,6 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
-
-      
 
       {/* Recommended Courses - Not Enrolled */}
       <div className={styles.recommendedSection}>
@@ -134,9 +166,18 @@ export default function DashboardPage() {
                     8 modules
                   </span>
                 </div>
-                <Link href={`/course-description/${course.id}`}>
-                  <button className={styles.viewBtn}>View Course</button>
-                </Link>
+                <div className={styles.courseActions}>
+                  <button
+                    className={styles.demoBtn}
+                    onClick={() => openDemo(course as unknown as AnyCourse)}
+                  >
+                    <PlayCircle size={14} />
+                    Demo Class
+                  </button>
+                  <Link href={`/course-description/${course.id}`} className={styles.viewBtnLink}>
+                    <button className={styles.viewBtn}>View Course</button>
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
@@ -246,9 +287,18 @@ export default function DashboardPage() {
                     </span>
                     <span className={styles.level}>{course.level}</span>
                   </div>
-                  <Link href={`/course-description/${course.id}`}>
-                    <button className={styles.viewBtn}>View Course</button>
-                  </Link>
+                  <div className={styles.courseActions}>
+                    <button
+                      className={styles.demoBtn}
+                      onClick={() => openDemo(course as unknown as AnyCourse)}
+                    >
+                      <PlayCircle size={14} />
+                      Demo Class
+                    </button>
+                    <Link href={`/course-description/${course.id}`} className={styles.viewBtnLink}>
+                      <button className={styles.viewBtn}>View Course</button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))
@@ -269,6 +319,8 @@ export default function DashboardPage() {
           ))}
         </div>
       </div>
+
+      <CourseDemoModal course={demoCourse} onClose={() => setDemoCourse(null)} />
     </div>
   );
 }
