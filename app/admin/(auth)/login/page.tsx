@@ -2,14 +2,8 @@
 
 import { useState, type FormEvent } from 'react';
 import Image from 'next/image';
-import { Poppins } from 'next/font/google';
+import Link from 'next/link';
 import styles from './login.module.css';
-
-const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-body',
-});
 
 // Free-to-use photo (Unsplash License) — "silhouette of woman doing yoga
 // during sunset" by Jason Mavrommatis. Swap for AYM's own photography
@@ -51,174 +45,137 @@ export default function LoginPage() {
   }
 
   return (
-    <main className={`${poppins.variable} ${styles.page}`}>
-      <div className={`container-fluid ${styles.shell}`}>
-        <div className={`row g-0 ${styles.card}`}>
-          {/* Left — form panel */}
-          <section className={`col-12 col-lg-5 ${styles.formCol}`}>
-            <div className={styles.formWrap}>
-              <a href="/" className={styles.brand} aria-label="AYM Yoga School home">
-                <img src="https://aymyogaschool.com/_next/static/media/aym-yoga-school-logo.80503ca5.png" alt="" />
-                {/* <span className={styles.brandText}>
-                  <span className={styles.brandName}>AYM</span>
-                  <span className={styles.brandSub}>Yoga School</span>
-                </span> */}
-              </a>
-
-              <div className={styles.heading}>
-                <h1 className={styles.title}>Welcome back</h1>
-                <p className={styles.subtitle}>
-                  Log in to continue your yoga journey
-                </p>
-              </div>
-
-              <form
-                className={styles.form}
-                onSubmit={handleSubmit}
-                noValidate
-              >
-                <div className={styles.field}>
-                  <label htmlFor="email" className={styles.label}>
-                    Email address
-                  </label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    placeholder="you@aymyogaschool.com"
-                    className={`form-control ${styles.input}`}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-
-                <div className={styles.field}>
-                  <label htmlFor="password" className={styles.label}>
-                    Password
-                  </label>
-                  <div className={styles.passwordRow}>
-                    <input
-                      id="password"
-                      name="password"
-                      type={showPassword ? 'text' : 'password'}
-                      autoComplete="current-password"
-                      placeholder="Enter your password"
-                      className={`form-control ${styles.input}`}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <button
-                      type="button"
-                      className={styles.toggleVisibility}
-                      onClick={() => setShowPassword((v) => !v)}
-                      aria-label={
-                        showPassword ? 'Hide password' : 'Show password'
-                      }
-                      aria-pressed={showPassword}
-                    >
-                      {showPassword ? <EyeOffIcon /> : <EyeIcon />}
-                    </button>
-                  </div>
-                </div>
-
-                <div className={styles.metaRow}>
-                  <a href="/forgot-password" className={styles.link}>
-                    Forgot password?
-                  </a>
-                </div>
-
-                {error && (
-                  <p className={styles.error} role="alert">
-                    {error}
-                  </p>
-                )}
-
-                <button
-                  type="submit"
-                  className={styles.submit}
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? 'Logging in…' : 'Login'}
-                </button>
-
-                <p className={styles.signupRow}>
-                  Don&apos;t have an account?{' '}
-                  <a href="/signup" className={styles.link}>
-                    Sign up
-                  </a>
-                </p>
-              </form>
-            </div>
-          </section>
-
-          {/* Right — hero image */}
-          <section
-            className={`col-12 col-lg-7 ${styles.heroCol}`}
-            aria-hidden="true"
-          >
-            <Image
-              src={HERO_IMAGE}
-              alt=""
-              fill
-              priority
-              sizes="(max-width: 992px) 100vw, 58vw"
-              className={styles.heroImage}
-            />
-            <div className={styles.heroOverlay} />
-            <p className={styles.heroCaption}>
-              <span className={styles.heroCaptionLine}>
-                Breathe in. Begin again.
-              </span>
-            </p>
-          </section>
+    <main className={styles.page}>
+      {/* Left — image / branding panel */}
+      <section className={styles.leftPanel} aria-hidden="true">
+        <Image
+          src={HERO_IMAGE}
+          alt=""
+          fill
+          priority
+          sizes="(max-width: 900px) 100vw, 45vw"
+          className={styles.heroImage}
+        />
+        <div className={styles.leftOverlay} />
+        <div className={styles.leftContent}>
+          <span className={styles.brandTag}>AYM Yoga School</span>
+          <h1 className={styles.leftTitle}>Breathe in. Begin again.</h1>
+          <p className={styles.leftSubtitle}>
+            Log in to pick up your practice — recorded classes, live sessions, and everything
+            you&apos;re working on, right where you left it.
+          </p>
         </div>
-      </div>
+      </section>
+
+      {/* Right — form panel */}
+      <section className={styles.rightPanel}>
+        <div className={styles.formWrap}>
+          <a href="/" className={styles.brandMark} aria-label="AYM Yoga School home">
+            <img
+              src="https://aymyogaschool.com/_next/static/media/aym-yoga-school-logo.80503ca5.png"
+              alt=""
+            />
+          </a>
+
+          <div className={styles.formHeader}>
+            <h2 className={styles.title}>Welcome back</h2>
+            <p className={styles.subtitle}>Log in to continue your yoga journey</p>
+          </div>
+
+          <form className={styles.form} onSubmit={handleSubmit} noValidate>
+            <div className={styles.field}>
+              <label htmlFor="email" className={styles.label}>
+                Email address
+              </label>
+              <div className={styles.inputWrap}>
+                <MailIcon className={styles.inputIcon} />
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="you@aymyogaschool.com"
+                  className={styles.input}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className={styles.field}>
+              <label htmlFor="password" className={styles.label}>
+                Password
+              </label>
+              <div className={styles.inputWrap}>
+                <LockIcon className={styles.inputIcon} />
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
+                  autoComplete="current-password"
+                  placeholder="Enter your password"
+                  className={styles.input}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button
+                  type="button"
+                  className={styles.eyeBtn}
+                  onClick={() => setShowPassword((v) => !v)}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  aria-pressed={showPassword}
+                >
+                  {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                </button>
+              </div>
+            </div>
+
+            <div className={styles.metaRow}>
+              <Link href="/admin/forgot-password" className={styles.link}>
+                Forgot password?
+              </Link>
+            </div>
+
+            {error && (
+              <p className={styles.errorText} role="alert">
+                {error}
+              </p>
+            )}
+
+            <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
+              {isSubmitting && <LoaderIcon className={styles.spin} />}
+              {isSubmitting ? 'Logging in…' : 'Login'}
+            </button>
+
+            <p className={styles.terms}>
+              Don&apos;t have an account?{' '}
+              <Link href="/admin/signup" className={styles.link}>
+                Sign up
+              </Link>
+            </p>
+          </form>
+        </div>
+      </section>
     </main>
   );
 }
 
-function LotusMark() {
+/* ---------- Icons ---------- */
+
+function MailIcon({ className }: { className?: string }) {
   return (
-    <svg
-      className="lotus-mark"
-      width="34"
-      height="34"
-      viewBox="0 0 48 48"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M24 44c-8 0-15-6-15-13 4 3 9 4 15 4s11-1 15-4c0 7-7 13-15 13Z"
-        fill="url(#lotusGrad)"
-      />
-      <path
-        d="M24 30c-3-6-9-9-16-8 2 6 8 10 16 8Z"
-        fill="url(#lotusGrad)"
-        opacity="0.85"
-      />
-      <path
-        d="M24 30c3-6 9-9 16-8-2 6-8 10-16 8Z"
-        fill="url(#lotusGrad)"
-        opacity="0.85"
-      />
-      <path
-        d="M24 28c-1-8-5-13-11-16 5 8 7 13 11 16Z"
-        fill="url(#lotusGrad)"
-        opacity="0.65"
-      />
-      <path
-        d="M24 28c1-8 5-13 11-16-5 8-7 13-11 16Z"
-        fill="url(#lotusGrad)"
-        opacity="0.65"
-      />
-      <path d="M24 6c2 7 2 14 0 22-2-8-2-15 0-22Z" fill="url(#lotusGrad)" />
-      <defs>
-        <linearGradient id="lotusGrad" x1="8" y1="6" x2="40" y2="44">
-          <stop offset="0" stopColor="#F2733D" />
-          <stop offset="1" stopColor="#C44E1F" />
-        </linearGradient>
-      </defs>
+    <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M2 6l10 7 10-7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function LockIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <rect x="4" y="10" width="16" height="10" rx="2" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M7 10V7a5 5 0 0 1 10 0v3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
     </svg>
   );
 }
@@ -247,6 +204,15 @@ function EyeOffIcon() {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+    </svg>
+  );
+}
+
+function LoaderIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2.5" opacity="0.25" />
+      <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
     </svg>
   );
 }

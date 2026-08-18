@@ -10,23 +10,19 @@
   flex: 1;
   max-width: 45%;
   min-height: 100vh;
+  background:
+    linear-gradient(160deg, rgba(255, 122, 0, 0.85), rgba(26, 26, 26, 0.85)),
+    url("/images/signup-yoga.jpg") center/cover no-repeat;
   display: flex;
   align-items: flex-end;
   padding: 48px;
   flex-shrink: 0;
-  overflow: hidden;
-}
-
-.heroImage {
-  object-fit: cover;
 }
 
 .leftOverlay {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.08), transparent 60%),
-    linear-gradient(160deg, rgba(255, 122, 0, 0.85), rgba(26, 26, 26, 0.85));
+  background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.08), transparent 60%);
 }
 
 .leftContent {
@@ -79,21 +75,10 @@
 
 .formWrap {
   width: 100%;
-  max-width: 400px;
+  max-width: 460px;
   display: flex;
   flex-direction: column;
   gap: 24px;
-}
-
-.brandMark {
-  display: inline-flex;
-  align-items: center;
-  align-self: flex-start;
-}
-
-.brandMark img {
-  height: 36px;
-  width: auto;
 }
 
 .formHeader {
@@ -125,11 +110,66 @@
   text-decoration: underline;
 }
 
+/* ---------- Social login ---------- */
+.socialRow {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.socialBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 16px;
+  background: #fff;
+  border: 1px solid #e5e0d8;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.socialBtn:hover {
+  background: #faf7f2;
+  border-color: #ddd5c8;
+}
+
+.facebookBtn svg {
+  color: #1877f2;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #999;
+  font-size: 12px;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #e5e0d8;
+}
+
 /* ---------- Form ---------- */
 .form {
   display: flex;
   flex-direction: column;
   gap: 18px;
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 
 .field {
@@ -143,6 +183,12 @@
   font-size: 13px;
   font-weight: 600;
   color: #333;
+}
+
+.optionalTag {
+  font-weight: 400;
+  color: #aaa;
+  font-size: 12px;
 }
 
 .inputWrap {
@@ -171,10 +217,6 @@
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.input::placeholder {
-  color: #aaa;
-}
-
 .input:focus {
   outline: none;
   border-color: #ff7a00;
@@ -185,11 +227,6 @@
   background: #f5f2ec;
   color: #777;
   cursor: not-allowed;
-}
-
-/* password field needs extra right padding for the eye button */
-.field:nth-of-type(2) .input {
-  padding-right: 40px;
 }
 
 .eyeBtn {
@@ -209,27 +246,128 @@
   color: #333;
 }
 
-.eyeBtn:focus-visible {
-  outline: 2px solid #ff7a00;
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
-.metaRow {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: -6px;
-}
-
-.metaRow .link {
-  font-size: 13px;
+.verifiedIcon {
+  position: absolute;
+  right: 12px;
+  color: #4caf50;
+  flex-shrink: 0;
 }
 
 .errorText {
   font-size: 12px;
   color: #e53935;
   font-weight: 500;
-  margin: 0;
+}
+
+.hintText {
+  font-size: 12px;
+  color: #999;
+}
+
+/* Email + verify button row */
+.emailRow {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.emailRow .inputWrap {
+  flex: 1;
+}
+
+.otpRow {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+  margin-top: 4px;
+}
+
+.otpRow .inputWrap {
+  flex: 1;
+}
+
+.verifyBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 18px;
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.verifyBtn:hover:not(:disabled) {
+  background: #333;
+}
+
+.verifyBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.spin {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- Captcha (static "I'm not a robot") ---------- */
+.captchaBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid #e5e0d8;
+  border-radius: 10px;
+  padding: 12px 16px;
+  background: #fff;
+}
+
+.captchaLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  user-select: none;
+}
+
+.captchaLabel input[type="checkbox"] {
+  display: none;
+}
+
+.checkboxCustom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  color: #4caf50;
+  flex-shrink: 0;
+  transition: border-color 0.2s;
+}
+
+.captchaLabel input:checked + .checkboxCustom {
+  border-color: #4caf50;
+}
+
+.captchaLogo {
+  color: #ccc;
+  flex-shrink: 0;
 }
 
 /* ---------- Submit ---------- */
@@ -247,15 +385,11 @@
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s, transform 0.15s;
+  transition: background 0.2s;
 }
 
 .submitBtn:hover:not(:disabled) {
   background: #e56e00;
-}
-
-.submitBtn:active:not(:disabled) {
-  transform: translateY(1px);
 }
 
 .submitBtn:disabled {
@@ -263,38 +397,47 @@
   cursor: not-allowed;
 }
 
-.submitBtn:focus-visible {
-  outline: 2px solid #1a1a1a;
-  outline-offset: 3px;
-}
-
-.spin {
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
 .terms {
-  font-size: 13px;
-  color: #777;
+  font-size: 12px;
+  color: #999;
   text-align: center;
   line-height: 1.6;
   margin: 0;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .submitBtn,
-  .spin {
-    animation: none;
-    transition: none;
-  }
+/* ---------- Success state ---------- */
+.successBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 40px 20px;
+  background: #fff;
+  border: 1px solid #e8f5e9;
+  border-radius: 14px;
+}
+
+.successIcon {
+  color: #4caf50;
+  margin-bottom: 4px;
+}
+
+.successBox h3 {
+  font-size: 18px;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.successBox p {
+  font-size: 14px;
+  color: #777;
+  margin: 0;
 }
 
 /* ================= Responsive breakpoints ================= */
 
+/* Large laptop */
 @media (max-width: 1280px) {
   .leftPanel {
     padding: 40px;
@@ -305,6 +448,7 @@
   }
 }
 
+/* Small laptop / tablet landscape - narrower image panel */
 @media (max-width: 1100px) {
   .leftPanel {
     max-width: 40%;
@@ -315,6 +459,7 @@
   }
 }
 
+/* Tablet portrait - stack image on top, form below */
 @media (max-width: 900px) {
   .page {
     flex-direction: column;
@@ -341,8 +486,14 @@
   .rightPanel {
     padding: 32px 20px 48px;
   }
+
+  .fieldRow {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
 }
 
+/* Large phones - single column fields */
 @media (max-width: 640px) {
   .leftPanel {
     min-height: 200px;
@@ -364,8 +515,26 @@
   .title {
     font-size: 22px;
   }
+
+  .fieldRow {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .emailRow {
+    flex-direction: column;
+  }
+
+  .verifyBtn {
+    padding: 11px 18px;
+  }
+
+  .otpRow {
+    flex-direction: column;
+  }
 }
 
+/* Small phones */
 @media (max-width: 420px) {
   .leftPanel {
     min-height: 160px;
@@ -393,6 +562,11 @@
     font-size: 13px;
   }
 
+  .socialBtn {
+    font-size: 13px;
+    padding: 11px 14px;
+  }
+
   .input {
     font-size: 13px;
     padding: 10px 12px 10px 36px;
@@ -402,8 +576,17 @@
     font-size: 14px;
     padding: 12px;
   }
+
+  .captchaBox {
+    padding: 10px 12px;
+  }
+
+  .captchaLabel {
+    font-size: 13px;
+  }
 }
 
+/* Very small phones */
 @media (max-width: 340px) {
   .leftPanel {
     min-height: 130px;
