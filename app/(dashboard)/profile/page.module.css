@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  /* max-width: 900px; */
 }
 
 /* ---------- Header card ---------- */
@@ -122,6 +121,7 @@
   border-radius: 12px;
   padding: 4px;
   overflow-x: auto;
+  scrollbar-width: thin;
 }
 
 .tab {
@@ -361,7 +361,6 @@
   align-items: center;
   justify-content: flex-end;
   gap: 14px;
-  padding-top: 4px;
   border-top: 1px solid #f5f2ec;
   margin-top: 4px;
   padding-top: 16px;
@@ -392,7 +391,7 @@
   background: #e56e00;
 }
 
-/* ---------- Courses tab ---------- */
+/* ---------- Purchased courses tab ---------- */
 
 .coursesHeaderRow {
   display: flex;
@@ -564,6 +563,652 @@
   color: #ff7a00;
 }
 
+/* ---------- Active subscriptions tab ---------- */
+
+.subscriptionGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.subscriptionCard {
+  border: 1px solid #f0ece5;
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+
+.subscriptionTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.planName {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.planDesc {
+  font-size: 12.5px;
+  color: #888;
+  margin: 0 0 14px;
+}
+
+.statusPill {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.statusActive {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.statusExpired {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.statusCancelled {
+  background: #f0ece5;
+  color: #888;
+}
+
+.subscriptionMeta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metaLabel {
+  font-size: 10.5px;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.metaValue {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.subscriptionFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  border-top: 1px solid #f5f2ec;
+}
+
+.autoRenewTag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #666;
+}
+
+.manageBtn {
+  background: #fff;
+  border: 1px solid #e8e4dd;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #1a1a1a;
+  transition: all 0.2s;
+}
+
+.manageBtn:hover {
+  border-color: #ff7a00;
+  color: #ff7a00;
+}
+
+/* ---------- Upcoming live classes tab ---------- */
+
+.liveClassList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.liveClassRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid #f0ece5;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.dateBox {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #faf7f2;
+  border: 1px solid #f0ece5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.dateDay {
+  font-size: 17px;
+  font-weight: 700;
+  color: #ff7a00;
+  line-height: 1;
+}
+
+.dateMonth {
+  font-size: 10px;
+  font-weight: 600;
+  color: #999;
+  text-transform: uppercase;
+}
+
+.liveClassInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.liveClassTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 3px;
+}
+
+.liveClassCourse {
+  font-size: 12px;
+  color: #888;
+  margin: 0 0 6px;
+}
+
+.liveClassMeta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 11.5px;
+  color: #999;
+}
+
+.liveClassMeta span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.liveDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4caf50;
+  display: inline-block;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(76, 175, 80, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+  }
+}
+
+.joinBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #ff7a00;
+  color: #fff;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.joinBtn:hover {
+  background: #e56e00;
+}
+
+.joinBtnLive {
+  background: #4caf50;
+}
+
+.joinBtnLive:hover {
+  background: #43a047;
+}
+
+.reminderBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid #e8e4dd;
+  color: #1a1a1a;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.reminderBtn:hover {
+  border-color: #ff7a00;
+  color: #ff7a00;
+}
+
+/* ---------- Certificates tab ---------- */
+
+.certGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.certCard {
+  border: 1px solid #f0ece5;
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.certCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ff7a00, #ffb066);
+}
+
+.certIconWrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #fff3e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff7a00;
+}
+
+.certCourseTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.certInstructor {
+  font-size: 12px;
+  color: #888;
+  margin: 0;
+}
+
+.certMetaRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11.5px;
+  color: #999;
+  padding-top: 8px;
+  border-top: 1px solid #f5f2ec;
+}
+
+.certId {
+  font-family: monospace;
+  color: #777;
+}
+
+.certActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.certDownloadBtn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #ff7a00;
+  color: #fff;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.certDownloadBtn:hover {
+  background: #e56e00;
+}
+
+.certVerifyBtn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid #e8e4dd;
+  color: #1a1a1a;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.certVerifyBtn:hover {
+  border-color: #ff7a00;
+  color: #ff7a00;
+}
+
+/* ---------- Payment history tab ---------- */
+
+.paymentSummary {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.paymentSummaryCard {
+  flex: 1;
+  min-width: 140px;
+  background: #faf7f2;
+  border: 1px solid #f0ece5;
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+
+.paymentSummaryLabel {
+  font-size: 11px;
+  color: #999;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.paymentSummaryValue {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.paymentList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.paymentRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid #f0ece5;
+  border-radius: 12px;
+  padding: 12px 16px;
+  flex-wrap: wrap;
+}
+
+.paymentIconWrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #faf7f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff7a00;
+  flex-shrink: 0;
+}
+
+.paymentInfo {
+  flex: 1;
+  min-width: 140px;
+}
+
+.paymentDesc {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 2px;
+}
+
+.paymentMeta {
+  font-size: 11.5px;
+  color: #999;
+}
+
+.paymentAmount {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a1a;
+  min-width: 80px;
+  text-align: right;
+}
+
+.paymentStatusPill {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.paymentSuccess {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.paymentFailed {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.paymentPending {
+  background: #fff3e0;
+  color: #ff7a00;
+}
+
+.invoiceBtn {
+  background: none;
+  border: 1px solid #e8e4dd;
+  color: #666;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.invoiceBtn:hover {
+  border-color: #ff7a00;
+  color: #ff7a00;
+}
+
+/* ---------- Course progress tab ---------- */
+
+.progressList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.progressCard {
+  border: 1px solid #f0ece5;
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+
+.progressTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.progressTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 3px;
+}
+
+.progressInstructor {
+  font-size: 12px;
+  color: #888;
+  margin: 0;
+}
+
+.progressPercent {
+  font-size: 20px;
+  font-weight: 800;
+  color: #ff7a00;
+}
+
+.progressBarLarge {
+  height: 8px;
+  background: #f0ece5;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progressBarLargeFill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff7a00, #ffb066);
+  border-radius: 4px;
+  transition: width 0.3s;
+}
+
+.progressFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.progressStats {
+  display: flex;
+  gap: 16px;
+  font-size: 11.5px;
+  color: #999;
+  flex-wrap: wrap;
+}
+
+.progressStats span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.continueBtnSmall {
+  background: #ff7a00;
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.continueBtnSmall:hover {
+  background: #e56e00;
+}
+
+/* ---------- Empty state ---------- */
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.emptyIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #faf7f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ccc;
+  margin-bottom: 14px;
+}
+
+.emptyTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  margin: 0 0 4px;
+}
+
+.emptyDesc {
+  font-size: 12.5px;
+  color: #999;
+  margin: 0;
+  max-width: 280px;
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 700px) {
@@ -615,6 +1260,18 @@
     height: 100px;
   }
 
+  .tabs {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+
+  .tab {
+    flex: 1 1 calc(50% - 4px);
+    justify-content: center;
+    padding: 10px 8px;
+    font-size: 12.5px;
+  }
+
   .courseRowActions {
     flex-direction: row;
     width: 100%;
@@ -633,6 +1290,59 @@
 
   .primaryBtn {
     width: 100%;
+  }
+
+  /* Subscriptions */
+  .subscriptionMeta {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .subscriptionFooter {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .manageBtn {
+    width: 100%;
+  }
+
+  /* Live classes */
+  .liveClassRow {
+    flex-wrap: wrap;
+  }
+
+  .joinBtn,
+  .reminderBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Certificates */
+  .certGrid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Payments */
+  .paymentRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .paymentAmount {
+    text-align: left;
+  }
+
+  .invoiceBtn {
+    justify-content: center;
+  }
+
+  /* Progress */
+  .progressTop {
+    flex-direction: column;
+  }
+
+  .continueBtnSmall {
+    text-align: center;
   }
 }
 
@@ -653,5 +1363,18 @@
 
   .statBadge {
     padding: 6px 8px;
+  }
+
+  .subscriptionMeta {
+    grid-template-columns: 1fr;
+  }
+
+  .dateBox {
+    width: 48px;
+    height: 48px;
+  }
+
+  .tab {
+    flex: 1 1 100%;
   }
 }
