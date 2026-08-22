@@ -1,0 +1,146 @@
+.section {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: 48px;
+  align-items: center;
+  margin: 0 6% 80px;
+  padding: 56px;
+  background: var(--aym-charcoal);
+  border-radius: var(--radius-lg);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: 30px;
+  color: var(--aym-white);
+  margin: 0 0 16px;
+  max-width: 460px;
+}
+
+.subtext {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 28px;
+  max-width: 440px;
+}
+
+.perks {
+  list-style: none;
+  margin: 0 0 32px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 24px;
+}
+
+.perk {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.perkIcon {
+  font-size: 18px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.subscribeBtn {
+  border: none;
+  background: var(--aym-orange);
+  color: var(--aym-white);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 30px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+.subscribeBtn:hover {
+  background: var(--aym-orange-dark);
+  transform: translateY(-2px);
+}
+
+.learnMore {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--aym-white);
+  text-decoration: underline;
+}
+
+.imageCol {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.mainImage {
+  width: 100%;
+  max-width: 320px;
+  height: 380px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+.sideImage {
+  position: absolute;
+  right: -18px;
+  bottom: -18px;
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 4px solid var(--aym-charcoal);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .section {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 44px 36px;
+    margin: 0 5% 64px;
+  }
+  .imageCol {
+    order: -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .heading {
+    font-size: 24px;
+  }
+  .perks {
+    grid-template-columns: 1fr;
+  }
+  .mainImage {
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 32px 22px;
+  }
+  .actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .subscribeBtn {
+    width: 100%;
+    text-align: center;
+  }
+}

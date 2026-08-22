@@ -1,0 +1,120 @@
+.section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+  padding: 80px 6%;
+  background: var(--aym-cream);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--aym-orange);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: 32px;
+  color: var(--aym-charcoal);
+  margin: 10px 0 16px;
+}
+
+.text {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--aym-brown);
+  margin: 0 0 24px;
+  max-width: 460px;
+}
+
+.points {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--aym-charcoal);
+}
+
+.points li {
+  padding-left: 26px;
+  position: relative;
+}
+
+.points li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--aym-orange);
+  font-weight: 700;
+}
+
+.videoWrap {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  aspect-ratio: 16 / 10;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background: var(--aym-charcoal);
+}
+
+.playBtn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--aym-orange);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s var(--ease-out), background 0.2s var(--ease-out);
+}
+
+.playBtn:hover {
+  transform: translate(-50%, -50%) scale(1.06);
+  background: var(--aym-white);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .section {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 64px 6%;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 56px 5%;
+  }
+  .heading {
+    font-size: 26px;
+  }
+  .playBtn {
+    width: 56px;
+    height: 56px;
+    font-size: 16px;
+  }
+}

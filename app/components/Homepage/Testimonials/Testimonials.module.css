@@ -1,0 +1,141 @@
+.section {
+  padding: 80px 6%;
+  background: var(--aym-cream);
+  text-align: center;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--aym-orange);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: 32px;
+  color: var(--aym-charcoal);
+  margin: 10px 0 40px;
+}
+
+.card {
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--aym-white);
+  border-radius: var(--radius-lg);
+  padding: 44px 48px;
+  box-shadow: var(--shadow-card);
+  position: relative;
+}
+
+.quoteMark {
+  font-family: var(--font-display);
+  font-size: 64px;
+  color: var(--aym-orange-soft);
+  line-height: 0;
+  position: absolute;
+  top: 38px;
+  left: 32px;
+}
+
+.quote {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-style: italic;
+  color: var(--aym-charcoal);
+  line-height: 1.6;
+  margin: 0 0 28px;
+  position: relative;
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  justify-content: center;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.name {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--aym-charcoal);
+  margin: 0;
+  text-align: left;
+}
+
+.location {
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  color: var(--aym-brown);
+  margin: 0;
+  text-align: left;
+}
+
+.stars {
+  color: var(--aym-orange);
+  font-size: 15px;
+  margin-left: 12px;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: none;
+  background: var(--aym-border);
+  cursor: pointer;
+  transition: background 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+.dotActive {
+  background: var(--aym-orange);
+  transform: scale(1.2);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .section {
+    padding: 56px 5%;
+  }
+  .heading {
+    font-size: 25px;
+  }
+  .card {
+    padding: 36px 28px;
+  }
+  .quote {
+    font-size: 16.5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .person {
+    flex-wrap: wrap;
+  }
+  .stars {
+    margin-left: 0;
+    width: 100%;
+    margin-top: 8px;
+  }
+  .quoteMark {
+    left: 16px;
+    top: 24px;
+    font-size: 48px;
+  }
+}

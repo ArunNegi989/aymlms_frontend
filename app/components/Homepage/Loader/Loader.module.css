@@ -1,0 +1,114 @@
+.wrapper {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  background: var(--aym-cream);
+}
+
+.ring {
+  position: relative;
+  width: 96px;
+  height: 96px;
+}
+
+.core {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--aym-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(43, 33, 24, 0.1);
+  animation: breathe 2.4s ease-in-out infinite;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--aym-orange-dark);
+}
+
+.dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--aym-orange);
+  transform-origin: 0 0;
+  animation: orbit-fade 1.6s linear infinite;
+}
+
+/* 8 dots placed evenly around the ring, each with a rotation offset
+   and its own animation-delay so the fade "chases" around the circle */
+.dot:nth-child(1) { transform: rotate(0deg) translate(42px) rotate(0deg); animation-delay: 0s; }
+.dot:nth-child(2) { transform: rotate(45deg) translate(42px) rotate(-45deg); animation-delay: 0.2s; }
+.dot:nth-child(3) { transform: rotate(90deg) translate(42px) rotate(-90deg); animation-delay: 0.4s; }
+.dot:nth-child(4) { transform: rotate(135deg) translate(42px) rotate(-135deg); animation-delay: 0.6s; }
+.dot:nth-child(5) { transform: rotate(180deg) translate(42px) rotate(-180deg); animation-delay: 0.8s; }
+.dot:nth-child(6) { transform: rotate(225deg) translate(42px) rotate(-225deg); animation-delay: 1s; }
+.dot:nth-child(7) { transform: rotate(270deg) translate(42px) rotate(-270deg); animation-delay: 1.2s; }
+.dot:nth-child(8) { transform: rotate(315deg) translate(42px) rotate(-315deg); animation-delay: 1.4s; }
+
+.label {
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--aym-brown);
+  letter-spacing: 0.02em;
+}
+
+@keyframes orbit-fade {
+  0%   { opacity: 0.15; }
+  12%  { opacity: 1; }
+  40%  { opacity: 0.15; }
+  100% { opacity: 0.15; }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(0.92); }
+  50% { transform: scale(1.06); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot,
+  .core {
+    animation: none;
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+  .ring {
+    width: 78px;
+    height: 78px;
+  }
+  .dot:nth-child(1) { transform: rotate(0deg) translate(34px) rotate(0deg); }
+  .dot:nth-child(2) { transform: rotate(45deg) translate(34px) rotate(-45deg); }
+  .dot:nth-child(3) { transform: rotate(90deg) translate(34px) rotate(-90deg); }
+  .dot:nth-child(4) { transform: rotate(135deg) translate(34px) rotate(-135deg); }
+  .dot:nth-child(5) { transform: rotate(180deg) translate(34px) rotate(-180deg); }
+  .dot:nth-child(6) { transform: rotate(225deg) translate(34px) rotate(-225deg); }
+  .dot:nth-child(7) { transform: rotate(270deg) translate(34px) rotate(-270deg); }
+  .dot:nth-child(8) { transform: rotate(315deg) translate(34px) rotate(-315deg); }
+  .core {
+    width: 40px;
+    height: 40px;
+  }
+  .label {
+    font-size: 12.5px;
+    padding: 0 20px;
+    text-align: center;
+  }
+}

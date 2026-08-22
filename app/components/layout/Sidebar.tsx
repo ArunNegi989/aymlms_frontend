@@ -29,7 +29,7 @@ const navItems = [
   { label: "Assignments", href: "/assignments", icon: ClipboardList },
   { label: "Quizzes", href: "/quizzes", icon: HelpCircle },
   { label: "Community", href: "/community", icon: Users },
-  { label: "Calendar", href: "/calendarr", icon: Calendar },
+  { label: "Calendar", href: "/calendar", icon: Calendar },
   { label: "My Certificates", href: "/my-certificates", icon: Award },
 ];
 
