@@ -34,7 +34,7 @@ const navItems = [
 ];
 
 const bottomItems = [
-  { label: "Profile", href: "/profile", icon: User },
+  { label: "Profile", href: "/", icon: User },
   { label: "Settings", href: "/settings", icon: Settings },
 ];
 

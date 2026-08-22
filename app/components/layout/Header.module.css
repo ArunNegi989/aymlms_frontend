@@ -1,0 +1,308 @@
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: #fff;
+    border-bottom: 1px solid #f0ece5;
+  }
+  
+  .inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  
+  .logoImage {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+  }
+  
+  .menuToggle {
+    display: none;
+    margin-left: auto;
+    background: none;
+    border: 1px solid #f0ece5;
+    border-radius: 8px;
+    padding: 7px;
+    color: #1a1a1a;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  
+  .nav {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    min-width: 0;
+  }
+  
+  .navLinks {
+    order: 1;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+  }
+  
+  .navLink {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  
+  .navLink:hover {
+    color: #ff7a00;
+  }
+  
+  .searchForm {
+    order: 2;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    max-width: 380px;
+  }
+  
+  .searchIcon {
+    position: absolute;
+    left: 12px;
+    color: #999;
+    pointer-events: none;
+  }
+  
+  .searchInput {
+    width: 100%;
+    height: 38px;
+    padding: 0 14px 0 36px;
+    border-radius: 10px;
+    border: 1px solid #f0ece5;
+    background: #fbf9f6;
+    font-size: 13px;
+    color: #1a1a1a;
+    box-sizing: border-box;
+  }
+  
+  .searchInput::placeholder {
+    color: #999;
+  }
+  
+  .searchInput:focus {
+    outline: none;
+    border-color: #ff7a00;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.12);
+  }
+  
+  .socialRow {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .socialIcon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #f0ece5;
+    background: #fbf9f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  
+  .socialIcon:hover {
+    background: #ff7a00;
+    border-color: #ff7a00;
+    color: #fff;
+  }
+  
+  .actions {
+    order: 3;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  
+  .cartBtn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    border: 1px solid #f0ece5;
+    color: #1a1a1a;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  
+  .cartBtn:hover {
+    border-color: #ff7a00;
+    color: #ff7a00;
+  }
+  
+  .cartBadge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 17px;
+    height: 17px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: #ff7a00;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .loginBtn {
+    padding: 9px 16px;
+    border-radius: 8px;
+    border: 1.5px solid #ff7a00;
+    color: #ff7a00;
+    background: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  
+  .loginBtn:hover {
+    background: #fdecdc;
+  }
+  
+  .signupBtn {
+    padding: 9px 16px;
+    border-radius: 8px;
+    border: none;
+    background: #ff7a00;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  
+  .signupBtn:hover {
+    background: #e56e00;
+  }
+  
+  .mobileDivider {
+    display: none;
+  }
+  
+  /* ---------- Responsive ---------- */
+  
+  @media (max-width: 900px) {
+    .inner {
+      padding: 12px 20px;
+      gap: 12px;
+    }
+  
+    .logoImage {
+      height: 38px;
+    }
+  
+    .menuToggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 60;
+    }
+  
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      top: 64px;
+      background: rgba(0, 0, 0, 0.4);
+      border: none;
+      padding: 0;
+      z-index: 45;
+      cursor: default;
+    }
+  
+    .nav {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      width: 100%;
+      background: #fff;
+      border-bottom: 1px solid #f0ece5;
+      border-radius: 0 0 16px 16px;
+      box-shadow: 0 16px 32px -8px rgba(26, 26, 26, 0.18);
+      flex-direction: column;
+      align-items: stretch;
+      gap: 16px;
+      padding: 20px 20px 28px;
+      display: none;
+      box-sizing: border-box;
+      z-index: 50;
+    }
+  
+    .navOpen {
+      display: flex;
+    }
+  
+    .searchForm {
+      order: -1;
+      max-width: none;
+    }
+  
+    .navLinks {
+      order: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+  
+    .navLink {
+      font-size: 15px;
+    }
+  
+    .mobileDivider {
+      display: block;
+      order: 1;
+      height: 1px;
+      background: #f0ece5;
+    }
+  
+    .actions {
+      order: 2;
+      margin-left: 0;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+  
+    .loginBtn,
+    .signupBtn {
+      flex: 1;
+      text-align: center;
+    }
+  
+    .socialRow {
+      margin: 0;
+    }
+  }

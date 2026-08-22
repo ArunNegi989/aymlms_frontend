@@ -18,8 +18,10 @@ import {
   Heart,
   Share2,
   Clock3,
+  ShoppingCart,
 } from "lucide-react";
 import type { CourseDetail } from "@/app/types/CourseDetail";
+import { useCart } from "@/app/context/CartContext";
 import styles from "./page.module.css";
 
 // Dummy data - replace with a fetch by params.id
@@ -173,6 +175,7 @@ export default function CourseDetailPage() {
   );
   const [learnExpanded, setLearnExpanded] = useState(false);
   const [descExpanded, setDescExpanded] = useState(false);
+  const { addToCart, isInCart } = useCart();
 
   const toggleSection = (id: string) => {
     setOpenSections((prev) => {
@@ -184,6 +187,18 @@ export default function CourseDetailPage() {
 
   const totalLectures = course.curriculum.reduce((sum, s) => sum + s.lectureCount, 0);
   const learnItems = learnExpanded ? course.whatYoullLearn : course.whatYoullLearn.slice(0, 4);
+  const alreadyInCart = isInCart(course.id);
+
+  const handleAddToCart = () => {
+    if (alreadyInCart) return;
+    addToCart({
+      id: course.id,
+      title: course.title,
+      instructor: course.instructor,
+      price: course.price,
+      originalPrice: course.originalPrice,
+    });
+  };
 
   return (
     <div className={styles.page}>
@@ -441,7 +456,14 @@ export default function CourseDetailPage() {
             </div>
 
             <button className={styles.enrollBtn}>Enroll Now</button>
-            <button className={styles.cartBtn}>Add to Cart</button>
+            <button
+              className={styles.cartBtn}
+              onClick={handleAddToCart}
+              disabled={alreadyInCart}
+            >
+              <ShoppingCart size={15} />
+              {alreadyInCart ? "Added to Cart" : "Add to Cart"}
+            </button>
 
             <div className={styles.sidebarActions}>
               <button className={styles.iconTextBtn}>
@@ -473,7 +495,13 @@ export default function CourseDetailPage() {
           <span className={styles.mobileActionNow}>₹{course.price.toLocaleString()}</span>
           <span className={styles.mobileActionOld}>₹{course.originalPrice.toLocaleString()}</span>
         </div>
-        <button className={styles.mobileEnrollBtn}>Enroll Now</button>
+        <button
+          className={styles.mobileEnrollBtn}
+          onClick={handleAddToCart}
+          disabled={alreadyInCart}
+        >
+          {alreadyInCart ? "Added to Cart" : "Add to Cart"}
+        </button>
       </div>
     </div>
   );
