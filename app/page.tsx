@@ -42,8 +42,9 @@ export default function Home() {
       <TrendingCourses />
       <FeaturedVideo />
       <Instructors />
-      <Testimonials />
+      
       <SubscribePlan />
+      <Testimonials />
       <Certifications />
     </main>
   );

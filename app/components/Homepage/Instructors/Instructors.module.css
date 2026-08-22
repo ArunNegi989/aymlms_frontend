@@ -1,110 +1,558 @@
 .section {
-  padding: 80px 6%;
-  background: var(--aym-cream-deep);
+  --aym-cream: #fdf6ec;
+  --aym-cream-deep: #f7ecdb;
+  --aym-white: #ffffff;
+  --aym-charcoal: #241f1a;
+  --aym-brown: #6b5c4f;
+  --aym-orange: #f5821f;
+  --aym-orange-dark: #d0680f;
+  --aym-orange-soft: rgba(245, 130, 31, 0.16);
+  --aym-border: #e9dcc8;
+  --shadow-card: 0 20px 46px rgba(36, 31, 26, 0.1);
+  --radius-md: 22px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  position: relative;
+  padding: 96px 6% 100px;
+  background: #f5f5f5;
+  overflow-x: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* ================= HEADER ================= */
 .header {
+  max-width: 620px;
+  margin: 0 auto 60px;
   text-align: center;
-  max-width: 640px;
-  margin: 0 auto 48px;
 }
 
 .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-family: var(--font-body);
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  color: var(--aym-orange);
+  letter-spacing: 0.14em;
+  color: var(--aym-orange-dark);
+}
+
+.eyebrowDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--aym-orange);
+  box-shadow: 0 0 0 3px var(--aym-orange-soft);
 }
 
 .heading {
   font-family: var(--font-display);
-  font-size: 32px;
+  font-size: clamp(26px, 3.2vw, 38px);
+  font-weight: 600;
   color: var(--aym-charcoal);
-  margin: 10px 0 0;
+  margin: 14px 0 0;
+  line-height: 1.25;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+/* ================= SLIDER VIEWPORT ================= */
+/* IMPORTANT: only clip horizontally. Vertical stagger (cardOffset) must
+   NOT be clipped, otherwise name/role of offset cards gets cut off. */
+.viewport {
+  position: relative;
+  max-width: 1360px;
+  width: 100%;
+  margin: 0 auto;
+  overflow-x: hidden;
+  overflow-y: visible;
+  box-sizing: border-box;
+  /* extra top/bottom room for the staggered offset + hover lift */
+  padding: 30px 0 56px;
+  /* tells the browser this element only cares about horizontal drag —
+     lets vertical page-scroll pass through untouched on touch devices,
+     preventing the "double scroll" conflict on mobile */
+  touch-action: pan-y;
 }
 
+.track {
+  display: flex;
+  align-items: flex-start;
+  max-width: 100%;
+  will-change: transform;
+  touch-action: pan-y;
+}
+
+/* each slide is a plain flex cell — the stagger/hover transforms live on
+   the .card INSIDE it, so the slide's own box height stays fixed and
+   never gets clipped by the viewport */
+.slide {
+  box-sizing: border-box;
+  padding: 0 14px;
+  min-width: 0;
+}
+
+/* ================= CARD ================= */
 .card {
-  background: var(--aym-white);
-  border-radius: var(--radius-md);
-  padding: 24px 20px 28px;
-  text-align: center;
-  box-shadow: var(--shadow-card);
-  transition: transform 0.25s var(--ease-out);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  transition: transform 0.3s var(--ease-out);
+  cursor: pointer;
+}
+
+/* ---- staggered card offset (editorial rhythm) ---- */
+.cardOffset {
+  margin-top: 36px;
 }
 
 .card:hover {
   transform: translateY(-6px);
 }
 
+.cardNum {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--aym-orange-dark);
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+
 .imageWrap {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 18px;
-  border-radius: 50%;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-md);
   overflow: hidden;
-  border: 3px solid var(--aym-orange-soft);
+  box-shadow: var(--shadow-card);
+  background: var(--aym-charcoal);
 }
 
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+  transition: transform 0.5s var(--ease-out);
+  user-select: none;
+  pointer-events: none;
+}
+
+.card:hover .image {
+  transform: scale(1.06);
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(24, 19, 13, 0) 40%,
+    rgba(24, 19, 13, 0.78) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-out);
+  pointer-events: none;
+}
+
+.card:hover .scrim {
+  opacity: 1;
+}
+
+/* ---- hover-reveal detail overlay ---- */
+.overlay {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+  pointer-events: none;
+}
+
+.card:hover .overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.detail {
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 4px;
+}
+
+.viewLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 12.5px;
+  color: var(--aym-white);
+  margin-top: 8px;
+}
+
+.viewArrow {
+  transition: transform 0.2s var(--ease-out);
+}
+
+.card:hover .viewArrow {
+  transform: translateX(3px);
+}
+
+/* ---- name/role (always visible below image) ---- */
+.info {
+  padding-top: 18px;
+  text-align: center;
 }
 
 .name {
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 19px;
+  font-weight: 600;
   color: var(--aym-charcoal);
   margin: 0 0 4px;
 }
 
 .role {
   font-family: var(--font-body);
-  font-size: 13px;
-  color: var(--aym-orange-dark);
+  font-size: 12.5px;
   font-weight: 600;
+  color: var(--aym-orange-dark);
   margin: 0;
 }
 
-.divider {
-  width: 32px;
-  height: 2px;
+/* ================= NAV ARROWS ================= */
+.navBtn {
+  position: absolute;
+  top: 46%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--aym-border);
+  background: var(--aym-white);
+  color: var(--aym-charcoal);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 28px rgba(36, 31, 26, 0.12);
+  transition: background 0.2s var(--ease-out), color 0.2s var(--ease-out);
+  z-index: 2;
+}
+
+.navBtn:hover {
+  background: var(--aym-orange);
+  color: var(--aym-white);
+}
+
+.navPrev {
+  left: 8px;
+}
+
+.navNext {
+  right: 8px;
+}
+
+/* ================= DOTS ================= */
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
   background: var(--aym-border);
-  margin: 16px auto;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s var(--ease-out), transform 0.2s var(--ease-out);
 }
 
-.detail {
+.dotActive {
+  background: var(--aym-orange);
+  transform: scale(1.25);
+}
+
+/* ================= MODAL ================= */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(36, 31, 26, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 1000;
+  animation: backdropIn 0.25s var(--ease-out) both;
+  overscroll-behavior: contain;
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 880px;
+  max-height: 88vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--aym-white);
+  border-radius: 28px;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.35);
+  animation: modalIn 0.3s var(--ease-out) both;
+}
+
+.modalClose {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: var(--aym-cream);
+  color: var(--aym-charcoal);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: background 0.2s var(--ease-out), color 0.2s var(--ease-out);
+}
+
+.modalClose:hover {
+  background: var(--aym-orange);
+  color: var(--aym-white);
+}
+
+.modalGrid {
+  display: grid;
+  grid-template-columns: 0.85fr 1fr;
+}
+
+.modalImageWrap {
+  position: relative;
+  border-radius: 28px 0 0 28px;
+  overflow: hidden;
+  min-height: 100%;
+  background: var(--aym-cream-deep);
+}
+
+.modalImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  min-height: 380px;
+}
+
+.modalContent {
+  padding: 48px 44px 40px;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+}
+
+.modalRole {
   font-family: var(--font-body);
-  font-size: 12.5px;
-  color: var(--aym-brown);
-  margin: 4px 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--aym-orange-dark);
+  text-transform: uppercase;
 }
 
-/* ---------- Responsive ---------- */
+.modalName {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3vw, 32px);
+  font-weight: 600;
+  color: var(--aym-charcoal);
+  margin: 8px 0 24px;
+}
+
+.modalMetaRow {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 20px;
+  background: var(--aym-cream);
+  border: 1px solid var(--aym-border);
+  border-radius: 16px;
+  margin-bottom: 24px;
+}
+
+.modalMetaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.modalMetaDivider {
+  width: 1px;
+  height: 32px;
+  background: var(--aym-border);
+  flex-shrink: 0;
+}
+
+.modalMetaLabel {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--aym-brown);
+  text-transform: uppercase;
+}
+
+.modalMetaValue {
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--aym-charcoal);
+}
+
+.modalBio {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: var(--aym-brown);
+  margin: 0 0 32px;
+  flex: 1;
+}
+
+.modalCta {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ff9a41;
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14.5px;
+  padding: 14px 26px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(245, 130, 31, 0.32);
+  transition: background 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+.modalCta:hover {
+  background: #010000;
+  transform: translateY(-2px);
+  color: #ffffff;
+}
+
+.modalCtaArrow {
+  transition: transform 0.2s var(--ease-out);
+}
+
+.modalCta:hover .modalCtaArrow {
+  transform: translateX(3px);
+}
+
+@keyframes backdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1200px) {
+  .section { padding: 88px 5% 92px; }
+  .slide { padding: 0 12px; }
+  .navBtn { width: 40px; height: 40px; font-size: 18px; }
+}
+
 @media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
+  .cardOffset {
+    margin-top: 0;
   }
+  .modalContent { padding: 40px 36px 32px; }
+}
+
+@media (max-width: 900px) {
+  .header { margin-bottom: 44px; }
 }
 
 @media (max-width: 768px) {
-  .section {
-    padding: 56px 5%;
+  .section { padding: 64px 5% 72px; }
+  .heading { font-size: 25px; }
+  .slide { padding: 0 10px; }
+  .modalGrid {
+    grid-template-columns: 1fr;
   }
-  .heading {
-    font-size: 25px;
+  .modalImageWrap {
+    border-radius: 28px 28px 0 0;
+  }
+  .modalImage {
+    min-height: 240px;
+  }
+  .modal {
+    max-height: 92vh;
   }
 }
 
-@media (max-width: 480px) {
-  .grid {
-    grid-template-columns: 1fr;
+@media (max-width: 640px) {
+  .viewport { padding: 20px 0 64px; }
+  .imageWrap { aspect-ratio: 3 / 3.6; }
+  .navBtn {
+    top: auto;
+    bottom: 0;
+    transform: none;
+    width: 40px;
+    height: 40px;
+    font-size: 17px;
   }
+  .navPrev { left: 6px; }
+  .navNext { right: 6px; }
+  .dots { margin-top: 20px; }
+  .modalContent { padding: 32px 24px 28px; }
+  .modalMetaRow {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .modalMetaDivider { display: none; }
+}
+
+@media (max-width: 480px) {
+  .section { padding: 56px 5% 60px; }
+  .slide { padding: 0 6px; }
+  .imageWrap { aspect-ratio: 4 / 4.2; }
+  .name { font-size: 18px; }
+  .navBtn { width: 34px; height: 34px; font-size: 15px; }
+  .navPrev { left: 4px; }
+  .navNext { right: 4px; }
+  .modalBackdrop { padding: 12px; }
+  .modal { border-radius: 20px; max-height: 94vh; }
+  .modalImageWrap { border-radius: 20px 20px 0 0; }
+  .modalContent { padding: 28px 18px 24px; }
+  .modalCta { width: 100%; justify-content: center; }
+}
+
+@media (max-width: 360px) {
+  .heading { font-size: 22px; }
+  .imageWrap { aspect-ratio: 1 / 1.15; }
+  .navBtn { width: 30px; height: 30px; font-size: 14px; }
 }

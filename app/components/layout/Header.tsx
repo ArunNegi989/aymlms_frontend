@@ -4,7 +4,7 @@ import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingCart, Menu, X, Search } from "lucide-react";
+import { ShoppingCart, Heart, Menu, X, Search, User } from "lucide-react";
 import styles from "./Header.module.css";
 
 function FacebookIcon() {
@@ -25,7 +25,13 @@ function InstagramIcon() {
   );
 }
 
-export default function Header({ cartCount = 0 }: { cartCount?: number }) {
+export default function Header({
+  cartCount = 0,
+  wishlistCount = 0,
+}: {
+  cartCount?: number;
+  wishlistCount?: number;
+}) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState("");
   const router = useRouter();
@@ -60,69 +66,67 @@ export default function Header({ cartCount = 0 }: { cartCount?: number }) {
         </button>
 
         <nav className={`${styles.nav} ${menuOpen ? styles.navOpen : ""}`}>
-          {/* <Link href="/" className={styles.navLink} onClick={() => setMenuOpen(false)}>
-            Home
-          </Link> */}
+          <div className={styles.rightGroup}>
+            <form className={styles.searchForm} role="search" onSubmit={handleSearch}>
+              <Search size={16} className={styles.searchIcon} />
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search for courses..."
+                className={styles.searchInput}
+                aria-label="Search for courses"
+              />
+            </form>
 
-          <div className={styles.navLinks}>
-            <Link href="/courses" className={styles.navLink} onClick={() => setMenuOpen(false)}>
-              All Courses
-            </Link>
-            <Link href="/free-lessons" className={styles.navLink} onClick={() => setMenuOpen(false)}>
-              Free Lessons
-            </Link>
-            <Link href="/contact" className={styles.navLink} onClick={() => setMenuOpen(false)}>
-              Contact Us
-            </Link>
+            <div className={styles.navLinks}>
+              <Link href="/courses" className={styles.navLink} onClick={() => setMenuOpen(false)}>
+                All Courses
+              </Link>
+              <Link href="/free-lessons" className={styles.navLink} onClick={() => setMenuOpen(false)}>
+                Free Lessons
+              </Link>
+              <Link href="/contact" className={styles.navLink} onClick={() => setMenuOpen(false)}>
+                Contact Us
+              </Link>
+            </div>
+
+            <div className={styles.mobileDivider} />
+
+            <div className={styles.actions}>
+              <Link
+                href="/wishlist"
+                className={styles.iconBtn}
+                aria-label="Wishlist"
+                onClick={() => setMenuOpen(false)}
+              >
+                <Heart size={19} />
+                {wishlistCount > 0 && <span className={styles.cartBadge}>{wishlistCount}</span>}
+              </Link>
+
+              <Link
+                href="/cart"
+                className={styles.iconBtn}
+                aria-label="Cart"
+                onClick={() => setMenuOpen(false)}
+              >
+                <ShoppingCart size={19} />
+                {cartCount > 0 && <span className={styles.cartBadge}>{cartCount}</span>}
+              </Link>
+
+               <Link
+    href="/admin/login"
+    className={styles.iconBtn}
+    aria-label="Login"
+    onClick={() => setMenuOpen(false)}
+  >
+    <User size={19} />
+  </Link>
+              {/* <Link href="/admin/register" className={styles.signupBtn} onClick={() => setMenuOpen(false)}>
+                Sign Up
+              </Link> */}
+            </div>
           </div>
-
-          <form className={styles.searchForm} role="search" onSubmit={handleSearch}>
-            <Search size={16} className={styles.searchIcon} />
-            <input
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search for courses..."
-              className={styles.searchInput}
-              aria-label="Search for courses"
-            />
-          </form>
-
-          <div className={styles.mobileDivider} />
-
-          <div className={styles.actions}>
-            <Link href="/cart" className={styles.cartBtn} aria-label="Cart" onClick={() => setMenuOpen(false)}>
-              <ShoppingCart size={19} />
-              {cartCount > 0 && <span className={styles.cartBadge}>{cartCount}</span>}
-            </Link>
-
-            <Link href="/admin/login" className={styles.loginBtn} onClick={() => setMenuOpen(false)}>
-              Login
-            </Link>
-            <Link href="/admin/register" className={styles.signupBtn} onClick={() => setMenuOpen(false)}>
-              Sign Up
-            </Link>
-          </div>
-          {/* <div className={styles.socialRow}>
-            
-              href="https://facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-              className={styles.socialIcon}
-            >
-              <FacebookIcon />
-            </a>
-            
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className={styles.socialIcon}
-            >
-              <InstagramIcon />
-            </a>
-          </div> */}
         </nav>
       </div>
 

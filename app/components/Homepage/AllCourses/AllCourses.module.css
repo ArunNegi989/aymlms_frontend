@@ -70,7 +70,7 @@
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 26px;
+  margin-bottom: 28px;
 }
 
 .chip {
@@ -97,180 +97,20 @@
   background: var(--aym-charcoal);
 }
 
-/* ================= BENTO GRID ================= */
-.bento {
+/* ================= GRID (4 per row) ================= */
+.grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
 
-/* ================= HERO / FEATURED CARD (compact) ================= */
-.heroCard {
-  grid-column: span 3;
-  border-radius: 20px;
-  overflow: hidden;
-  background: var(--aym-white);
-  box-shadow: var(--shadow-card);
-}
-
-.heroImageWrap {
-  position: relative;
-  height: 220px;
-  display: flex;
-  align-items: flex-end;
-}
-
-.heroImage {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
-}
-
-.heroScrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(20, 15, 10, 0) 0%,
-    rgba(20, 15, 10, 0.15) 35%,
-    rgba(20, 15, 10, 0.78) 100%
-  );
-}
-
-.heroCategory {
-  position: absolute;
-  top: 16px;
-  left: 20px;
-  color: var(--aym-white);
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  padding: 5px 13px;
-  border-radius: 999px;
-  z-index: 2;
-}
-
-.heroContent {
-  position: relative;
-  z-index: 2;
-  padding: 18px 24px 18px;
-  color: var(--aym-white);
-  max-width: 640px;
-}
-
-.heroFeaturedTag {
-  display: inline-block;
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 700;
-  color: #ffd9a0;
-  letter-spacing: 0.04em;
-  margin-bottom: 6px;
-}
-
-.heroTitle {
-  font-family: var(--font-display);
-  font-size: 24px;
-  line-height: 1.15;
-  margin: 0 0 6px;
-  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.25);
-}
-
-.heroTagline {
-  font-family: var(--font-body);
-  font-size: 13px;
-  line-height: 1.45;
-  color: rgba(255, 255, 255, 0.88);
-  margin: 0 0 14px;
-  max-width: 480px;
-}
-
-.heroMetaRow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.instructorChip,
-.heroRatingChip {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-body);
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--aym-white);
-  background: rgba(0, 0, 0, 0.32);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  padding: 5px 12px 5px 5px;
-  border-radius: 999px;
-}
-
-.heroRatingChip {
-  padding: 5px 12px;
-}
-
-.heroRatingText {
-  font-weight: 700;
-}
-
-.heroFooter {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-  padding: 18px 24px;
-}
-
-.heroPrice {
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--aym-charcoal);
-}
-
-.metaSmall {
-  display: block;
-  font-family: var(--font-body);
-  font-size: 12px;
-  color: var(--aym-brown);
-  margin-top: 3px;
-}
-
-.heroEnrollBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: none;
-  background: var(--aym-orange);
-  color: var(--aym-white);
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 13.5px;
-  padding: 11px 20px;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: background 0.2s var(--ease-out), transform 0.2s var(--ease-out);
-}
-
-.heroEnrollBtn:hover {
-  background: var(--aym-orange-dark);
-  transform: translateX(2px);
-}
-
-/* ================= SAVE BUTTON (shared) ================= */
+/* ================= SAVE BUTTON ================= */
 .saveBtn {
   position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 32px;
-  height: 32px;
+  top: 12px;
+  right: 12px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   border: none;
   background: rgba(255, 255, 255, 0.9);
@@ -293,16 +133,17 @@
 }
 
 .heartIcon {
-  width: 15px;
-  height: 15px;
+  width: 14px;
+  height: 14px;
 }
 
-/* ================= REGULAR CARD ================= */
+/* ================= CARD ================= */
 .card {
   background: var(--aym-white);
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 6px 18px rgba(60, 40, 20, 0.08);
+  border: 1px solid var(--aym-border);
   display: flex;
   flex-direction: column;
   transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
@@ -310,12 +151,12 @@
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 16px 32px rgba(60, 40, 20, 0.14);
 }
 
 .thumbWrap {
   position: relative;
-  height: 140px;
+  height: 240px;
   overflow: hidden;
 }
 
@@ -343,10 +184,10 @@
   left: 12px;
   color: var(--aym-white);
   font-family: var(--font-body);
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 700;
   letter-spacing: 0.03em;
-  padding: 4px 11px;
+  padding: 4px 10px;
   border-radius: 999px;
   z-index: 2;
 }
@@ -354,13 +195,13 @@
 .discountTag {
   position: absolute;
   top: 12px;
-  right: 52px;
+  right: 48px;
   background: rgba(255, 255, 255, 0.92);
   color: var(--aym-charcoal);
   font-family: var(--font-body);
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 700;
-  padding: 4px 10px;
+  padding: 4px 9px;
   border-radius: 999px;
   z-index: 2;
 }
@@ -377,24 +218,24 @@
 
 .levelText {
   font-family: var(--font-body);
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 700;
   color: var(--aym-white);
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(3px);
-  padding: 3px 9px;
+  padding: 3px 8px;
   border-radius: 999px;
 }
 
 .durationText {
   font-family: var(--font-body);
-  font-size: 11px;
+  font-size: 10.5px;
   color: rgba(255, 255, 255, 0.92);
   font-weight: 600;
 }
 
 .cardBody {
-  padding: 16px 18px 18px;
+  padding: 14px 16px 16px;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -402,18 +243,22 @@
 
 .cardTitle {
   font-family: var(--font-display);
-  font-size: 17px;
+  font-size: 15.5px;
   line-height: 1.28;
   color: var(--aym-charcoal);
   margin: 0 0 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .cardTagline {
   font-family: var(--font-body);
-  font-size: 12.5px;
-  line-height: 1.48;
+  font-size: 11.5px;
+  line-height: 1.45;
   color: var(--aym-brown);
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -423,21 +268,21 @@
 .instructorRow {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: 11.5px;
   color: var(--aym-brown);
-  margin-bottom: 10px;
+  margin-bottom: 9px;
 }
 
 .avatar {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: var(--accent, var(--aym-orange-soft));
   color: var(--aym-white);
   font-family: var(--font-body);
-  font-size: 9px;
+  font-size: 8.5px;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -448,11 +293,11 @@
 .ratingRow {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   font-family: var(--font-body);
-  font-size: 11.5px;
+  font-size: 10.5px;
   color: var(--aym-brown);
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   flex-wrap: wrap;
 }
 
@@ -463,8 +308,8 @@
 }
 
 .starIcon {
-  width: 11px;
-  height: 11px;
+  width: 10px;
+  height: 10px;
 }
 
 .ratingText {
@@ -481,26 +326,26 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 12px;
+  padding-top: 11px;
   border-top: 1px dashed var(--aym-border);
 }
 
 .priceLine {
   display: flex;
   align-items: baseline;
-  gap: 7px;
+  gap: 6px;
 }
 
 .price {
   font-family: var(--font-display);
-  font-size: 17px;
+  font-size: 15.5px;
   font-weight: 600;
   color: var(--aym-charcoal);
 }
 
 .originalPrice {
   font-family: var(--font-body);
-  font-size: 11.5px;
+  font-size: 10.5px;
   color: var(--aym-brown);
   text-decoration: line-through;
 }
@@ -509,8 +354,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   border: none;
   background: var(--accent, var(--aym-orange));
@@ -525,8 +370,48 @@
 }
 
 .arrowIcon {
+  width: 13px;
+  height: 13px;
+}
+
+/* ================= VIEW MORE BUTTON ================= */
+.viewMoreWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 36px;
+}
+
+.viewMoreBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--aym-white);
+  border: 1.5px solid var(--aym-charcoal);
+  color: var(--aym-charcoal);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 13px 28px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s var(--ease-out);
+}
+
+.viewMoreBtn:hover {
+  background: var(--aym-charcoal);
+  color: var(--aym-white);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(60, 40, 20, 0.2);
+}
+
+.chevronIcon {
   width: 14px;
   height: 14px;
+  transition: transform 0.25s var(--ease-out);
+}
+
+.viewMoreBtn:hover .chevronIcon {
+  transform: translateY(2px);
 }
 
 /* ================= EMPTY STATE ================= */
@@ -573,16 +458,19 @@
 }
 
 /* ================= RESPONSIVE ================= */
-@media (max-width: 1024px) {
-  .bento {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .heroCard {
-    grid-column: span 2;
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
   .section {
     padding: 44px 5% 56px;
   }
@@ -597,48 +485,16 @@
     width: 100%;
     min-width: 0;
   }
-  .bento {
+  .grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
-  .heroCard {
-    grid-column: span 1;
-  }
-  .heroImageWrap {
-    height: 200px;
-  }
-  .heroTitle {
-    font-size: 21px;
-  }
-  .heroFooter {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .heroEnrollBtn {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
   .chipRow {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     overflow-x: auto;
     padding-bottom: 6px;
   }
   .chip {
     flex: none;
-  }
-  .heroContent {
-    padding: 16px 18px 16px;
-  }
-  .heroTitle {
-    font-size: 19px;
-  }
-  .heroMetaRow {
-    gap: 8px;
-  }
-  .instructorChip,
-  .heroRatingChip {
-    font-size: 11.5px;
   }
 }

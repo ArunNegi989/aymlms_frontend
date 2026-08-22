@@ -4,20 +4,63 @@ type Certification = {
   id: string;
   name: string;
   tags: string;
-  image: string;
+  badges: { icon: string; bg: string }[];
 };
 
 const certifications: Certification[] = [
-  { id: "cert1", name: "Yoga Alliance RYT-200", tags: "Hatha, Vinyasa, Ashtanga", image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=500&auto=format&fit=crop" },
-  { id: "cert2", name: "AYM Ayurveda Certificate", tags: "Nutrition, Doshas, Ritucharya", image: "https://images.unsplash.com/photo-1611072965169-e3733f373f7c?q=80&w=500&auto=format&fit=crop" },
-  { id: "cert3", name: "Meditation & Breathwork", tags: "Pranayama, Mindfulness", image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=500&auto=format&fit=crop" },
+  {
+    id: "cert1",
+    name: "Yoga Alliance RYT-200",
+    tags: "Hatha, Vinyasa, Ashtanga",
+    badges: [
+      { icon: "🧘", bg: "linear-gradient(135deg, #f0923f, #d9631a)" },
+      { icon: "🕉", bg: "#ffffff" },
+      { icon: "🧘‍♀️", bg: "linear-gradient(135deg, #f6b26b, #e67e22)" },
+      { icon: "☀️", bg: "#ffffff" },
+      { icon: "🪷", bg: "linear-gradient(135deg, #d9631a, #b34e15)" },
+      { icon: "🧘", bg: "#ffffff" },
+    ],
+  },
+  {
+    id: "cert2",
+    name: "AYM Ayurveda Certificate",
+    tags: "Nutrition, Doshas, Ritucharya",
+    badges: [
+      { icon: "🌿", bg: "linear-gradient(135deg, #17a37a, #0f8163)" },
+      { icon: "🥗", bg: "#ffffff" },
+      { icon: "🌾", bg: "linear-gradient(135deg, #2f9e6e, #1c7a53)" },
+      { icon: "💧", bg: "#ffffff" },
+      { icon: "🌱", bg: "linear-gradient(135deg, #17a37a, #0f8163)" },
+      { icon: "🍵", bg: "#ffffff" },
+    ],
+  },
+  {
+    id: "cert3",
+    name: "Meditation & Breathwork",
+    tags: "Pranayama, Mindfulness",
+    badges: [
+      { icon: "🌬", bg: "linear-gradient(135deg, #6c63d1, #4b3fa0)" },
+      { icon: "🧠", bg: "#ffffff" },
+      { icon: "✨", bg: "linear-gradient(135deg, #8a7fe0, #6c63d1)" },
+      { icon: "🕯", bg: "#ffffff" },
+      { icon: "🔮", bg: "linear-gradient(135deg, #4b3fa0, #362d78)" },
+      { icon: "🌙", bg: "#ffffff" },
+    ],
+  },
 ];
 
 export default function Certifications() {
   return (
     <section className={styles.section}>
       <div className={styles.textCol}>
-        <h2 className={styles.heading}>Get certified and get ahead in your practice</h2>
+        <div className={styles.badge}>
+          <span className={styles.badgeDot} />
+          <span className={styles.eyebrow}>CERTIFICATIONS</span>
+        </div>
+
+        <h2 className={styles.heading}>
+          Get certified and get <span className={styles.headingAccent}>ahead</span> in your practice
+        </h2>
         <p className={styles.text}>
           Every AYM course path ends with a recognized certificate — with practice
           assessments and instructor sign-off along the way.
@@ -30,7 +73,20 @@ export default function Certifications() {
       <div className={styles.cards}>
         {certifications.map((cert) => (
           <div key={cert.id} className={styles.card}>
-            <img src={cert.image} alt={cert.name} className={styles.thumb} />
+            <div className={styles.thumb}>
+              {cert.badges.map((b, i) => (
+                <span
+                  key={i}
+                  className={styles.badgeIcon}
+                  style={{
+                    background: b.bg,
+                    color: b.bg === "#ffffff" ? "var(--aym-charcoal, #2e1e14)" : "#ffffff",
+                  }}
+                >
+                  {b.icon}
+                </span>
+              ))}
+            </div>
             <p className={styles.name}>{cert.name}</p>
             <p className={styles.tags}>{cert.tags}</p>
           </div>

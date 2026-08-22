@@ -14,12 +14,12 @@ type Slide = {
   subtitle: string;
   ctaLabel: string;
   ctaHref: string;
-  badgeTitle: string;
-  badgeSubtitle: string;
-  joinedStat: string;
+  scheduleTitle: string;
+  scheduleTime: string;
+  scheduleInstructor: string;
 };
 
-const SLIDE_DURATION = 6000;
+const SLIDE_DURATION = 6500;
 
 const slides: Slide[] = [
   {
@@ -27,22 +27,22 @@ const slides: Slide[] = [
     type: "video",
     src: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm",
     poster:
-      "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1600&auto=format&fit=crop",
     eyebrow: "200 HR TEACHER TRAINING",
     titlePlain: "Breathe. Move.",
     titleAccent: "Teach.",
     subtitle:
-      "Certified yoga teacher training taught live by real instructors, from anywhere.",
+      "Certified yoga teacher training taught live by real instructors, from anywhere in the world.",
     ctaLabel: "Explore Courses",
     ctaHref: "#all-courses",
-    badgeTitle: "Live now · Hatha Foundations",
-    badgeSubtitle: "Anjali Rawat · 7:00 AM batch",
-    joinedStat: "340+ joined this week",
+    scheduleTitle: "Hatha Foundations",
+    scheduleTime: "7:00 AM · Live now",
+    scheduleInstructor: "Anjali Rawat",
   },
   {
     id: "s2",
     type: "image",
-    src: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80&w=1200&auto=format&fit=crop",
+    src: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80&w=1600&auto=format&fit=crop",
     eyebrow: "NEW BATCH OPEN",
     titlePlain: "Ayurveda meets",
     titleAccent: "modern practice",
@@ -50,23 +50,23 @@ const slides: Slide[] = [
       "Blend ancient wisdom with a structured, certificate-backed curriculum.",
     ctaLabel: "View Ayurveda Track",
     ctaHref: "#ayurveda",
-    badgeTitle: "New · Ayurveda Foundations",
-    badgeSubtitle: "Enrollment closes in 4 days",
-    joinedStat: "180+ enrolled this month",
+    scheduleTitle: "Ayurveda Foundations",
+    scheduleTime: "Enrolment closes in 4 days",
+    scheduleInstructor: "Dr. Meera Nair",
   },
   {
     id: "s3",
     type: "image",
-    src: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1200&auto=format&fit=crop",
+    src: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1600&auto=format&fit=crop",
     eyebrow: "LIVE CLASSES DAILY",
     titlePlain: "Learn from instructors",
     titleAccent: "who show up daily",
     subtitle: "Small live batches, real feedback, recordings included.",
     ctaLabel: "Meet Instructors",
     ctaHref: "#instructors",
-    badgeTitle: "Today · Ashtanga Primary Series",
-    badgeSubtitle: "Rishikesh Yogacharya · 7:00 AM",
-    joinedStat: "12,000+ students trained",
+    scheduleTitle: "Ashtanga Primary Series",
+    scheduleTime: "7:00 AM · Today",
+    scheduleInstructor: "Rishikesh Yogacharya",
   },
 ];
 
@@ -78,15 +78,16 @@ export default function HeroSlider() {
   const startRef = useRef<number>(0);
   const elapsedRef = useRef<number>(0);
 
-  const runTimer = () => {
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+  // ---- Auto-scroll engine ----
+  useEffect(() => {
+    if (paused) {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      return;
+    }
+
     startRef.current = Date.now() - elapsedRef.current;
 
     const tick = () => {
-      if (paused) {
-        rafRef.current = requestAnimationFrame(tick);
-        return;
-      }
       const elapsed = Date.now() - startRef.current;
       elapsedRef.current = elapsed;
       const pct = Math.min((elapsed / SLIDE_DURATION) * 100, 100);
@@ -99,25 +100,19 @@ export default function HeroSlider() {
       }
       rafRef.current = requestAnimationFrame(tick);
     };
-    rafRef.current = requestAnimationFrame(tick);
-  };
 
-  useEffect(() => {
-    runTimer();
+    rafRef.current = requestAnimationFrame(tick);
+
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paused]);
 
   const goTo = (index: number) => {
     setActive((index + slides.length) % slides.length);
     setProgress(0);
     elapsedRef.current = 0;
-    runTimer();
   };
-
-  const slide = slides[active];
 
   return (
     <section
@@ -126,37 +121,97 @@ export default function HeroSlider() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className={styles.grid}>
-        {/* ---------- Left: content ---------- */}
-        <div className={styles.content}>
+      {/* ---------- Background stack (all slides, crossfade) ---------- */}
+      <div className={styles.bgStack}>
+        {slides.map((s, index) => (
+          <div
+            key={s.id}
+            className={`${styles.bgSlide} ${
+              index === active ? styles.bgSlideActive : ""
+            }`}
+            aria-hidden={index !== active}
+          >
+            {s.type === "video" ? (
+              <video
+                className={styles.bgMedia}
+                src={s.src}
+                poster={s.poster}
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+            ) : (
+              <img className={styles.bgMedia} src={s.src} alt="" />
+            )}
+          </div>
+        ))}
+        <div className={styles.scrim} />
+      </div>
+
+      {/* ---------- Foreground content ---------- */}
+      <div className={styles.inner}>
+        <div className={styles.contentBlock} key={`content-${slides[active].id}`}>
           <span className={styles.eyebrow}>
             <span className={styles.eyebrowDot} />
-            {slide.eyebrow}
+            {slides[active].eyebrow}
           </span>
 
-          <div className={styles.titleWrap}>
-            <h1 className={styles.title} key={`title-${slide.id}`}>
-              {slide.titlePlain}{" "}
-              <span className={styles.titleAccent}>{slide.titleAccent}</span>
-            </h1>
-          </div>
+          <h1 className={styles.title}>
+            {slides[active].titlePlain}{" "}
+            <span className={styles.titleAccent}>
+              {slides[active].titleAccent}
+            </span>
+          </h1>
 
-          <p className={styles.subtitle} key={`sub-${slide.id}`}>
-            {slide.subtitle}
-          </p>
+          <p className={styles.subtitle}>{slides[active].subtitle}</p>
 
           <div className={styles.ctaRow}>
-            <a href={slide.ctaHref} className={styles.ctaPrimary}>
-              {slide.ctaLabel}
+            <a href={slides[active].ctaHref} className={styles.ctaPrimary}>
+              <span>{slides[active].ctaLabel}</span>
               <span className={styles.ctaArrow}>&rarr;</span>
             </a>
-            <button className={styles.ctaSecondary}>
+            <button className={styles.ctaSecondary} type="button">
               <span className={styles.playIcon}>&#9654;</span>
-              Watch a class
+              <span>Watch a class</span>
             </button>
           </div>
+        </div>
 
-          {/* signature: rhythm rail replaces generic progress dots */}
+        {/* ---------- Floating live-class schedule card ---------- */}
+        <div
+          className={styles.scheduleCard}
+          key={`schedule-${slides[active].id}`}
+        >
+          <span className={styles.liveDot} />
+          <div className={styles.scheduleText}>
+            <p className={styles.scheduleTitle}>
+              {slides[active].scheduleTitle}
+            </p>
+            <p className={styles.scheduleMeta}>
+              {slides[active].scheduleInstructor} · {slides[active].scheduleTime}
+            </p>
+          </div>
+          <button className={styles.joinMiniBtn} type="button">
+            Join
+          </button>
+        </div>
+
+        {/* ---------- Stats strip ---------- */}
+        <div className={styles.statsRow}>
+          <span className={styles.statChip}>
+            <strong>12,000+</strong> students trained
+          </span>
+          <span className={styles.statChip}>
+            <strong>4.8 ★</strong> average rating
+          </span>
+          <span className={styles.statChip}>
+            <strong>150+</strong> live classes / month
+          </span>
+        </div>
+
+        {/* ---------- Bottom controls: numbers + progress + arrows ---------- */}
+        <div className={styles.controls}>
           <div className={styles.rail}>
             {slides.map((s, index) => (
               <button
@@ -167,6 +222,7 @@ export default function HeroSlider() {
                 onClick={() => goTo(index)}
                 aria-label={`Go to slide ${index + 1}`}
                 aria-current={index === active}
+                type="button"
               >
                 <span className={styles.railNum}>
                   {String(index + 1).padStart(2, "0")}
@@ -188,74 +244,23 @@ export default function HeroSlider() {
             ))}
           </div>
 
-          <div className={styles.statsRow}>
-            <span className={styles.statChip}>
-              <strong>12,000+</strong> students trained
-            </span>
-            <span className={styles.statChip}>
-              <strong>4.8 ★</strong> average rating
-            </span>
-            <span className={styles.statChip}>
-              <strong>150+</strong> live classes / month
-            </span>
-          </div>
-        </div>
-
-        {/* ---------- Right: media card ---------- */}
-        <div className={styles.mediaCol}>
-          <div className={styles.mediaCard}>
-            <div className={styles.mediaFrame} key={slide.id}>
-              {slide.type === "video" ? (
-                <video
-                  className={styles.media}
-                  src={slide.src}
-                  poster={slide.poster}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                />
-              ) : (
-                <img className={styles.media} src={slide.src} alt="" />
-              )}
-            </div>
-
-            <div className={styles.mediaScrim} />
-
+          <div className={styles.arrowGroup}>
             <button
-              className={`${styles.navBtn} ${styles.navPrev}`}
+              className={styles.navBtn}
               onClick={() => goTo(active - 1)}
               aria-label="Previous slide"
+              type="button"
             >
               &#8249;
             </button>
             <button
-              className={`${styles.navBtn} ${styles.navNext}`}
+              className={styles.navBtn}
               onClick={() => goTo(active + 1)}
               aria-label="Next slide"
+              type="button"
             >
               &#8250;
             </button>
-
-            <div className={styles.badgeBottom}>
-              <span className={styles.liveDot} />
-              <div className={styles.badgeBottomText}>
-                <p className={styles.badgeBottomTitle}>{slide.badgeTitle}</p>
-                <p className={styles.badgeBottomSubtitle}>
-                  {slide.badgeSubtitle}
-                </p>
-              </div>
-              <button className={styles.joinMiniBtn}>Join</button>
-            </div>
-          </div>
-
-          <div className={styles.badgeTop}>
-            <div className={styles.avatarStack}>
-              <span className={styles.avatarDot} />
-              <span className={styles.avatarDot} />
-              <span className={styles.avatarDot} />
-            </div>
-            <span className={styles.badgeTopValue}>{slide.joinedStat}</span>
           </div>
         </div>
       </div>

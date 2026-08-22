@@ -1,12 +1,12 @@
 .footer {
   background: #fff;
-  color: #444;
+  color: #050505;
   z-index: 500;
   border-top: 1px solid #f0ece5;
 }
 
 .top {
-  max-width: 1180px;
+  max-width: 1680px;
   margin: 0 auto;
   padding: 48px 32px 32px;
   display: grid;
@@ -30,17 +30,20 @@
 }
 
 .logoImage {
-  height: 60px;
+  height: 80px;
   width: auto;
   object-fit: contain;
+  justify-content: center;
+  display: flex;
 }
 
 .tagline {
-  font-size: 12.5px;
+  font-size: 16px;
   line-height: 1.6;
-  color: #777;
+  color: #161616;
   margin: 0;
   max-width: 260px;
+  font-weight: 500;
 }
 
 .socialRow {
@@ -77,9 +80,9 @@
 }
 
 .colTitle {
-  font-size: 13px;
+  font-size: 18px;
   font-weight: 700;
-  color: #1a1a1a;
+  color: #e43a06;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin: 0 0 8px;
@@ -95,10 +98,11 @@
 }
 
 .link {
-  font-size: 12.5px;
-  color: #777;
+  font-size: 16px;
+  color: #242424;
   text-decoration: none;
   line-height: 1.4;
+  font-weight: 500;
 }
 
 .link:hover {
@@ -144,9 +148,10 @@
   max-width: 1180px;
   margin: 0 auto;
   padding: 18px 32px;
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   flex-wrap: wrap;
   gap: 10px;
 }
@@ -155,12 +160,17 @@
   font-size: 12px;
   color: #999;
   margin: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
 }
 
 .legalLinks {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-left: auto;
 }
 
 .legalLink {
@@ -197,6 +207,16 @@
 
   .bottom {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .copyright {
+    position: static;
+    transform: none;
+  }
+
+  .legalLinks {
+    margin-left: 0;
   }
 }

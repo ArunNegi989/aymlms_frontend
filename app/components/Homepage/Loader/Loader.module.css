@@ -5,84 +5,223 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 28px;
+  gap: 40px;
   background: var(--aym-cream);
+  overflow: hidden;
 }
 
-.ring {
+/* ================= STAGE ================= */
+.stage {
   position: relative;
-  width: 96px;
-  height: 96px;
-}
-
-.core {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: var(--aym-white);
+  width: 320px;
+  height: 320px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(43, 33, 24, 0.1);
-  animation: breathe 2.4s ease-in-out infinite;
 }
 
-.logo {
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--aym-orange-dark);
+/* ================= SOFT BACKGROUND GLOW ================= */
+.glow {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(245, 130, 31, 0.3) 0%,
+    rgba(245, 130, 31, 0) 70%
+  );
+  animation: glow-breathe 2.6s ease-in-out infinite;
+}
+
+@keyframes glow-breathe {
+  0%, 100% { opacity: 0.55; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+/* ================= OUTER PULSE RINGS ================= */
+.pulseRing {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 1.5px solid var(--aym-orange);
+  opacity: 0;
+  animation: pulse-out 2.8s cubic-bezier(0.2, 0.7, 0.4, 1) infinite;
+}
+
+@keyframes pulse-out {
+  0% {
+    width: 220px;
+    height: 220px;
+    opacity: 0.6;
+    border-width: 2px;
+  }
+  100% {
+    width: 320px;
+    height: 320px;
+    opacity: 0;
+    border-width: 0.5px;
+  }
+}
+
+/* ================= TWINKLING SPARKLES ================= */
+.spark {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--aym-orange);
+  box-shadow: 0 0 10px 2px rgba(245, 130, 31, 0.7);
+  opacity: 0;
+  animation: twinkle 2.4s ease-in-out infinite;
+}
+
+.spark1 { top: 6%;  left: 18%; animation-delay: 0s; }
+.spark2 { top: 14%; right: 8%; animation-delay: 0.6s; }
+.spark3 { bottom: 10%; left: 6%; animation-delay: 1.2s; }
+.spark4 { bottom: 4%; right: 20%; animation-delay: 1.8s; }
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.4); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* ================= OUTER DASHED RING (slow rotate) ================= */
+.dashRing {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 258px;
+  height: 258px;
+  border-radius: 50%;
+  border: 2px dashed rgba(245, 130, 31, 0.45);
+  animation: spin 9s linear infinite;
+}
+
+/* ================= INNER GRADIENT ARC RING (fast, opposite) ================= */
+.spinnerRing {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  padding: 4px;
+  background: conic-gradient(
+    from 0deg,
+    var(--aym-orange) 0deg,
+    var(--aym-orange-dark) 90deg,
+    rgba(245, 130, 31, 0.05) 260deg,
+    var(--aym-orange) 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: spin 1.8s linear infinite reverse;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ================= ORBITING DOTS — OUTER ================= */
+.orbitOuter {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 258px;
+  height: 258px;
+  animation: spin 4.5s linear infinite;
 }
 
 .dot {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: var(--aym-orange);
-  transform-origin: 0 0;
-  animation: orbit-fade 1.6s linear infinite;
+  background: var(--aym-orange-dark);
+  box-shadow: 0 0 10px rgba(168, 79, 2, 0.7);
 }
 
-/* 8 dots placed evenly around the ring, each with a rotation offset
-   and its own animation-delay so the fade "chases" around the circle */
-.dot:nth-child(1) { transform: rotate(0deg) translate(42px) rotate(0deg); animation-delay: 0s; }
-.dot:nth-child(2) { transform: rotate(45deg) translate(42px) rotate(-45deg); animation-delay: 0.2s; }
-.dot:nth-child(3) { transform: rotate(90deg) translate(42px) rotate(-90deg); animation-delay: 0.4s; }
-.dot:nth-child(4) { transform: rotate(135deg) translate(42px) rotate(-135deg); animation-delay: 0.6s; }
-.dot:nth-child(5) { transform: rotate(180deg) translate(42px) rotate(-180deg); animation-delay: 0.8s; }
-.dot:nth-child(6) { transform: rotate(225deg) translate(42px) rotate(-225deg); animation-delay: 1s; }
-.dot:nth-child(7) { transform: rotate(270deg) translate(42px) rotate(-270deg); animation-delay: 1.2s; }
-.dot:nth-child(8) { transform: rotate(315deg) translate(42px) rotate(-315deg); animation-delay: 1.4s; }
+.dot:nth-child(1) { transform: rotate(0deg) translate(129px) rotate(0deg); }
+.dot:nth-child(2) { transform: rotate(120deg) translate(129px) rotate(-120deg); }
+.dot:nth-child(3) { transform: rotate(240deg) translate(129px) rotate(-240deg); }
+
+/* ================= ORBITING DOTS — INNER (reverse, faster) ================= */
+.orbitInner {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 230px;
+  height: 230px;
+  animation: spin 3s linear infinite reverse;
+}
+
+.dotSmall {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--aym-orange);
+  opacity: 0.85;
+}
+
+.dotSmall:nth-child(1) { transform: rotate(60deg) translate(115px) rotate(-60deg); }
+.dotSmall:nth-child(2) { transform: rotate(240deg) translate(115px) rotate(-240deg); }
+
+/* ================= CENTER CORE (big logo) ================= */
+.core {
+  position: relative;
+  z-index: 3;
+  width: 290px;
+  height: 290px;
+  border-radius: 50%;
+  background: var(--aym-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: breathe 2.6s ease-in-out infinite;
+  overflow: hidden;
+}
+
+.logoImg {
+  width: 250px;
+  height: 250px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(0.95); }
+  50% { transform: scale(1.05); }
+}
 
 .label {
   font-family: var(--font-body);
-  font-size: 13.5px;
+  font-size: 25px;
   font-weight: 500;
   color: var(--aym-brown);
   letter-spacing: 0.02em;
 }
 
-@keyframes orbit-fade {
-  0%   { opacity: 0.15; }
-  12%  { opacity: 1; }
-  40%  { opacity: 0.15; }
-  100% { opacity: 0.15; }
-}
-
-@keyframes breathe {
-  0%, 100% { transform: scale(0.92); }
-  50% { transform: scale(1.06); }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .dot,
+  .glow,
+  .pulseRing,
+  .spark,
+  .dashRing,
+  .spinnerRing,
+  .orbitOuter,
+  .orbitInner,
   .core {
     animation: none;
   }
@@ -90,24 +229,26 @@
 
 /* ---------- Responsive ---------- */
 @media (max-width: 480px) {
-  .ring {
-    width: 78px;
-    height: 78px;
-  }
-  .dot:nth-child(1) { transform: rotate(0deg) translate(34px) rotate(0deg); }
-  .dot:nth-child(2) { transform: rotate(45deg) translate(34px) rotate(-45deg); }
-  .dot:nth-child(3) { transform: rotate(90deg) translate(34px) rotate(-90deg); }
-  .dot:nth-child(4) { transform: rotate(135deg) translate(34px) rotate(-135deg); }
-  .dot:nth-child(5) { transform: rotate(180deg) translate(34px) rotate(-180deg); }
-  .dot:nth-child(6) { transform: rotate(225deg) translate(34px) rotate(-225deg); }
-  .dot:nth-child(7) { transform: rotate(270deg) translate(34px) rotate(-270deg); }
-  .dot:nth-child(8) { transform: rotate(315deg) translate(34px) rotate(-315deg); }
-  .core {
-    width: 40px;
-    height: 40px;
-  }
+  .stage { width: 240px; height: 240px; }
+  .glow { width: 175px; height: 175px; }
+  .pulseRing { width: 165px; height: 165px; }
+  .dashRing { width: 194px; height: 194px; }
+  .spinnerRing { width: 173px; height: 173px; }
+  .orbitOuter { width: 194px; height: 194px; }
+  .orbitInner { width: 173px; height: 173px; }
+
+  .dot:nth-child(1) { transform: rotate(0deg) translate(97px) rotate(0deg); }
+  .dot:nth-child(2) { transform: rotate(120deg) translate(97px) rotate(-120deg); }
+  .dot:nth-child(3) { transform: rotate(240deg) translate(97px) rotate(-240deg); }
+
+  .dotSmall:nth-child(1) { transform: rotate(60deg) translate(86px) rotate(-60deg); }
+  .dotSmall:nth-child(2) { transform: rotate(240deg) translate(86px) rotate(-240deg); }
+
+  .core { width: 140px; height: 140px; }
+  .logoImg { width: 122px; height: 122px; }
+
   .label {
-    font-size: 12.5px;
+    font-size: 13px;
     padding: 0 20px;
     text-align: center;
   }

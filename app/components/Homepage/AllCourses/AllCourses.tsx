@@ -1,7 +1,6 @@
-// AllCourses.tsx — same logic, only layout/sizing changed from previous version
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import styles from "./AllCourses.module.css";
 
 type Course = {
@@ -18,7 +17,6 @@ type Course = {
   reviews: number;
   students: string;
   tagline: string;
-  featured?: boolean;
 };
 
 const courses: Course[] = [
@@ -37,7 +35,6 @@ const courses: Course[] = [
     reviews: 412,
     students: "3.2k",
     tagline: "Build your practice from the ground up — breath, alignment, stillness.",
-    featured: true,
   },
   {
     id: "c2",
@@ -126,6 +123,8 @@ const categoryAccent: Record<Course["category"], string> = {
   Meditation: "#7c6a94",
 };
 
+const PAGE_SIZE = 8;
+
 function StarIcon({ fill }: { fill: "full" | "half" | "empty" }) {
   const id = useMemo(() => Math.random().toString(36).slice(2), []);
   return (
@@ -183,6 +182,14 @@ function ArrowIcon() {
   );
 }
 
+function ChevronDownIcon() {
+  return (
+    <svg viewBox="0 0 20 20" className={styles.chevronIcon}>
+      <polyline points="5 7.5 10 13 15 7.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function SearchIcon() {
   return (
     <svg viewBox="0 0 20 20" className={styles.searchIcon}>
@@ -204,6 +211,7 @@ export default function AllCourses() {
   const [category, setCategory] = useState<(typeof categories)[number]>("All");
   const [query, setQuery] = useState("");
   const [saved, setSaved] = useState<Set<string>>(new Set());
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   const toggleSave = (id: string) => {
     setSaved((prev) => {
@@ -224,8 +232,12 @@ export default function AllCourses() {
     });
   }, [category, query]);
 
-  const featured = filtered.find((c) => c.featured);
-  const rest = filtered.filter((c) => c.id !== featured?.id);
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [category, query]);
+
+  const visible = filtered.slice(0, visibleCount);
+  const hasMore = visibleCount < filtered.length;
 
   return (
     <section className={styles.section} id="all-courses">
@@ -263,66 +275,8 @@ export default function AllCourses() {
         ))}
       </div>
 
-      <div className={styles.bento}>
-        {featured && (
-          <article className={styles.heroCard}>
-            <div className={styles.heroImageWrap}>
-              <img src={featured.image} alt={featured.title} className={styles.heroImage} />
-              <div className={styles.heroScrim} />
-              <button
-                className={`${styles.saveBtn} ${saved.has(featured.id) ? styles.saveBtnActive : ""}`}
-                onClick={() => toggleSave(featured.id)}
-                aria-label="Save course"
-              >
-                <HeartIcon filled={saved.has(featured.id)} />
-              </button>
-              <span
-                className={styles.heroCategory}
-                style={{ background: categoryAccent[featured.category] }}
-              >
-                {featured.category}
-              </span>
-
-              <div className={styles.heroContent}>
-                <span className={styles.heroFeaturedTag}>★ Editor's Pick</span>
-                <h3 className={styles.heroTitle}>{featured.title}</h3>
-                <p className={styles.heroTagline}>{featured.tagline}</p>
-
-                <div className={styles.heroMetaRow}>
-                  <div className={styles.instructorChip}>
-                    <span className={styles.avatar}>{initials(featured.instructor)}</span>
-                    {featured.instructor}
-                  </div>
-                  <div className={styles.heroRatingChip}>
-                    <Stars rating={featured.rating} />
-                    <span className={styles.heroRatingText}>
-                      {featured.rating} ({featured.reviews})
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.heroFooter}>
-              <div>
-                <div className={styles.priceLine}>
-                  <span className={styles.heroPrice}>{formatPrice(featured.price)}</span>
-                  {featured.originalPrice && (
-                    <span className={styles.originalPrice}>{formatPrice(featured.originalPrice)}</span>
-                  )}
-                </div>
-                <span className={styles.metaSmall}>
-                  {featured.duration} · {featured.students} students
-                </span>
-              </div>
-              <button className={styles.heroEnrollBtn}>
-                Enroll now <ArrowIcon />
-              </button>
-            </div>
-          </article>
-        )}
-
-        {rest.map((course) => {
+      <div className={styles.grid}>
+        {visible.map((course) => {
           const isSaved = saved.has(course.id);
           const discount = course.originalPrice
             ? Math.round((1 - course.price / course.originalPrice) * 100)
@@ -404,6 +358,17 @@ export default function AllCourses() {
           </div>
         )}
       </div>
+
+      {hasMore && (
+        <div className={styles.viewMoreWrap}>
+          <button
+            className={styles.viewMoreBtn}
+            onClick={() => setVisibleCount((v) => v + PAGE_SIZE)}
+          >
+            View more courses <ChevronDownIcon />
+          </button>
+        </div>
+      )}
     </section>
   );
 }
