@@ -25,6 +25,7 @@ import type { CourseDetail } from "@/app/types/CourseDetail";
 import { useCart } from "@/app/context/CartContext";
 import { getCourseDetailById } from "@/app/data/courseDetails"; // adjust path if your data file lives elsewhere
 import styles from "./CourseDetailContent.module.css"; // rename/copy your existing page.module.css to this filename
+import { useWishlist } from "@/app/context/WishlistContext";
 
 const includeIcon = {
   roleplay: Users,
@@ -53,6 +54,7 @@ export default function CourseDetailContent({ id, basePath }: Props) {
   const [learnExpanded, setLearnExpanded] = useState(false);
   const [descExpanded, setDescExpanded] = useState(false);
   const { addToCart, isInCart } = useCart();
+  const { isWishlisted, toggleWishlist } = useWishlist();
 
   if (!course) {
     return (
@@ -83,7 +85,7 @@ export default function CourseDetailContent({ id, basePath }: Props) {
   const totalLectures = course.curriculum.reduce((sum, s) => sum + s.lectureCount, 0);
   const learnItems = learnExpanded ? course.whatYoullLearn : course.whatYoullLearn.slice(0, 4);
   const alreadyInCart = isInCart(course.id);
-
+    
   const handleAddToCart = () => {
     if (alreadyInCart) return;
     addToCart({
@@ -366,11 +368,14 @@ export default function CourseDetailContent({ id, basePath }: Props) {
               <ShoppingCart size={15} />
               {alreadyInCart ? "Added to Cart" : "Add to Cart"}
             </button>
-
+            
             <div className={styles.sidebarActions}>
-              <button className={styles.iconTextBtn}>
+              {/* <button className={styles.iconTextBtn}>
                 <Heart size={14} /> Wishlist
-              </button>
+              </button> */}
+              <button className={styles.iconTextBtn} onClick={() => toggleWishlist({ id: course.id, title: course.title, instructor: course.instructor, image: course.thumbnail, price: course.price, originalPrice: course.originalPrice, rating: course.rating, students: String(course.students) })}>
+  <Heart size={14} fill={isWishlisted(course.id) ? "#ff7a00" : "none"} /> Wishlist
+</button>
               <button className={styles.iconTextBtn}>
                 <Share2 size={14} /> Share
               </button>

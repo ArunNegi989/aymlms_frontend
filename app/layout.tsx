@@ -4,6 +4,7 @@ import "./globals.css";
 import { CartProvider } from "./context/CartContext";
 import CartDrawer from "./components/cart/CartDrawer";
 import LayoutWrapper from "./components/LayoutWrapper"; // ✅ Add this import
+import { WishlistProvider } from "./context/WishlistContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,12 +48,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           color: '#000000' 
         }}
       >
+        <WishlistProvider>
         <CartProvider>
           <LayoutWrapper> {/* ✅ Wrap children with LayoutWrapper */}
             {children}
           </LayoutWrapper>
           <CartDrawer />
         </CartProvider>
+        </WishlistProvider>
       </body>
     </html>
   );

@@ -1,12 +1,14 @@
 // AllCourses.tsx
 "use client";
 import React, { useState, useMemo, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   FaSearch, FaFilter, FaTimes, FaStar, FaStarHalfAlt, 
   FaRegStar, FaClock, FaBook, FaUser, FaUsers, FaCertificate,
-  FaGlobe, FaPlay, FaChevronLeft, FaChevronRight
+  FaGlobe, FaPlay, FaChevronLeft, FaChevronRight, FaHeart, FaRegHeart
 } from "react-icons/fa";
+import { useWishlist } from "@/app/context/WishlistContext";
 import styles from "./AllCourses.module.css";
 
 // ===== TYPES & INTERFACES =====
@@ -369,6 +371,9 @@ const courseData: Course[] = [
 
 // ===== MAIN COMPONENT =====
 const AllCourses: React.FC = () => {
+  const router = useRouter();
+  const { isWishlisted, toggleWishlist } = useWishlist();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedType, setSelectedType] = useState("All");
@@ -391,6 +396,25 @@ const AllCourses: React.FC = () => {
   const prices = ["All", "Free", "Under ₹5,000", "₹5,000–₹10,000", "₹10,000–₹20,000", "₹20,000+"];
   const ratings = ["All", "4+ Stars", "4.5+ Stars", "5 Stars"];
   const sortOptions = ["Most Popular", "Trending", "Newest", "Highest Rated", "Price: Low to High", "Price: High to Low"];
+
+  // Navigate to the course description page.
+  const goToCourse = (course: Course) => {
+    router.push(`/course/${course.slug}`);
+  };
+
+  // Add/remove a course from the shared wishlist (used by the wishlist page too).
+  const handleToggleWishlist = (course: Course) => {
+    toggleWishlist({
+      id: course.id,
+      title: course.title,
+      instructor: course.instructor.name,
+      image: course.image,
+      price: course.price,
+      originalPrice: course.originalPrice,
+      rating: course.rating,
+      students: course.students.toLocaleString(),
+    });
+  };
 
   // Get trending courses
   const trendingCourses = useMemo(() => courseData.filter(c => c.trending), []);
@@ -525,74 +549,107 @@ const AllCourses: React.FC = () => {
   };
 
   // Course Card Component
-  const CourseCard = ({ course, index }: { course: Course; index: number }) => (
-    <motion.div
-      className={styles.courseCard}
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.08 }}
-      whileHover={{ y: -8, transition: { duration: 0.3 } }}
-    >
-      <div className={styles.cardImage}>
-        <img src={course.image} alt={course.title} loading="lazy" />
-        <div className={styles.cardBadges}>
-          {course.trending && <span className={styles.badgeTrending}>🔥 Trending</span>}
-          {course.popular && <span className={styles.badgePopular}>⭐ Popular</span>}
-          {course.featured && <span className={styles.badgeFeatured}>✨ Featured</span>}
-          {course.type === "live" && <span className={styles.badgeLive}>🔴 Live</span>}
-          {course.type === "recorded" && <span className={styles.badgeRecorded}>📹 Recorded</span>}
-        </div>
-        <div className={styles.cardOverlay}>
-          <button className={styles.previewBtn} onClick={() => setSelectedCourse(course)}>
-            <FaPlay /> Preview
-          </button>
-        </div>
-      </div>
-      <div className={styles.cardContent}>
-        <div className={styles.cardCategory}>{course.category}</div>
-        <h3 className={styles.cardTitle}>{course.title}</h3>
-        <p className={styles.cardDescription}>{course.description}</p>
-        <div className={styles.cardInstructor}>
-          <img src={course.instructor.image} alt={course.instructor.name} />
-          <span>{course.instructor.name}</span>
-        </div>
-        <div className={styles.cardRating}>
-          <div className={styles.stars}>
-            {[...Array(5)].map((_, i) => {
-              if (i < Math.floor(course.rating)) return <FaStar key={i} />;
-              if (i < Math.ceil(course.rating) && course.rating % 1 !== 0) return <FaStarHalfAlt key={i} />;
-              return <FaRegStar key={i} />;
-            })}
-          </div>
-          <span className={styles.ratingValue}>{course.rating}</span>
-          <span className={styles.studentCount}>({course.students.toLocaleString()})</span>
-        </div>
-        <div className={styles.cardDetails}>
-          <span><FaClock /> {course.durationDays}d</span>
-          <span><FaBook /> {course.lessons}L</span>
-          <span><FaUser /> {course.level}</span>
-        </div>
-        <div className={styles.cardFooter}>
-          <div className={styles.cardPrice}>
-            <span className={styles.currentPrice}>₹{course.price.toLocaleString()}</span>
-            {course.originalPrice && (
-              <>
-                <span className={styles.originalPrice}>₹{course.originalPrice.toLocaleString()}</span>
-                <span className={styles.discount}>-{course.discount}%</span>
-              </>
-            )}
-          </div>
-          <motion.button 
-            className={styles.viewCourseBtn}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+  const CourseCard = ({ course, index }: { course: Course; index: number }) => {
+    const saved = isWishlisted(course.id);
+
+    return (
+      <motion.div
+        className={styles.courseCard}
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: index * 0.08 }}
+        whileHover={{ y: -8, transition: { duration: 0.3 } }}
+        onClick={() => goToCourse(course)}
+        role="link"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") goToCourse(course);
+        }}
+        style={{ cursor: "pointer" }}
+      >
+        <div className={styles.cardImage}>
+          <img src={course.image} alt={course.title} loading="lazy" />
+
+          <button
+            className={styles.wishlistBtn}
+            aria-label={saved ? "Remove from wishlist" : "Add to wishlist"}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleToggleWishlist(course);
+            }}
           >
-            View Course
-          </motion.button>
+            {saved ? <FaHeart color="#ff7a00" /> : <FaRegHeart />}
+          </button>
+
+          <div className={styles.cardBadges}>
+            {course.trending && <span className={styles.badgeTrending}>🔥 Trending</span>}
+            {course.popular && <span className={styles.badgePopular}>⭐ Popular</span>}
+            {course.featured && <span className={styles.badgeFeatured}>✨ Featured</span>}
+            {course.type === "live" && <span className={styles.badgeLive}>🔴 Live</span>}
+            {course.type === "recorded" && <span className={styles.badgeRecorded}>📹 Recorded</span>}
+          </div>
+          <div className={styles.cardOverlay}>
+            <button
+              className={styles.previewBtn}
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedCourse(course);
+              }}
+            >
+              <FaPlay /> Preview
+            </button>
+          </div>
         </div>
-      </div>
-    </motion.div>
-  );
+        <div className={styles.cardContent}>
+          <div className={styles.cardCategory}>{course.category}</div>
+          <h3 className={styles.cardTitle}>{course.title}</h3>
+          <p className={styles.cardDescription}>{course.description}</p>
+          <div className={styles.cardInstructor}>
+            <img src={course.instructor.image} alt={course.instructor.name} />
+            <span>{course.instructor.name}</span>
+          </div>
+          <div className={styles.cardRating}>
+            <div className={styles.stars}>
+              {[...Array(5)].map((_, i) => {
+                if (i < Math.floor(course.rating)) return <FaStar key={i} />;
+                if (i < Math.ceil(course.rating) && course.rating % 1 !== 0) return <FaStarHalfAlt key={i} />;
+                return <FaRegStar key={i} />;
+              })}
+            </div>
+            <span className={styles.ratingValue}>{course.rating}</span>
+            <span className={styles.studentCount}>({course.students.toLocaleString()})</span>
+          </div>
+          <div className={styles.cardDetails}>
+            <span><FaClock /> {course.durationDays}d</span>
+            <span><FaBook /> {course.lessons}L</span>
+            <span><FaUser /> {course.level}</span>
+          </div>
+          <div className={styles.cardFooter}>
+            <div className={styles.cardPrice}>
+              <span className={styles.currentPrice}>₹{course.price.toLocaleString()}</span>
+              {course.originalPrice && (
+                <>
+                  <span className={styles.originalPrice}>₹{course.originalPrice.toLocaleString()}</span>
+                  <span className={styles.discount}>-{course.discount}%</span>
+                </>
+              )}
+            </div>
+            <motion.button 
+              className={styles.viewCourseBtn}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={(e) => {
+                e.stopPropagation();
+                goToCourse(course);
+              }}
+            >
+              View Course
+            </motion.button>
+          </div>
+        </div>
+      </motion.div>
+    );
+  };
 
   // Section Slider Component
   const SectionSlider = ({ title, subtitle, courses, badge }: { title: string; subtitle?: string; courses: Course[]; badge?: string }) => {
@@ -904,7 +961,18 @@ const AllCourses: React.FC = () => {
                     </>
                   )}
                 </div>
-                <button className={styles.enrollBtn}>Enroll Now</button>
+                <div className={styles.modalActions}>
+                  <button className={styles.enrollBtn}>Enroll Now</button>
+                  <button
+                    className={styles.viewCourseBtn}
+                    onClick={() => {
+                      goToCourse(selectedCourse);
+                      setSelectedCourse(null);
+                    }}
+                  >
+                    View Full Course
+                  </button>
+                </div>
               </div>
             </div>
           </motion.div>
