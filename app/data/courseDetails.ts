@@ -344,6 +344,309 @@ export const courseDetails: Record<string, CourseDetail> = {
   },
 };
 
+// ---- Auto-generated details for homepage cards (AllCourses + TrendingCourses) ----
+// These give every card on the homepage a real, unique id that resolves to a
+// full CourseDetail, so clicking through from AllCourses / TrendingCourses
+// always lands on a populated description page.
+
+type SummaryInput = {
+  id: string;
+  title: string;
+  instructor: string;
+  image: string;
+  price: number;
+  originalPrice?: number;
+  rating: number;
+  reviews: number;
+  students: string; // e.g. "3.2k" or "12,400"
+  tagline: string;
+  category?: string;
+  level?: string;
+  duration?: string;
+};
+
+function parseStudentCount(v: string): number {
+  const clean = v.replace(/,/g, "").trim();
+  if (clean.toLowerCase().endsWith("k")) {
+    return Math.round(parseFloat(clean) * 1000);
+  }
+  const n = parseInt(clean, 10);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function makeDetail(input: SummaryInput): CourseDetail {
+  const discountPercent = input.originalPrice
+    ? Math.round((1 - input.price / input.originalPrice) * 100)
+    : 0;
+
+  return {
+    id: input.id,
+    breadcrumb: ["Yoga & Wellness", input.category ?? "Courses", input.level ?? "All Levels"],
+    title: input.title,
+    subtitle: input.tagline,
+    badges: discountPercent > 0 ? ["Bestseller"] : [],
+    instructor: input.instructor,
+    lastUpdated: "8/2026",
+    languages: ["English", "Hindi (Auto)"],
+    rating: input.rating,
+    ratingCount: input.reviews,
+    students: parseStudentCount(input.students),
+    thumbnail: input.image,
+    price: input.price,
+    originalPrice: input.originalPrice ?? input.price,
+    discountPercent,
+    subscriptionPrice: Math.round(input.price / 5),
+    whatYoullLearn: [
+      `Understand the core principles of ${input.category ?? "this practice"}`,
+      "Build a safe, consistent personal practice",
+      "Learn proper alignment and breath control",
+      "Apply techniques in a real, guided routine",
+    ],
+    relatedTopics: [input.category ?? "Yoga", input.level ?? "All Levels"],
+    includes: [
+      { label: "Live sessions", icon: "roleplay" },
+      { label: "On-demand video", icon: "video" },
+      { label: "Downloadable resources", icon: "download" },
+      { label: "Access on mobile and TV", icon: "mobile" },
+      { label: "Certificate of completion", icon: "certificate" },
+    ],
+    curriculum: [
+      {
+        id: "s1",
+        title: "Module 1 - Getting Started",
+        lectureCount: 3,
+        duration: input.duration ?? "Self-paced",
+        lectures: [
+          { id: "l1", title: `Welcome to ${input.title}`, duration: "5:00", preview: true },
+          { id: "l2", title: "Foundational technique", duration: "20:00" },
+          { id: "l3", title: "Putting it into practice", duration: "18:00" },
+        ],
+      },
+    ],
+    requirements: [
+      "A mat and a quiet space to practice",
+      "No prior experience required unless noted",
+    ],
+    description: `${input.tagline}\n\nThis course is taught by ${input.instructor} and designed for ${input.level ?? "all levels"} practitioners.`,
+    related: [],
+  };
+}
+
+const allCoursesSummaries: SummaryInput[] = [
+  {
+    id: "all-c1",
+    title: "Foundations of Hatha Yoga",
+    instructor: "Anjali Rawat",
+    image:
+      "https://images.unsplash.com/photo-1552196563-55cd4e45efb3?q=80&w=1200&auto=format&fit=crop",
+    price: 2999,
+    originalPrice: 4499,
+    rating: 4.8,
+    reviews: 412,
+    students: "3.2k",
+    tagline: "Build your practice from the ground up — breath, alignment, stillness.",
+    category: "Hatha",
+    level: "Beginner",
+    duration: "4 weeks",
+  },
+  {
+    id: "all-c2",
+    title: "Vinyasa Flow Intensive",
+    instructor: "Rohan Bisht",
+    image:
+      "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=800&auto=format&fit=crop",
+    price: 3499,
+    rating: 4.7,
+    reviews: 268,
+    students: "1.8k",
+    tagline: "Dynamic sequencing that builds strength and breath-led movement.",
+    category: "Vinyasa",
+    level: "Intermediate",
+    duration: "6 weeks",
+  },
+  {
+    id: "all-c3",
+    title: "Ashtanga Primary Series",
+    instructor: "Meera Nair",
+    image:
+      "https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?q=80&w=800&auto=format&fit=crop",
+    price: 4999,
+    rating: 4.9,
+    reviews: 190,
+    students: "980",
+    tagline: "The traditional set sequence, taught with discipline and depth.",
+    category: "Ashtanga",
+    level: "Advanced",
+    duration: "8 weeks",
+  },
+  {
+    id: "all-c4",
+    title: "Prenatal Yoga Essentials",
+    instructor: "Sunita Joshi",
+    image:
+      "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop",
+    price: 2499,
+    rating: 4.9,
+    reviews: 356,
+    students: "2.1k",
+    tagline: "Doctor-reviewed, trimester-specific sequences for a safe practice.",
+    category: "Prenatal",
+    level: "Beginner",
+    duration: "3 weeks",
+  },
+  {
+    id: "all-c5",
+    title: "Guided Meditation & Breathwork",
+    instructor: "Kabir Singh",
+    image:
+      "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=800&auto=format&fit=crop",
+    price: 1999,
+    rating: 4.6,
+    reviews: 224,
+    students: "4.5k",
+    tagline: "A daily reset for the mind — breath, stillness, and presence.",
+    category: "Meditation",
+    level: "Beginner",
+    duration: "2 weeks",
+  },
+  {
+    id: "all-c6",
+    title: "Vinyasa for Athletes",
+    instructor: "Rohan Bisht",
+    image:
+      "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80&w=800&auto=format&fit=crop",
+    price: 3999,
+    rating: 4.8,
+    reviews: 145,
+    students: "760",
+    tagline: "Mobility and recovery-focused flow built for high-output bodies.",
+    category: "Vinyasa",
+    level: "Advanced",
+    duration: "5 weeks",
+  },
+];
+
+const trendingSummaries: SummaryInput[] = [
+  {
+    id: "trend-c1",
+    title: "200-Hour Yoga Teacher Training (Yoga Alliance Certified)",
+    instructor: "Rishikesh Yogacharya, AYM Faculty",
+    image:
+      "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=700&auto=format&fit=crop",
+    price: 24999,
+    originalPrice: 39999,
+    rating: 4.8,
+    reviews: 413,
+    students: "12,400",
+    tagline:
+      "Live-taught 200-hour YTT covering asana, anatomy, philosophy and teaching methodology.",
+    duration: "200 total hours",
+  },
+  {
+    id: "trend-c2",
+    title: "Ayurveda Foundations: Diet, Doshas & Daily Practice",
+    instructor: "Dr. Meera Kulkarni, Ayurveda Physician",
+    image:
+      "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80&w=700&auto=format&fit=crop",
+    price: 5999,
+    originalPrice: 9999,
+    rating: 4.7,
+    reviews: 204,
+    students: "6,120",
+    tagline: "Understand your dosha and build a daily Ayurvedic routine backed by classical texts.",
+    duration: "24 total hours",
+  },
+  {
+    id: "trend-c3",
+    title: "Ashtanga Primary Series: Foundations to Flow",
+    instructor: "Anjali Rawat, Senior Instructor",
+    image:
+      "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=700&auto=format&fit=crop",
+    price: 7999,
+    originalPrice: 12999,
+    rating: 4.8,
+    reviews: 328,
+    students: "9,850",
+    tagline: "Build strength and breath control through the traditional Ashtanga primary sequence.",
+    duration: "30 total hours",
+  },
+  {
+    id: "trend-c4",
+    title: "Prenatal Yoga: Safe Practice Through Every Trimester",
+    instructor: "Kavita Sharma, Prenatal Specialist",
+    image:
+      "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=700&auto=format&fit=crop",
+    price: 4999,
+    originalPrice: 7999,
+    rating: 4.9,
+    reviews: 144,
+    students: "4,310",
+    tagline: "Trimester-specific sequences designed with obstetric guidance for a safe practice.",
+    duration: "18 total hours",
+  },
+  {
+    id: "trend-c5",
+    title: "Meditation & Pranayama: A 21-Day Reset",
+    instructor: "Suresh Bhatt, Meditation Teacher",
+    image:
+      "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=700&auto=format&fit=crop&sat=-100",
+    price: 3999,
+    originalPrice: 6499,
+    rating: 4.8,
+    reviews: 251,
+    students: "7,540",
+    tagline: "A guided 21-day breathwork and meditation sequence to build a lasting daily practice.",
+    duration: "14 total hours",
+  },
+  {
+    id: "trend-c6",
+    title: "Yin Yoga: Deep Stretch & Restorative Flow",
+    instructor: "Priya Menon, Senior Instructor",
+    image:
+      "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=700&auto=format&fit=crop&sat=-40",
+    price: 4499,
+    originalPrice: 7499,
+    rating: 4.7,
+    reviews: 176,
+    students: "5,290",
+    tagline: "Long-held, restorative postures designed to release deep tension and calm the mind.",
+    duration: "16 total hours",
+  },
+  {
+    id: "trend-c7",
+    title: "300-Hour Advanced Yoga Teacher Training",
+    instructor: "Rishikesh Yogacharya, AYM Faculty",
+    image:
+      "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80&w=700&auto=format&fit=crop&sat=-30",
+    price: 34999,
+    originalPrice: 54999,
+    rating: 4.9,
+    reviews: 106,
+    students: "3,180",
+    tagline:
+      "For 200-hour graduates ready to deepen practice and teaching across advanced sequences.",
+    duration: "300 total hours",
+  },
+  {
+    id: "trend-c8",
+    title: "Kids Yoga Instructor Certification",
+    instructor: "Neha Kapoor, Child Yoga Specialist",
+    image:
+      "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=700&auto=format&fit=crop&sat=-20",
+    price: 6999,
+    originalPrice: 10999,
+    rating: 4.6,
+    reviews: 82,
+    students: "2,470",
+    tagline: "Learn to design playful, age-appropriate yoga sessions for children aged 4 to 12.",
+    duration: "20 total hours",
+  },
+];
+
+[...allCoursesSummaries, ...trendingSummaries].forEach((s) => {
+  courseDetails[s.id] = makeDetail(s);
+});
+
 export function getCourseDetailById(id: string): CourseDetail | undefined {
   return courseDetails[id];
 }
