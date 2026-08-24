@@ -86,7 +86,7 @@ export default function Header({
               <Link href="/free-lessons" className={styles.navLink} onClick={() => setMenuOpen(false)}>
                 Free Lessons
               </Link>
-              <Link href="/contact" className={styles.navLink} onClick={() => setMenuOpen(false)}>
+              <Link href="/contact-us" className={styles.navLink} onClick={() => setMenuOpen(false)}>
                 Contact Us
               </Link>
             </div>
