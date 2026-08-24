@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./AllCourses.module.css";
 
 type Course = {
@@ -21,7 +22,7 @@ type Course = {
 
 const courses: Course[] = [
   {
-    id: "c1",
+    id: "all-c1",
     title: "Foundations of Hatha Yoga",
     category: "Hatha",
     level: "Beginner",
@@ -37,7 +38,7 @@ const courses: Course[] = [
     tagline: "Build your practice from the ground up — breath, alignment, stillness.",
   },
   {
-    id: "c2",
+    id: "all-c2",
     title: "Vinyasa Flow Intensive",
     category: "Vinyasa",
     level: "Intermediate",
@@ -52,7 +53,7 @@ const courses: Course[] = [
     tagline: "Dynamic sequencing that builds strength and breath-led movement.",
   },
   {
-    id: "c3",
+    id: "all-c3",
     title: "Ashtanga Primary Series",
     category: "Ashtanga",
     level: "Advanced",
@@ -67,7 +68,7 @@ const courses: Course[] = [
     tagline: "The traditional set sequence, taught with discipline and depth.",
   },
   {
-    id: "c4",
+    id: "all-c4",
     title: "Prenatal Yoga Essentials",
     category: "Prenatal",
     level: "Beginner",
@@ -82,7 +83,7 @@ const courses: Course[] = [
     tagline: "Doctor-reviewed, trimester-specific sequences for a safe practice.",
   },
   {
-    id: "c5",
+    id: "all-c5",
     title: "Guided Meditation & Breathwork",
     category: "Meditation",
     level: "Beginner",
@@ -97,7 +98,7 @@ const courses: Course[] = [
     tagline: "A daily reset for the mind — breath, stillness, and presence.",
   },
   {
-    id: "c6",
+    id: "all-c6",
     title: "Vinyasa for Athletes",
     category: "Vinyasa",
     level: "Advanced",
@@ -208,6 +209,7 @@ function formatPrice(n: number) {
 }
 
 export default function AllCourses() {
+  const router = useRouter();
   const [category, setCategory] = useState<(typeof categories)[number]>("All");
   const [query, setQuery] = useState("");
   const [saved, setSaved] = useState<Set<string>>(new Set());
@@ -219,6 +221,10 @@ export default function AllCourses() {
       next.has(id) ? next.delete(id) : next.add(id);
       return next;
     });
+  };
+
+  const goToCourse = (course: Course) => {
+    router.push(`/course/${course.id}`);
   };
 
   const filtered = useMemo(() => {
@@ -284,14 +290,27 @@ export default function AllCourses() {
           const accent = categoryAccent[course.category];
 
           return (
-            <article key={course.id} className={styles.card} style={{ ["--accent" as string]: accent }}>
+            <article
+              key={course.id}
+              className={styles.card}
+              style={{ ["--accent" as string]: accent, cursor: "pointer" }}
+              onClick={() => goToCourse(course)}
+              role="link"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") goToCourse(course);
+              }}
+            >
               <div className={styles.thumbWrap}>
                 <img src={course.image} alt={course.title} className={styles.thumb} />
                 <div className={styles.thumbScrim} />
 
                 <button
                   className={`${styles.saveBtn} ${isSaved ? styles.saveBtnActive : ""}`}
-                  onClick={() => toggleSave(course.id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleSave(course.id);
+                  }}
                   aria-label="Save course"
                 >
                   <HeartIcon filled={isSaved} />
@@ -333,7 +352,13 @@ export default function AllCourses() {
                       <span className={styles.originalPrice}>{formatPrice(course.originalPrice)}</span>
                     )}
                   </div>
-                  <button className={styles.enrollBtn}>
+                  <button
+                    className={styles.enrollBtn}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      goToCourse(course);
+                    }}
+                  >
                     <ArrowIcon />
                   </button>
                 </div>

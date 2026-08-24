@@ -3,6 +3,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useRouter } from "next/navigation";
 import styles from "./TrendingCourses.module.css";
 
 type Course = {
@@ -22,7 +23,7 @@ type Course = {
 
 const courses: Course[] = [
   {
-    id: "c1",
+    id: "trend-c1",
     title: "200-Hour Yoga Teacher Training (Yoga Alliance Certified)",
     instructor: "Rishikesh Yogacharya, AYM Faculty",
     image:
@@ -42,7 +43,7 @@ const courses: Course[] = [
     ],
   },
   {
-    id: "c2",
+    id: "trend-c2",
     title: "Ayurveda Foundations: Diet, Doshas & Daily Practice",
     instructor: "Dr. Meera Kulkarni, Ayurveda Physician",
     image:
@@ -62,7 +63,7 @@ const courses: Course[] = [
     ],
   },
   {
-    id: "c3",
+    id: "trend-c3",
     title: "Ashtanga Primary Series: Foundations to Flow",
     instructor: "Anjali Rawat, Senior Instructor",
     image:
@@ -82,7 +83,7 @@ const courses: Course[] = [
     ],
   },
   {
-    id: "c4",
+    id: "trend-c4",
     title: "Prenatal Yoga: Safe Practice Through Every Trimester",
     instructor: "Kavita Sharma, Prenatal Specialist",
     image:
@@ -102,7 +103,7 @@ const courses: Course[] = [
     ],
   },
   {
-    id: "c5",
+    id: "trend-c5",
     title: "Meditation & Pranayama: A 21-Day Reset",
     instructor: "Suresh Bhatt, Meditation Teacher",
     image:
@@ -122,7 +123,7 @@ const courses: Course[] = [
     ],
   },
   {
-    id: "c6",
+    id: "trend-c6",
     title: "Yin Yoga: Deep Stretch & Restorative Flow",
     instructor: "Priya Menon, Senior Instructor",
     image:
@@ -142,7 +143,7 @@ const courses: Course[] = [
     ],
   },
   {
-    id: "c7",
+    id: "trend-c7",
     title: "300-Hour Advanced Yoga Teacher Training",
     instructor: "Rishikesh Yogacharya, AYM Faculty",
     image:
@@ -162,7 +163,7 @@ const courses: Course[] = [
     ],
   },
   {
-    id: "c8",
+    id: "trend-c8",
     title: "Kids Yoga Instructor Certification",
     instructor: "Neha Kapoor, Child Yoga Specialist",
     image:
@@ -234,6 +235,7 @@ function getCardsPerView(width: number) {
 }
 
 export default function TrendingCourses() {
+  const router = useRouter();
   const [popover, setPopover] = useState<PopoverState | null>(null);
   const [mounted, setMounted] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
@@ -334,6 +336,13 @@ export default function TrendingCourses() {
     setIndex(CLONE + dotIndex);
   };
 
+  const goToCourse = useCallback(
+    (course: Course) => {
+      router.push(`/course/${course.id}`);
+    },
+    [router]
+  );
+
   // ---- touch: swipe to change slide, tap to expand (mobile only) ----
   const onTouchStart = (e: React.TouchEvent) => {
     touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
@@ -362,6 +371,17 @@ export default function TrendingCourses() {
     // A real swipe shouldn't also toggle the card open/closed.
     if (touchMoved.current) return;
     setExpandedId((cur) => (cur === slideKey ? null : slideKey));
+  };
+
+  // Desktop: clicking a card (outside its enroll button) navigates straight
+  // to the course description page. Mobile: tapping the card expands it
+  // in place instead (handled by handleCardTap / detailsToggle button).
+  const handleCardClick = (course: Course, slideKey: string) => {
+    if (isMobile) {
+      handleCardTap(course, slideKey);
+    } else {
+      goToCourse(course);
+    }
   };
 
   // ---- desktop hover popover (unchanged behaviour, disabled on mobile) ----
@@ -462,10 +482,13 @@ export default function TrendingCourses() {
                       ? styles.isHovered
                       : ""
                   }`}
-                  style={{ width: cardWidth ? `${cardWidth}px` : undefined }}
+                  style={{
+                    width: cardWidth ? `${cardWidth}px` : undefined,
+                    cursor: isMobile ? undefined : "pointer",
+                  }}
                   onMouseEnter={(e) => openPopover(course, e.currentTarget)}
                   onMouseLeave={handleMouseLeave}
-                  onClick={() => handleCardTap(course, slideKey)}
+                  onClick={() => handleCardClick(course, slideKey)}
                 >
                   <article
                     className={`${styles.card} ${
@@ -546,7 +569,10 @@ export default function TrendingCourses() {
                               </p>
                               <button
                                 className={styles.enrollBtn}
-                                onClick={(e) => e.stopPropagation()}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  goToCourse(course);
+                                }}
                               >
                                 Enroll Now
                               </button>
@@ -625,7 +651,15 @@ export default function TrendingCourses() {
                 </li>
               ))}
             </ul>
-            <button className={styles.enrollBtn}>Enroll Now</button>
+            <button
+              className={styles.enrollBtn}
+              onClick={(e) => {
+                e.stopPropagation();
+                goToCourse(popover.course);
+              }}
+            >
+              Enroll Now
+            </button>
           </div>,
           document.body
         )}
