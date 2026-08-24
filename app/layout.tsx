@@ -46,7 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
           <CartDrawer />
         </CartProvider>
-        <Footer/>
+        
       </body>
     </html>
   );

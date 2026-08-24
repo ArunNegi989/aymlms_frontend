@@ -13,6 +13,7 @@ import SubscribePlan from "./components/Homepage/SubscribePlan/SubscribePlan";
 import Certifications from "./components/Homepage/Certifications/Certifications";
 import styles from "./HomePage.module.css";
 import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
 
 export default function Home() {
   const router = useRouter();
@@ -48,6 +49,7 @@ export default function Home() {
       <SubscribePlan />
       <Testimonials />
       <Certifications />
+      <Footer/>
     </main>
   );
 }
