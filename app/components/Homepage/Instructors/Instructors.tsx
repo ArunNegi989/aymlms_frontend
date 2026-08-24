@@ -94,7 +94,7 @@ function getItemsPerView(width: number) {
   return 1;
 }
 
-const AUTOPLAY_MS = 2200;
+const AUTOPLAY_MS = 2500;
 
 export default function Instructors() {
   const [itemsPerView, setItemsPerView] = useState(4);
@@ -102,10 +102,9 @@ export default function Instructors() {
   const [withTransition, setWithTransition] = useState(true);
   const [paused, setPaused] = useState(false);
   const [selected, setSelected] = useState<Instructor | null>(null);
-  const [mounted, setMounted] = useState(false); // portal ke liye
+  const [mounted, setMounted] = useState(false);
   const total = instructors.length;
 
-  // portal sirf client-side mount hone ke baad render karo (SSR safe)
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -129,7 +128,6 @@ export default function Instructors() {
     setIndex(clonesCount);
     const raf = requestAnimationFrame(() => setWithTransition(true));
     return () => cancelAnimationFrame(raf);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemsPerView]);
 
   const goNext = useCallback(() => {
@@ -191,8 +189,6 @@ export default function Instructors() {
     setSelected(instructor);
   };
 
-  // Modal JSX createPortal se document.body mein render hoga, isliye koi
-  // parent transform/overflow ise clip ya misposition nahi kar sakta.
   const modalContent = selected && (
     <div className={styles.modalBackdrop} onClick={() => setSelected(null)}>
       <div
@@ -208,7 +204,7 @@ export default function Instructors() {
           aria-label="Close"
           type="button"
         >
-          &times;
+          ✕
         </button>
 
         <div className={styles.modalGrid}>
@@ -218,6 +214,10 @@ export default function Instructors() {
               alt={selected.name}
               className={styles.modalImage}
             />
+            <div className={styles.modalImageBadge}>
+              <span className={styles.modalBadgeIcon}>⭐</span>
+              <span>Top Instructor</span>
+            </div>
           </div>
 
           <div className={styles.modalContent}>
@@ -238,13 +238,21 @@ export default function Instructors() {
                   {selected.schedule}
                 </span>
               </div>
+              <div className={styles.modalMetaDivider} />
+              <div className={styles.modalMetaItem}>
+                <span className={styles.modalMetaLabel}>Rating</span>
+                <span className={styles.modalMetaValue}>4.9 ★</span>
+              </div>
             </div>
 
             <p className={styles.modalBio}>{selected.bio}</p>
 
             <button className={styles.modalCta} type="button">
               Book a class
-              <span className={styles.modalCtaArrow}>&rarr;</span>
+              <svg viewBox="0 0 20 20" className={styles.modalCtaArrow}>
+                <line x1="4" y1="10" x2="15" y2="10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                <polyline points="10.5 5 15.5 10 10.5 15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </button>
           </div>
         </div>
@@ -259,14 +267,23 @@ export default function Instructors() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
+      {/* Decorative Elements */}
+      <div className={styles.decorativeCircle1} />
+      <div className={styles.decorativeCircle2} />
+      <div className={styles.decorativeLine} />
+
       <div className={styles.header}>
-        <span className={styles.eyebrow}>
+        <div className={styles.eyebrow}>
           <span className={styles.eyebrowDot} />
+          <span className={styles.eyebrowLine} />
           MEET YOUR TEACHERS
-        </span>
+        </div>
         <h2 className={styles.heading}>
-          Learn from instructors who teach live, every week
+          Learn from instructors who <span className={styles.headingAccent}>teach live</span>, every week
         </h2>
+        <p className={styles.subheading}>
+          Experienced, certified, and passionate about guiding your practice
+        </p>
       </div>
 
       <div className={styles.viewport}>
@@ -275,7 +292,7 @@ export default function Instructors() {
           style={{
             transform: `translateX(${translatePct}%)`,
             transition: withTransition
-              ? "transform 0.55s cubic-bezier(0.16,1,0.3,1)"
+              ? "transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)"
               : "none",
           }}
           onTransitionEnd={handleTransitionEnd}
@@ -318,11 +335,20 @@ export default function Instructors() {
                     <div className={styles.scrim} />
 
                     <div className={styles.overlay}>
-                      <p className={styles.detail}>{instructor.experience}</p>
-                      <p className={styles.detail}>{instructor.schedule}</p>
+                      <div className={styles.overlayBadge}>
+                        <span className={styles.overlayIcon}>👨‍🏫</span>
+                        <span>{instructor.experience}</span>
+                      </div>
+                      <div className={styles.overlayBadge}>
+                        <span className={styles.overlayIcon}>🕐</span>
+                        <span>{instructor.schedule}</span>
+                      </div>
                       <span className={styles.viewLink}>
-                        View schedule{" "}
-                        <span className={styles.viewArrow}>&rarr;</span>
+                        View Profile
+                        <svg viewBox="0 0 20 20" className={styles.viewArrow}>
+                          <line x1="4" y1="10" x2="15" y2="10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                          <polyline points="10.5 5 15.5 10 10.5 15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
                       </span>
                     </div>
                   </div>
@@ -330,6 +356,11 @@ export default function Instructors() {
                   <div className={styles.info}>
                     <h3 className={styles.name}>{instructor.name}</h3>
                     <p className={styles.role}>{instructor.role}</p>
+                    <div className={styles.infoBadge}>
+                      <span>⭐ 4.9</span>
+                      <span>•</span>
+                      <span>{instructor.experience}</span>
+                    </div>
                   </div>
                 </article>
               </div>
@@ -343,7 +374,9 @@ export default function Instructors() {
           aria-label="Previous instructor"
           type="button"
         >
-          &#8249;
+          <svg viewBox="0 0 20 20" className={styles.navIcon}>
+            <polyline points="13 4 7 10 13 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
         </button>
         <button
           className={`${styles.navBtn} ${styles.navNext}`}
@@ -351,7 +384,9 @@ export default function Instructors() {
           aria-label="Next instructor"
           type="button"
         >
-          &#8250;
+          <svg viewBox="0 0 20 20" className={styles.navIcon}>
+            <polyline points="7 4 13 10 7 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
         </button>
       </div>
 
@@ -369,7 +404,6 @@ export default function Instructors() {
         ))}
       </div>
 
-      {/* Portal: modal ab body mein render hota hai, section ke andar nahi */}
       {mounted && modalContent
         ? createPortal(modalContent, document.body)
         : null}

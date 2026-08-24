@@ -124,23 +124,22 @@ const categoryAccent: Record<Course["category"], string> = {
   Meditation: "#7c6a94",
 };
 
+const categoryEmoji: Record<Course["category"], string> = {
+  Hatha: "🧘",
+  Vinyasa: "🌊",
+  Ashtanga: "🔥",
+  Prenatal: "🤰",
+  Meditation: "🧠",
+};
+
 const PAGE_SIZE = 8;
 
 function StarIcon({ fill }: { fill: "full" | "half" | "empty" }) {
-  const id = useMemo(() => Math.random().toString(36).slice(2), []);
   return (
     <svg viewBox="0 0 20 20" className={styles.starIcon}>
-      {fill === "half" && (
-        <defs>
-          <linearGradient id={id} x1="0" x2="1" y1="0" y2="0">
-            <stop offset="50%" stopColor="currentColor" />
-            <stop offset="50%" stopColor="transparent" />
-          </linearGradient>
-        </defs>
-      )}
       <path
         d="M10 1.5l2.6 5.6 6.1.6-4.6 4.2 1.3 6-5.4-3.2-5.4 3.2 1.3-6L1.3 7.7l6.1-.6L10 1.5z"
-        fill={fill === "empty" ? "none" : fill === "half" ? `url(#${id})` : "currentColor"}
+        fill={fill === "full" ? "currentColor" : "none"}
         stroke="currentColor"
         strokeWidth={fill === "empty" ? 1.3 : 0}
       />
@@ -150,11 +149,10 @@ function StarIcon({ fill }: { fill: "full" | "half" | "empty" }) {
 
 function Stars({ rating }: { rating: number }) {
   const full = Math.floor(rating);
-  const hasHalf = rating - full >= 0.4;
   return (
     <span className={styles.starsRow}>
       {Array.from({ length: 5 }).map((_, i) => (
-        <StarIcon key={i} fill={i < full ? "full" : i === full && hasHalf ? "half" : "empty"} />
+        <StarIcon key={i} fill={i < full ? "full" : "empty"} />
       ))}
     </span>
   );
@@ -196,6 +194,18 @@ function SearchIcon() {
     <svg viewBox="0 0 20 20" className={styles.searchIcon}>
       <circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" strokeWidth="1.8" />
       <line x1="13" y1="13" x2="18" y2="18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function CalendarIcon() {
+  return (
+    <svg viewBox="0 0 20 20" className={styles.calendarIcon}>
+      <rect x="2" y="4" width="16" height="14" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
+      <line x1="2" y1="8" x2="18" y2="8" stroke="currentColor" strokeWidth="1.5" />
+      <line x1="6" y1="2" x2="6" y2="5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <line x1="14" y1="2" x2="14" y2="5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <circle cx="10" cy="13" r="2" fill="currentColor" />
     </svg>
   );
 }
@@ -246,154 +256,201 @@ export default function AllCourses() {
   const hasMore = visibleCount < filtered.length;
 
   return (
-    <section className={styles.section} id="all-courses">
-      <div className={styles.header}>
-        <div>
-          <span className={styles.eyebrow}>Course library · {courses.length} programs</span>
-          <h2 className={styles.heading}>Find your practice</h2>
+    <section className={styles.section}>
+      {/* Decorative Element */}
+      <div className={styles.decorativeCircle1} />
+      <div className={styles.decorativeCircle2} />
+
+      <div className={styles.container}>
+        {/* Header */}
+        <div className={styles.header}>
+          <div className={styles.headerLeft}>
+            <div className={styles.eyebrow}>
+              <span className={styles.eyebrowDot} />
+              Course Library
+            </div>
+            <h2 className={styles.heading}>
+              Find Your<span className={styles.headingHighlight}> Practice</span>
+            </h2>
+            <p className={styles.subheading}>
+              Explore our curated collection of yoga courses designed for every level
+            </p>
+          </div>
+
+          <div className={styles.searchBox}>
+            <SearchIcon />
+            <input
+              type="text"
+              placeholder="Search courses, instructors..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            {query && (
+              <button className={styles.clearBtn} onClick={() => setQuery("")}>
+                ×
+              </button>
+            )}
+          </div>
         </div>
 
-        <div className={styles.searchBox}>
-          <SearchIcon />
-          <input
-            type="text"
-            placeholder="Search courses..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-        </div>
-      </div>
-
-      <div className={styles.chipRow}>
-        {categories.map((c) => (
-          <button
-            key={c}
-            className={`${styles.chip} ${category === c ? styles.chipActive : ""}`}
-            onClick={() => setCategory(c)}
-            style={
-              category === c && c !== "All"
-                ? { background: categoryAccent[c as Course["category"]], borderColor: categoryAccent[c as Course["category"]] }
-                : undefined
-            }
-          >
-            {c}
-          </button>
-        ))}
-      </div>
-
-      <div className={styles.grid}>
-        {visible.map((course) => {
-          const isSaved = saved.has(course.id);
-          const discount = course.originalPrice
-            ? Math.round((1 - course.price / course.originalPrice) * 100)
-            : null;
-          const accent = categoryAccent[course.category];
-
-          return (
-            <article
-              key={course.id}
-              className={styles.card}
-              style={{ ["--accent" as string]: accent, cursor: "pointer" }}
-              onClick={() => goToCourse(course)}
-              role="link"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") goToCourse(course);
-              }}
+        {/* Categories */}
+        <div className={styles.chipRow}>
+          {categories.map((c) => (
+            <button
+              key={c}
+              className={`${styles.chip} ${category === c ? styles.chipActive : ""}`}
+              onClick={() => setCategory(c)}
             >
-              <div className={styles.thumbWrap}>
-                <img src={course.image} alt={course.title} className={styles.thumb} />
-                <div className={styles.thumbScrim} />
+              {c === "All" ? "🎯 All" : `${categoryEmoji[c as Course["category"]]} ${c}`}
+            </button>
+          ))}
+        </div>
 
-                <button
-                  className={`${styles.saveBtn} ${isSaved ? styles.saveBtnActive : ""}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleSave(course.id);
-                  }}
-                  aria-label="Save course"
-                >
-                  <HeartIcon filled={isSaved} />
-                </button>
+        {/* Results Count */}
+        <div className={styles.resultsCount}>
+          <span>{filtered.length} courses found</span>
+        </div>
 
-                <span className={styles.categoryTag} style={{ background: accent }}>
-                  {course.category}
-                </span>
+        {/* Grid */}
+        <div className={styles.grid}>
+          {visible.map((course) => {
+            const isSaved = saved.has(course.id);
+            const discount = course.originalPrice
+              ? Math.round((1 - course.price / course.originalPrice) * 100)
+              : null;
+            const accent = categoryAccent[course.category];
 
-                {discount && <span className={styles.discountTag}>{discount}% off</span>}
+            return (
+              <article
+                key={course.id}
+                className={styles.card}
+                style={{ ["--accent" as string]: accent }}
+                onClick={() => goToCourse(course)}
+                role="link"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") goToCourse(course);
+                }}
+              >
+                <div className={styles.thumbWrap}>
+                  <img src={course.image} alt={course.title} className={styles.thumb} />
+                  <div className={styles.thumbScrim} />
 
-                <div className={styles.levelStrip}>
-                  <span className={styles.levelText}>{course.level}</span>
-                  <span className={styles.durationText}>{course.duration}</span>
-                </div>
-              </div>
-
-              <div className={styles.cardBody}>
-                <h3 className={styles.cardTitle}>{course.title}</h3>
-                <p className={styles.cardTagline}>{course.tagline}</p>
-
-                <div className={styles.instructorRow}>
-                  <span className={styles.avatar}>{initials(course.instructor)}</span>
-                  <span>{course.instructor}</span>
-                </div>
-
-                <div className={styles.ratingRow}>
-                  <Stars rating={course.rating} />
-                  <span className={styles.ratingText}>{course.rating}</span>
-                  <span className={styles.reviewsText}>({course.reviews})</span>
-                  <span className={styles.dotSep}>·</span>
-                  <span className={styles.studentsText}>{course.students}</span>
-                </div>
-
-                <div className={styles.cardFooter}>
-                  <div className={styles.priceLine}>
-                    <span className={styles.price}>{formatPrice(course.price)}</span>
-                    {course.originalPrice && (
-                      <span className={styles.originalPrice}>{formatPrice(course.originalPrice)}</span>
-                    )}
-                  </div>
                   <button
-                    className={styles.enrollBtn}
+                    className={`${styles.saveBtn} ${isSaved ? styles.saveBtnActive : ""}`}
                     onClick={(e) => {
                       e.stopPropagation();
-                      goToCourse(course);
+                      toggleSave(course.id);
                     }}
+                    aria-label="Save course"
                   >
-                    <ArrowIcon />
+                    <HeartIcon filled={isSaved} />
                   </button>
-                </div>
-              </div>
-            </article>
-          );
-        })}
 
-        {filtered.length === 0 && (
-          <div className={styles.empty}>
-            <p className={styles.emptyTitle}>No courses match your search</p>
-            <p className={styles.emptyText}>Try a different category or keyword.</p>
+                  <span className={styles.categoryTag} style={{ background: accent }}>
+                    {course.category}
+                  </span>
+
+                  {discount && (
+                    <span className={styles.discountTag}>
+                      {discount}% OFF
+                    </span>
+                  )}
+
+                  <div className={styles.levelStrip}>
+                    <span className={styles.levelBadge}>
+                      {course.level === "Beginner" && "🌱"}
+                      {course.level === "Intermediate" && "🌿"}
+                      {course.level === "Advanced" && "🌳"}
+                      {course.level}
+                    </span>
+                    <span className={styles.durationBadge}>
+                      <CalendarIcon />
+                      {course.duration}
+                    </span>
+                  </div>
+                </div>
+
+                <div className={styles.cardBody}>
+                  <h3 className={styles.cardTitle}>{course.title}</h3>
+                  <p className={styles.cardTagline}>{course.tagline}</p>
+
+                  <div className={styles.instructorRow}>
+                    <span className={styles.avatar} style={{ background: accent }}>
+                      {initials(course.instructor)}
+                    </span>
+                    <span className={styles.instructorName}>{course.instructor}</span>
+                    <span className={styles.studentCount}>
+                      • {course.students} students
+                    </span>
+                  </div>
+
+                  <div className={styles.ratingRow}>
+                    <Stars rating={course.rating} />
+                    <span className={styles.ratingText}>{course.rating}</span>
+                    <span className={styles.reviewsText}>
+                      ({course.reviews} reviews)
+                    </span>
+                  </div>
+
+                  <div className={styles.cardFooter}>
+                    <div className={styles.priceLine}>
+                      <span className={styles.price}>{formatPrice(course.price)}</span>
+                      {course.originalPrice && (
+                        <span className={styles.originalPrice}>
+                          {formatPrice(course.originalPrice)}
+                        </span>
+                      )}
+                    </div>
+                    <button
+                      className={styles.enrollBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        goToCourse(course);
+                      }}
+                    >
+                      <span className={styles.btnText}>Enroll</span>
+                      <ArrowIcon />
+                    </button>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+
+          {filtered.length === 0 && (
+            <div className={styles.empty}>
+              <div className={styles.emptyIcon}>🔍</div>
+              <p className={styles.emptyTitle}>No courses found</p>
+              <p className={styles.emptyText}>
+                Try adjusting your search or filter to find what you're looking for.
+              </p>
+              <button
+                className={styles.emptyResetBtn}
+                onClick={() => {
+                  setCategory("All");
+                  setQuery("");
+                }}
+              >
+                Reset Filters
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* View More */}
+        {hasMore && (
+          <div className={styles.viewMoreWrap}>
             <button
-              className={styles.emptyResetBtn}
-              onClick={() => {
-                setCategory("All");
-                setQuery("");
-              }}
+              className={styles.viewMoreBtn}
+              onClick={() => setVisibleCount((v) => v + PAGE_SIZE)}
             >
-              Reset
+              View More Courses
+              <ChevronDownIcon />
             </button>
           </div>
         )}
       </div>
-
-      {hasMore && (
-        <div className={styles.viewMoreWrap}>
-          <button
-            className={styles.viewMoreBtn}
-            onClick={() => setVisibleCount((v) => v + PAGE_SIZE)}
-          >
-            View more courses <ChevronDownIcon />
-          </button>
-        </div>
-      )}
     </section>
   );
 }

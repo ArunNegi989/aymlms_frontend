@@ -1,5 +1,6 @@
+/* HeroSlider.module.css */
+
 .hero {
-  /* ---- warm earthy theme (self-contained) ---- */
   --aym-cream: #fdf6ec;
   --aym-white: #ffffff;
   --aym-charcoal: #241f1a;
@@ -8,7 +9,7 @@
   --aym-orange-dark: #d0680f;
   --aym-orange-soft: rgba(245, 130, 31, 0.22);
   --aym-forest: #2e4a3d;
-  --aym-border: rgba(255, 255, 255, 0.28);
+  --aym-border: rgba(255, 255, 255, 0.25);
   --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.28);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --font-display: "Playfair Display", Georgia, serif;
@@ -24,7 +25,40 @@
   isolation: isolate;
 }
 
-/* ================= BACKGROUND STACK ================= */
+/* ===== Decorative Elements ===== */
+.decorativeCircle1 {
+  position: absolute;
+  top: -200px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 122, 0, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 2;
+  animation: floatCircle 25s ease-in-out infinite;
+}
+
+.decorativeCircle2 {
+  position: absolute;
+  bottom: -150px;
+  left: -80px;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 122, 0, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 2;
+  animation: floatCircle 20s ease-in-out infinite reverse;
+}
+
+@keyframes floatCircle {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(20px, -20px) scale(1.05); }
+  66% { transform: translate(-10px, 15px) scale(0.95); }
+}
+
+/* ===== Background Stack ===== */
 .bgStack {
   position: absolute;
   inset: 0;
@@ -59,21 +93,28 @@
   z-index: 2;
   background: linear-gradient(
       180deg,
-      rgba(24, 19, 13, 0.55) 0%,
-      rgba(24, 19, 13, 0.28) 32%,
-      rgba(24, 19, 13, 0.45) 68%,
-      rgba(24, 19, 13, 0.86) 100%
+      rgba(24, 19, 13, 0.6) 0%,
+      rgba(24, 19, 13, 0.2) 35%,
+      rgba(24, 19, 13, 0.4) 65%,
+      rgba(24, 19, 13, 0.85) 100%
     ),
     linear-gradient(
       90deg,
-      rgba(24, 19, 13, 0.55) 0%,
-      rgba(24, 19, 13, 0.1) 55%,
-      rgba(24, 19, 13, 0.05) 100%
+      rgba(24, 19, 13, 0.5) 0%,
+      rgba(24, 19, 13, 0.05) 60%,
+      rgba(24, 19, 13, 0) 100%
     );
 }
 
-/* ================= FOREGROUND ================= */
-/* max-width hataya — ab full width, sirf % padding se left-align hoga */
+.gradientOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: radial-gradient(ellipse at 30% 50%, rgba(255, 122, 0, 0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ===== Inner Container ===== */
 .inner {
   position: relative;
   z-index: 3;
@@ -88,57 +129,82 @@
   box-sizing: border-box;
 }
 
+/* ===== Content Block ===== */
 .contentBlock {
   max-width: 640px;
-  animation: riseIn 0.7s var(--ease-out) both;
+  animation: riseIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-family: var(--font-body);
+  gap: 10px;
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.16em;
   color: #ffcf9e;
   margin-bottom: 20px;
+  text-transform: uppercase;
 }
 
 .eyebrowDot {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: var(--aym-orange);
-  box-shadow: 0 0 0 3px var(--aym-orange-soft);
+  box-shadow: 0 0 0 4px var(--aym-orange-soft);
   flex-shrink: 0;
+  animation: pulse 2s ease-out infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(245, 130, 31, 0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(245, 130, 31, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(245, 130, 31, 0); }
+}
+
+.eyebrowLine {
+  width: 24px;
+  height: 2px;
+  background: var(--aym-orange);
+  border-radius: 2px;
 }
 
 .title {
   font-family: var(--font-display);
-  font-size: clamp(30px, 4.4vw, 62px);
+  font-size: clamp(30px, 4.8vw, 64px);
   line-height: 1.08;
   font-weight: 600;
   margin: 0 0 18px;
   color: var(--aym-white);
   text-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+  letter-spacing: -0.5px;
 }
 
 .titleAccent {
   font-style: italic;
   font-weight: 500;
-  color: #ffb066;
+  background: linear-gradient(135deg, #ffb066, #ff7a00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .subtitle {
-  font-family: var(--font-body);
-  font-size: clamp(14px, 1.4vw, 17px);
-  line-height: 1.65;
-  color: rgba(255, 255, 255, 0.88);
+  font-size: clamp(14px, 1.4vw, 18px);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
   margin: 0 0 32px;
   max-width: 500px;
+  font-weight: 400;
 }
 
+/* ===== CTA Buttons ===== */
 .ctaRow {
   display: flex;
   align-items: center;
@@ -149,91 +215,125 @@
 .ctaPrimary {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: var(--aym-orange);
+  gap: 10px;
+  background: linear-gradient(135deg, var(--aym-orange), var(--aym-orange-dark));
   color: var(--aym-white) !important;
-  font-family: var(--font-body);
   font-weight: 700;
   font-size: 14.5px;
-  padding: 15px 26px;
+  padding: 16px 30px;
   border-radius: 999px;
   text-decoration: none;
   white-space: nowrap;
-  box-shadow: 0 10px 28px rgba(245, 130, 31, 0.4);
-  transition: background 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+  box-shadow: 0 12px 32px rgba(245, 130, 31, 0.4);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaPrimary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transition: left 0.6s ease;
+}
+
+.ctaPrimary:hover::before {
+  left: 100%;
 }
 
 .ctaPrimary:hover {
-  background: var(--aym-orange-dark);
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 16px 40px rgba(245, 130, 31, 0.5);
 }
 
 .ctaArrow {
-  transition: transform 0.2s var(--ease-out);
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s ease;
 }
 
 .ctaPrimary:hover .ctaArrow {
-  transform: translateX(3px);
+  transform: translateX(4px);
 }
 
 .ctaSecondary {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid var(--aym-border);
-  backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid var(--aym-border);
+  backdrop-filter: blur(8px);
   color: var(--aym-white) !important;
-  font-family: var(--font-body);
   font-weight: 600;
   font-size: 14.5px;
   white-space: nowrap;
   cursor: pointer;
-  padding: 13px 22px 13px 13px;
+  padding: 14px 24px 14px 14px;
   border-radius: 999px;
-  transition: background 0.2s var(--ease-out);
+  transition: all 0.3s ease;
 }
 
 .ctaSecondary:hover {
   background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
 }
 
 .playIcon {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: var(--aym-white);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
-  color: var(--aym-orange);
   flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* ---- floating schedule card ---- */
+.playSvg {
+  width: 14px;
+  height: 14px;
+  color: var(--aym-orange);
+}
+
+/* ===== Schedule Card ===== */
 .scheduleCard {
   display: flex;
   align-items: center;
   gap: 14px;
   align-self: flex-start;
-  background: rgba(36, 31, 26, 0.55);
+  background: rgba(36, 31, 26, 0.6);
   border: 1px solid var(--aym-border);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   border-radius: 18px;
-  padding: 14px 18px;
+  padding: 14px 20px;
   max-width: 100%;
-  animation: riseIn 0.7s var(--ease-out) 0.1s both;
+  animation: riseIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+  transition: all 0.3s ease;
+}
+
+.scheduleCard:hover {
+  background: rgba(36, 31, 26, 0.75);
+  transform: translateY(-2px);
 }
 
 .liveDot {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: #ff6a3d;
   flex-shrink: 0;
-  box-shadow: 0 0 0 4px rgba(255, 106, 61, 0.28);
-  animation: pulse 1.8s ease-in-out infinite;
+  box-shadow: 0 0 0 4px rgba(255, 106, 61, 0.25);
+  animation: pulseDot 1.8s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 4px rgba(255, 106, 61, 0.25); }
+  50% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(255, 106, 61, 0.1); }
 }
 
 .scheduleText {
@@ -241,7 +341,6 @@
 }
 
 .scheduleTitle {
-  font-family: var(--font-body);
   font-weight: 700;
   font-size: 14px;
   color: var(--aym-white) !important;
@@ -252,9 +351,8 @@
 }
 
 .scheduleMeta {
-  font-family: var(--font-body);
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.75) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
   margin: 2px 0 0;
   white-space: nowrap;
   overflow: hidden;
@@ -264,39 +362,52 @@
 .joinMiniBtn {
   flex-shrink: 0;
   border: none;
-  background: var(--aym-orange);
+  background: linear-gradient(135deg, var(--aym-orange), var(--aym-orange-dark));
   color: var(--aym-white) !important;
-  font-family: var(--font-body);
   font-weight: 700;
-  font-size: 12.5px;
-  padding: 9px 16px;
+  font-size: 12px;
+  padding: 8px 18px;
   border-radius: 999px;
   cursor: pointer;
   white-space: nowrap;
-  transition: background 0.2s var(--ease-out);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(245, 130, 31, 0.3);
 }
 
 .joinMiniBtn:hover {
-  background: var(--aym-orange-dark);
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(245, 130, 31, 0.4);
 }
 
-/* ---- stats strip ---- */
+/* ===== Stats Row ===== */
 .statsRow {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
 }
 
 .statChip {
-  font-family: var(--font-body);
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 12px;
   color: var(--aym-white);
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--aym-border);
   backdrop-filter: blur(6px);
   border-radius: 999px;
-  padding: 7px 14px;
+  padding: 8px 16px;
   white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.statChip:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+}
+
+.statIcon {
+  font-size: 14px;
 }
 
 .statChip strong {
@@ -304,7 +415,7 @@
   font-weight: 700;
 }
 
-/* ---- bottom controls ---- */
+/* ===== Controls ===== */
 .controls {
   display: flex;
   align-items: center;
@@ -318,7 +429,7 @@
 .rail {
   display: flex;
   align-items: flex-end;
-  gap: 26px;
+  gap: 30px;
   flex-wrap: wrap;
 }
 
@@ -331,14 +442,19 @@
   align-items: flex-start;
   gap: 8px;
   padding: 0;
+  transition: all 0.3s ease;
+}
+
+.railItem:hover .railNum {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .railNum {
   font-family: var(--font-display);
   font-size: 14px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.45);
-  transition: color 0.3s var(--ease-out), font-size 0.3s var(--ease-out);
+  color: rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
 }
 
 .railItemActive .railNum {
@@ -347,23 +463,25 @@
 }
 
 .railBar {
-  width: 30px;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.25);
-  border-radius: 2px;
+  width: 32px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
   overflow: hidden;
   position: relative;
+  transition: width 0.3s ease;
 }
 
 .railItemActive .railBar {
-  width: 42px;
+  width: 48px;
 }
 
 .railFill {
   position: absolute;
   inset: 0;
-  background: var(--aym-orange);
+  background: linear-gradient(90deg, var(--aym-orange), var(--aym-orange-dark));
   width: 0%;
+  border-radius: 3px;
 }
 
 .arrowGroup {
@@ -372,117 +490,283 @@
 }
 
 .navBtn {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: 1px solid var(--aym-border);
-  background: rgba(255, 255, 255, 0.1);
+  border: 1.5px solid var(--aym-border);
+  background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(6px);
   color: var(--aym-white);
-  font-size: 18px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .navBtn:hover {
   background: var(--aym-orange);
   border-color: var(--aym-orange);
-  transform: translateY(-2px);
+  transform: scale(1.1);
+  box-shadow: 0 8px 24px rgba(245, 130, 31, 0.3);
 }
 
-/* ================= ANIMATIONS ================= */
-@keyframes riseIn {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+.navIcon {
+  width: 18px;
+  height: 18px;
 }
 
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 4px rgba(255, 106, 61, 0.28); }
-  50% { box-shadow: 0 0 0 7px rgba(255, 106, 61, 0.14); }
-}
+/* ===== Responsive ===== */
 
-@media (prefers-reduced-motion: reduce) {
-  .bgSlide, .contentBlock, .scheduleCard, .liveDot {
-    animation: none !important;
-    transition: opacity 0.3s ease !important;
-  }
-}
-
-/* ================= RESPONSIVE ================= */
-
-/* Large desktop / ultra-wide */
+/* Extra Large Screens */
 @media (min-width: 1600px) {
   .inner { padding: 0 8%; padding-bottom: 56px; }
   .contentBlock { max-width: 720px; }
+  .title { font-size: 72px; }
 }
 
-@media (max-width: 1200px) {
-  .inner { padding-bottom: 36px; }
+/* Large Desktops */
+@media (max-width: 1400px) {
+  .inner { padding-bottom: 40px; }
+  .title { font-size: clamp(28px, 4.2vw, 56px); }
 }
 
+/* Tablets & Small Desktops */
 @media (max-width: 1024px) {
   .hero { height: 100vh; min-height: 680px; }
   .contentBlock { max-width: 100%; }
+  .decorativeCircle1 { width: 300px; height: 300px; }
+  .decorativeCircle2 { width: 200px; height: 200px; }
 }
 
+/* Medium Tablets */
 @media (max-width: 860px) {
   .hero { min-height: 620px; }
-  .inner { gap: 22px; padding-bottom: 30px; }
+  .inner { gap: 24px; padding-bottom: 32px; }
   .scheduleCard { max-width: 100%; }
+  .title { font-size: clamp(26px, 3.8vw, 44px); }
+  .ctaPrimary { padding: 14px 24px; font-size: 13.5px; }
+  .ctaSecondary { padding: 12px 20px 12px 12px; font-size: 13.5px; }
+  .playIcon { width: 28px; height: 28px; }
 }
 
-@media (max-width: 640px) {
-  .hero { height: auto; min-height: 100vh; }
+/* Mobile Landscape */
+@media (max-width: 768px) {
+  .hero { 
+    height: auto; 
+    min-height: 100vh; 
+    min-height: 100dvh;
+  }
+  
   .inner {
     padding: 0 5%;
-    padding-bottom: 26px;
-    padding-top: 90px;
+    padding-bottom: 28px;
+    padding-top: 80px;
+    gap: 20px;
   }
+  
+  .decorativeCircle1 { 
+    width: 200px; 
+    height: 200px; 
+    top: -100px;
+    right: -50px;
+  }
+  
+  .decorativeCircle2 { 
+    width: 150px; 
+    height: 150px; 
+    bottom: -80px;
+    left: -40px;
+  }
+  
+  .eyebrow { font-size: 10px; }
+  .eyebrowLine { width: 16px; }
+  
+  .title { font-size: clamp(22px, 4.5vw, 36px); }
+  .subtitle { font-size: clamp(13px, 1.8vw, 15px); }
+  
   .ctaRow {
     width: 100%;
     gap: 12px;
   }
+  
   .ctaPrimary {
     flex: 1 1 auto;
     justify-content: center;
-    padding: 14px 18px;
+    padding: 13px 20px;
+    font-size: 13px;
   }
+  
   .ctaSecondary {
-    padding: 12px 18px 12px 12px;
+    padding: 11px 16px 11px 11px;
+    font-size: 13px;
   }
+  
+  .playIcon { width: 26px; height: 26px; }
+  .playSvg { width: 12px; height: 12px; }
+  
   .scheduleCard {
-    padding: 12px 14px;
+    padding: 10px 14px;
     gap: 10px;
+    border-radius: 14px;
   }
+  
+  .scheduleTitle { font-size: 12px; }
+  .scheduleMeta { font-size: 11px; }
+  .joinMiniBtn { padding: 6px 14px; font-size: 11px; }
+  
   .statsRow { gap: 8px; }
-  .statChip { font-size: 11px; padding: 6px 12px; }
+  .statChip { font-size: 10px; padding: 5px 12px; }
+  .statChip strong { font-size: 11px; }
+  
   .controls {
     flex-direction: column;
     align-items: stretch;
+    gap: 14px;
+    padding-top: 16px;
   }
-  .arrowGroup {
+  
+  .rail { gap: 20px; }
+  .railNum { font-size: 12px; }
+  .railItemActive .railNum { font-size: 16px; }
+  .railBar { width: 24px; }
+  .railItemActive .railBar { width: 36px; }
+  
+  .arrowGroup { 
     align-self: center;
+    gap: 8px;
+  }
+  
+  .navBtn { 
+    width: 38px; 
+    height: 38px; 
+    font-size: 16px; 
   }
 }
 
+/* Mobile Portrait */
 @media (max-width: 480px) {
+  .hero { min-height: 100vh; min-height: 100dvh; }
+  
+  .inner {
+    padding: 0 4%;
+    padding-bottom: 20px;
+    padding-top: 70px;
+    gap: 16px;
+  }
+  
+  .eyebrow { font-size: 9px; gap: 6px; margin-bottom: 14px; }
+  .eyebrowDot { width: 6px; height: 6px; }
+  .eyebrowLine { width: 12px; }
+  
+  .title { 
+    font-size: clamp(20px, 5vw, 30px); 
+    margin-bottom: 12px;
+  }
+  
+  .subtitle { 
+    font-size: 13px; 
+    margin-bottom: 22px;
+    line-height: 1.6;
+  }
+  
   .ctaRow {
     flex-direction: column;
     align-items: stretch;
   }
-  .ctaPrimary, .ctaSecondary {
+  
+  .ctaPrimary {
     justify-content: center;
+    padding: 12px 18px;
+    font-size: 13px;
   }
+  
+  .ctaSecondary {
+    justify-content: center;
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+  
+  .playIcon { width: 24px; height: 24px; }
+  .playSvg { width: 10px; height: 10px; }
+  
+  .scheduleCard {
+    padding: 10px 12px;
+    gap: 8px;
+    border-radius: 12px;
+    flex-wrap: wrap;
+  }
+  
+  .scheduleTitle { font-size: 11px; }
   .scheduleMeta { display: none; }
-  .rail { gap: 16px; }
-  .navBtn { width: 36px; height: 36px; font-size: 16px; }
+  .joinMiniBtn { padding: 5px 12px; font-size: 10px; }
+  
+  .statChip { 
+    font-size: 9px; 
+    padding: 4px 10px;
+    gap: 4px;
+  }
+  .statChip strong { font-size: 10px; }
+  .statIcon { font-size: 11px; }
+  
+  .rail { gap: 14px; }
+  .railNum { font-size: 10px; }
+  .railItemActive .railNum { font-size: 14px; }
+  .railBar { width: 18px; height: 2px; }
+  .railItemActive .railBar { width: 28px; }
+  .railFill { height: 2px; }
+  
+  .navBtn { 
+    width: 34px; 
+    height: 34px; 
+  }
+  
+  .navIcon { width: 14px; height: 14px; }
 }
 
+/* Very Small Screens */
 @media (max-width: 360px) {
-  .title { font-size: 26px; }
-  .subtitle { font-size: 13px; }
-  .scheduleTitle { font-size: 13px; }
+  .inner {
+    padding: 0 3%;
+    padding-bottom: 16px;
+    padding-top: 60px;
+    gap: 14px;
+  }
+  
+  .title { font-size: 22px; }
+  .subtitle { font-size: 12px; }
+  
+  .ctaPrimary { 
+    padding: 10px 14px; 
+    font-size: 12px; 
+  }
+  .ctaSecondary { 
+    padding: 8px 12px; 
+    font-size: 11px; 
+  }
+  
+  .statChip { 
+    font-size: 8px; 
+    padding: 3px 8px;
+  }
+  .statChip strong { font-size: 9px; }
+  
+  .navBtn { width: 30px; height: 30px; }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .bgSlide,
+  .contentBlock,
+  .scheduleCard,
+  .liveDot,
+  .ctaPrimary,
+  .ctaSecondary {
+    animation: none !important;
+    transition: opacity 0.3s ease !important;
+  }
+  
+  .ctaPrimary::before {
+    display: none;
+  }
 }

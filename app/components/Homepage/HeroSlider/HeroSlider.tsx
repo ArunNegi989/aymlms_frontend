@@ -74,11 +74,18 @@ export default function HeroSlider() {
   const [active, setActive] = useState(0);
   const [progress, setProgress] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const rafRef = useRef<number | null>(null);
   const startRef = useRef<number>(0);
   const elapsedRef = useRef<number>(0);
 
-  // ---- Auto-scroll engine ----
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   useEffect(() => {
     if (paused) {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
@@ -120,8 +127,10 @@ export default function HeroSlider() {
       aria-label="Featured yoga programs"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
+      onTouchStart={() => setPaused(true)}
+      onTouchEnd={() => setTimeout(() => setPaused(false), 3000)}
     >
-      {/* ---------- Background stack (all slides, crossfade) ---------- */}
+      {/* Background Stack */}
       <div className={styles.bgStack}>
         {slides.map((s, index) => (
           <div
@@ -147,15 +156,21 @@ export default function HeroSlider() {
           </div>
         ))}
         <div className={styles.scrim} />
+        <div className={styles.gradientOverlay} />
       </div>
 
-      {/* ---------- Foreground content ---------- */}
+      {/* Decorative Elements */}
+      <div className={styles.decorativeCircle1} />
+      <div className={styles.decorativeCircle2} />
+
+      {/* Foreground Content */}
       <div className={styles.inner}>
         <div className={styles.contentBlock} key={`content-${slides[active].id}`}>
-          <span className={styles.eyebrow}>
+          <div className={styles.eyebrow}>
             <span className={styles.eyebrowDot} />
+            <span className={styles.eyebrowLine} />
             {slides[active].eyebrow}
-          </span>
+          </div>
 
           <h1 className={styles.title}>
             {slides[active].titlePlain}{" "}
@@ -169,16 +184,23 @@ export default function HeroSlider() {
           <div className={styles.ctaRow}>
             <a href={slides[active].ctaHref} className={styles.ctaPrimary}>
               <span>{slides[active].ctaLabel}</span>
-              <span className={styles.ctaArrow}>&rarr;</span>
+              <svg viewBox="0 0 20 20" className={styles.ctaArrow}>
+                <line x1="4" y1="10" x2="15" y2="10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                <polyline points="10.5 5 15.5 10 10.5 15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </a>
             <button className={styles.ctaSecondary} type="button">
-              <span className={styles.playIcon}>&#9654;</span>
+              <span className={styles.playIcon}>
+                <svg viewBox="0 0 24 24" className={styles.playSvg}>
+                  <polygon points="5,3 19,12 5,21" fill="currentColor" />
+                </svg>
+              </span>
               <span>Watch a class</span>
             </button>
           </div>
         </div>
 
-        {/* ---------- Floating live-class schedule card ---------- */}
+        {/* Floating Schedule Card */}
         <div
           className={styles.scheduleCard}
           key={`schedule-${slides[active].id}`}
@@ -193,24 +215,27 @@ export default function HeroSlider() {
             </p>
           </div>
           <button className={styles.joinMiniBtn} type="button">
-            Join
+            Join Now
           </button>
         </div>
 
-        {/* ---------- Stats strip ---------- */}
+        {/* Stats Row */}
         <div className={styles.statsRow}>
-          <span className={styles.statChip}>
+          <div className={styles.statChip}>
+            <span className={styles.statIcon}>👥</span>
             <strong>12,000+</strong> students trained
-          </span>
-          <span className={styles.statChip}>
+          </div>
+          <div className={styles.statChip}>
+            <span className={styles.statIcon}>⭐</span>
             <strong>4.8 ★</strong> average rating
-          </span>
-          <span className={styles.statChip}>
+          </div>
+          <div className={styles.statChip}>
+            <span className={styles.statIcon}>📚</span>
             <strong>150+</strong> live classes / month
-          </span>
+          </div>
         </div>
 
-        {/* ---------- Bottom controls: numbers + progress + arrows ---------- */}
+        {/* Controls */}
         <div className={styles.controls}>
           <div className={styles.rail}>
             {slides.map((s, index) => (
@@ -251,7 +276,9 @@ export default function HeroSlider() {
               aria-label="Previous slide"
               type="button"
             >
-              &#8249;
+              <svg viewBox="0 0 20 20" className={styles.navIcon}>
+                <polyline points="13 4 7 10 13 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </button>
             <button
               className={styles.navBtn}
@@ -259,7 +286,9 @@ export default function HeroSlider() {
               aria-label="Next slide"
               type="button"
             >
-              &#8250;
+              <svg viewBox="0 0 20 20" className={styles.navIcon}>
+                <polyline points="7 4 13 10 7 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </button>
           </div>
         </div>

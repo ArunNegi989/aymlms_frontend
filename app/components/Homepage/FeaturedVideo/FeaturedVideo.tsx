@@ -1,17 +1,35 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./FeaturedVideo.module.css";
 
 export default function FeaturedVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
     videoRef.current?.play().catch(() => {});
   }, []);
 
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
   return (
     <section className={styles.section}>
+      {/* Decorative elements */}
+      <div className={styles.decorativeCircle1} />
+      <div className={styles.decorativeCircle2} />
+      <div className={styles.decorativeLine} />
+
       <div className={styles.textCol}>
         <div className={styles.badge}>
           <span className={styles.badgeDot} />
@@ -42,24 +60,37 @@ export default function FeaturedVideo() {
         </ul>
 
         <div className={styles.statsRow}>
-          <div>
+          <div className={styles.statItem}>
             <span className={styles.statNum}>4.9/5</span>
             <span className={styles.statLabel}>Average rating</span>
+            <div className={styles.statBar}>
+              <div className={styles.statBarFill} style={{ width: '98%' }} />
+            </div>
           </div>
-          <div>
+          <div className={styles.statItem}>
             <span className={styles.statNum}>12k+</span>
             <span className={styles.statLabel}>Students taught</span>
+            <div className={styles.statBar}>
+              <div className={styles.statBarFill} style={{ width: '85%' }} />
+            </div>
           </div>
-          <div>
+          <div className={styles.statItem}>
             <span className={styles.statNum}>6</span>
             <span className={styles.statLabel}>Certified instructors</span>
+            <div className={styles.statBar}>
+              <div className={styles.statBarFill} style={{ width: '70%' }} />
+            </div>
           </div>
         </div>
       </div>
 
       <div className={styles.videoCol}>
         <div className={styles.videoFrame}>
-          <div className={styles.videoWrap}>
+          <div 
+            className={styles.videoWrap}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          >
             <video
               ref={videoRef}
               className={styles.video}
@@ -70,10 +101,33 @@ export default function FeaturedVideo() {
               muted
               playsInline
             />
+            
+            {/* Gradient overlay */}
+            <div className={styles.videoOverlay} />
+            
+            {/* Play/Pause button */}
+            <button 
+              className={`${styles.playBtn} ${isHovering ? styles.playBtnVisible : ''}`}
+              onClick={togglePlay}
+              aria-label={isPlaying ? "Pause video" : "Play video"}
+            >
+              {isPlaying ? (
+                <svg viewBox="0 0 24 24" className={styles.playIcon}>
+                  <rect x="6" y="4" width="4" height="16" fill="currentColor" />
+                  <rect x="14" y="4" width="4" height="16" fill="currentColor" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" className={styles.playIcon}>
+                  <polygon points="5,3 19,12 5,21" fill="currentColor" />
+                </svg>
+              )}
+            </button>
+
             <span className={styles.liveTag}>
               <span className={styles.liveDot} />
               LIVE SESSION
             </span>
+            
             <div className={styles.captionBar}>
               <div className={styles.captionTitle}>Morning Flow Batch</div>
               <div className={styles.captionSub}>Recorded this week</div>
@@ -86,6 +140,14 @@ export default function FeaturedVideo() {
               <div className={styles.floatNum}>4.9/5</div>
               <div className={styles.floatLabel}>Student rating</div>
             </div>
+          </div>
+
+          <div className={styles.timestampBadge}>
+            <svg viewBox="0 0 24 24" className={styles.clockIcon}>
+              <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2" />
+              <polyline points="12,6 12,12 16,14" fill="none" stroke="currentColor" strokeWidth="2" />
+            </svg>
+            <span>2:34</span>
           </div>
         </div>
       </div>

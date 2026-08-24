@@ -2,8 +2,8 @@
 "use client";
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  FaSearch, FaFilter, FaTimes, FaStar, FaStarHalfAlt, 
+import {
+  FaSearch, FaFilter, FaTimes, FaStar, FaStarHalfAlt,
   FaRegStar, FaClock, FaBook, FaUser, FaUsers, FaCertificate,
   FaGlobe, FaPlay, FaChevronLeft, FaChevronRight
 } from "react-icons/fa";
@@ -42,6 +42,15 @@ interface Course {
   sessions?: number;
 }
 
+interface FilterState {
+  selectedCategory: string;
+  selectedType: string;
+  selectedLevel: string;
+  selectedDuration: string;
+  selectedPrice: string;
+  selectedRating: string;
+}
+
 // ===== COURSE DATA =====
 const courseData: Course[] = [
   {
@@ -55,10 +64,7 @@ const courseData: Course[] = [
     durationHours: 200,
     type: "live-recorded",
     level: "intermediate",
-    instructor: {
-      name: "Swami AYM",
-      image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
-    },
+    instructor: { name: "Swami AYM", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
     rating: 4.9,
     students: 1240,
     lessons: 120,
@@ -83,10 +89,7 @@ const courseData: Course[] = [
     durationHours: 40,
     type: "recorded",
     level: "beginner",
-    instructor: {
-      name: "Priya Sharma",
-      image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
-    },
+    instructor: { name: "Priya Sharma", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
     rating: 4.8,
     students: 3400,
     lessons: 35,
@@ -109,10 +112,7 @@ const courseData: Course[] = [
     durationHours: 60,
     type: "live",
     level: "intermediate",
-    instructor: {
-      name: "Rajesh Kumar",
-      image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
-    },
+    instructor: { name: "Rajesh Kumar", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
     rating: 4.7,
     students: 1850,
     lessons: 45,
@@ -137,10 +137,7 @@ const courseData: Course[] = [
     durationHours: 15,
     type: "recorded",
     level: "all",
-    instructor: {
-      name: "Ananya Reddy",
-      image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
-    },
+    instructor: { name: "Ananya Reddy", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
     rating: 4.9,
     students: 5600,
     lessons: 21,
@@ -164,10 +161,7 @@ const courseData: Course[] = [
     durationHours: 25,
     type: "live",
     level: "beginner",
-    instructor: {
-      name: "Swami AYM",
-      image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
-    },
+    instructor: { name: "Swami AYM", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
     rating: 4.8,
     students: 2700,
     lessons: 28,
@@ -192,10 +186,7 @@ const courseData: Course[] = [
     durationHours: 50,
     type: "recorded",
     level: "intermediate",
-    instructor: {
-      name: "Dr. Vikram Singh",
-      image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
-    },
+    instructor: { name: "Dr. Vikram Singh", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
     rating: 4.6,
     students: 890,
     lessons: 42,
@@ -217,10 +208,7 @@ const courseData: Course[] = [
     durationHours: 80,
     type: "recorded",
     level: "intermediate",
-    instructor: {
-      name: "Dr. Meera Sharma",
-      image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
-    },
+    instructor: { name: "Dr. Meera Sharma", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
     rating: 4.7,
     students: 1200,
     lessons: 55,
@@ -242,10 +230,7 @@ const courseData: Course[] = [
     durationHours: 100,
     type: "live-recorded",
     level: "beginner",
-    instructor: {
-      name: "Swami AYM",
-      image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
-    },
+    instructor: { name: "Swami AYM", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
     rating: 4.8,
     students: 950,
     lessons: 65,
@@ -270,10 +255,7 @@ const courseData: Course[] = [
     durationHours: 20,
     type: "recorded",
     level: "beginner",
-    instructor: {
-      name: "Priya Sharma",
-      image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
-    },
+    instructor: { name: "Priya Sharma", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
     rating: 4.9,
     students: 7800,
     lessons: 18,
@@ -296,10 +278,7 @@ const courseData: Course[] = [
     durationHours: 35,
     type: "live",
     level: "advanced",
-    instructor: {
-      name: "Rajesh Kumar",
-      image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
-    },
+    instructor: { name: "Rajesh Kumar", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
     rating: 4.6,
     students: 650,
     lessons: 28,
@@ -324,10 +303,7 @@ const courseData: Course[] = [
     durationHours: 45,
     type: "recorded",
     level: "all",
-    instructor: {
-      name: "Ananya Reddy",
-      image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
-    },
+    instructor: { name: "Ananya Reddy", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
     rating: 4.7,
     students: 4200,
     lessons: 32,
@@ -349,10 +325,7 @@ const courseData: Course[] = [
     durationHours: 300,
     type: "live-recorded",
     level: "advanced",
-    instructor: {
-      name: "Swami AYM",
-      image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
-    },
+    instructor: { name: "Swami AYM", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
     rating: 4.9,
     students: 520,
     lessons: 180,
@@ -365,7 +338,708 @@ const courseData: Course[] = [
     trending: true,
     featured: true,
   },
+  {
+    id: "13",
+    slug: "200-hour-yoga-teacher-training",
+    title: "200 Hour Yoga Teacher Training",
+    description: "Complete teacher training program covering asanas, philosophy, anatomy, and teaching methodology.",
+    image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
+    category: "Teacher Training",
+    durationDays: 30,
+    durationHours: 200,
+    type: "live-recorded",
+    level: "intermediate",
+    instructor: { name: "Swami AYM", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
+    rating: 4.9,
+    students: 1240,
+    lessons: 120,
+    language: "English",
+    certificate: true,
+    lifetimeAccess: true,
+    price: 29999,
+    originalPrice: 39999,
+    discount: 25,
+    trending: true,
+    featured: true,
+    popular: true,
+  },
+  {
+    id: "14",
+    slug: "hatha-yoga-foundations",
+    title: "Hatha Yoga Foundations",
+    description: "Learn the fundamentals of Hatha Yoga including asanas, pranayama, and meditation.",
+    image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
+    category: "Yoga",
+    durationDays: 14,
+    durationHours: 40,
+    type: "recorded",
+    level: "beginner",
+    instructor: { name: "Priya Sharma", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
+    rating: 4.8,
+    students: 3400,
+    lessons: 35,
+    language: "English",
+    certificate: true,
+    lifetimeAccess: true,
+    price: 4999,
+    originalPrice: 7999,
+    discount: 37,
+    trending: true,
+  },
+  {
+    id: "15",
+    slug: "vinyasa-flow-mastery",
+    title: "Vinyasa Flow Mastery",
+    description: "Master dynamic Vinyasa sequences with proper alignment and breathing techniques.",
+    image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
+    category: "Yoga",
+    durationDays: 21,
+    durationHours: 60,
+    type: "live",
+    level: "intermediate",
+    instructor: { name: "Rajesh Kumar", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
+    rating: 4.7,
+    students: 1850,
+    lessons: 45,
+    language: "English",
+    certificate: true,
+    lifetimeAccess: true,
+    price: 7999,
+    originalPrice: 11999,
+    discount: 33,
+    startDate: "2026-09-15",
+    classTime: "08:00 AM - 10:00 AM",
+    sessions: 21,
+  },
+  {
+    id: "16",
+    slug: "meditation-mindfulness",
+    title: "Meditation & Mindfulness",
+    description: "Discover the art of meditation and mindfulness for inner peace and mental clarity.",
+    image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
+    category: "Meditation",
+    durationDays: 7,
+    durationHours: 15,
+    type: "recorded",
+    level: "all",
+    instructor: { name: "Ananya Reddy", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
+    rating: 4.9,
+    students: 5600,
+    lessons: 21,
+    language: "English",
+    certificate: true,
+    lifetimeAccess: true,
+    price: 2999,
+    originalPrice: 4999,
+    discount: 40,
+    trending: true,
+    popular: true,
+  },
+  {
+    id: "17",
+    slug: "pranayama-breath-control",
+    title: "Pranayama & Breath Control",
+    description: "Master the ancient science of pranayama for physical and mental well-being.",
+    image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
+    category: "Pranayama",
+    durationDays: 14,
+    durationHours: 25,
+    type: "live",
+    level: "beginner",
+    instructor: { name: "Swami AYM", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
+    rating: 4.8,
+    students: 2700,
+    lessons: 28,
+    language: "English",
+    certificate: true,
+    lifetimeAccess: true,
+    price: 3999,
+    originalPrice: 5999,
+    discount: 33,
+    startDate: "2026-10-01",
+    classTime: "06:00 AM - 07:30 AM",
+    sessions: 14,
+  },
+  {
+    id: "18",
+    slug: "yoga-philosophy-deep-dive",
+    title: "Yoga Philosophy Deep Dive",
+    description: "Explore the philosophical foundations of yoga including Patanjali's Yoga Sutras.",
+    image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
+    category: "Yoga Philosophy",
+    durationDays: 21,
+    durationHours: 50,
+    type: "recorded",
+    level: "intermediate",
+    instructor: { name: "Dr. Vikram Singh", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
+    rating: 4.6,
+    students: 890,
+    lessons: 42,
+    language: "English",
+    certificate: true,
+    lifetimeAccess: true,
+    price: 6999,
+    originalPrice: 9999,
+    discount: 30,
+  },
+  {
+    id: "19",
+    slug: "yoga-anatomy-physiology",
+    title: "Yoga Anatomy & Physiology",
+    description: "Understand the human body's anatomy and physiology for safe and effective yoga practice.",
+    image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
+    category: "Anatomy",
+    durationDays: 30,
+    durationHours: 80,
+    type: "recorded",
+    level: "intermediate",
+    instructor: { name: "Dr. Meera Sharma", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
+    rating: 4.7,
+    students: 1200,
+    lessons: 55,
+    language: "English",
+    certificate: true,
+    lifetimeAccess: true,
+    price: 8999,
+    originalPrice: 12999,
+    discount: 30,
+  },
+  {
+    id: "20",
+    slug: "100-hour-yoga-teacher-training",
+    title: "100 Hour Yoga Teacher Training",
+    description: "Foundation teacher training program for aspiring yoga teachers.",
+    image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
+    category: "Teacher Training",
+    durationDays: 15,
+    durationHours: 100,
+    type: "live-recorded",
+    level: "beginner",
+    instructor: { name: "Swami AYM", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
+    rating: 4.8,
+    students: 950,
+    lessons: 65,
+    language: "English",
+    certificate: true,
+    lifetimeAccess: true,
+    price: 19999,
+    originalPrice: 24999,
+    discount: 20,
+    startDate: "2026-11-01",
+    classTime: "07:00 AM - 09:00 AM",
+    sessions: 15,
+  },
+  {
+    id: "21",
+    slug: "beginners-yoga-journey",
+    title: "Beginner's Yoga Journey",
+    description: "Start your yoga journey with this comprehensive beginner-friendly course.",
+    image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
+    category: "Yoga",
+    durationDays: 7,
+    durationHours: 20,
+    type: "recorded",
+    level: "beginner",
+    instructor: { name: "Priya Sharma", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
+    rating: 4.9,
+    students: 7800,
+    lessons: 18,
+    language: "English",
+    certificate: true,
+    lifetimeAccess: true,
+    price: 1999,
+    originalPrice: 3499,
+    discount: 43,
+    popular: true,
+  },
+  {
+    id: "22",
+    slug: "advanced-asana-practice",
+    title: "Advanced Asana Practice",
+    description: "Master advanced yoga poses with proper alignment and technique.",
+    image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
+    category: "Yoga",
+    durationDays: 14,
+    durationHours: 35,
+    type: "live",
+    level: "advanced",
+    instructor: { name: "Rajesh Kumar", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
+    rating: 4.6,
+    students: 650,
+    lessons: 28,
+    language: "English",
+    certificate: true,
+    lifetimeAccess: true,
+    price: 8999,
+    originalPrice: 11999,
+    discount: 25,
+    startDate: "2026-10-15",
+    classTime: "05:00 PM - 07:00 PM",
+    sessions: 14,
+  },
+  {
+    id: "23",
+    slug: "yoga-for-wellness",
+    title: "Yoga for Wellness & Stress Relief",
+    description: "Discover yoga practices for mental health, stress relief, and overall wellness.",
+    image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
+    category: "Wellness",
+    durationDays: 21,
+    durationHours: 45,
+    type: "recorded",
+    level: "all",
+    instructor: { name: "Ananya Reddy", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
+    rating: 4.7,
+    students: 4200,
+    lessons: 32,
+    language: "English",
+    certificate: true,
+    lifetimeAccess: true,
+    price: 5999,
+    originalPrice: 7999,
+    discount: 25,
+  },
+  {
+    id: "24",
+    slug: "300-hour-advanced-teacher-training",
+    title: "300 Hour Advanced Teacher Training",
+    description: "Advanced teacher training program for experienced yoga teachers.",
+    image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg",
+    category: "Teacher Training",
+    durationDays: 45,
+    durationHours: 300,
+    type: "live-recorded",
+    level: "advanced",
+    instructor: { name: "Swami AYM", image: "https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" },
+    rating: 4.9,
+    students: 520,
+    lessons: 180,
+    language: "English",
+    certificate: true,
+    lifetimeAccess: true,
+    price: 49999,
+    originalPrice: 59999,
+    discount: 17,
+    trending: true,
+    featured: true,
+  },
+  
 ];
+
+const CATEGORIES = ["All", "Yoga", "Meditation", "Pranayama", "Yoga Philosophy", "Anatomy", "Teacher Training", "Wellness"];
+const TYPES = ["All", "live", "recorded", "live-recorded"];
+const LEVELS = ["All", "beginner", "intermediate", "advanced", "all"];
+const DURATIONS = ["All", "7 Days", "14 Days", "21 Days", "30 Days", "45 Days", "100 Hours", "200 Hours", "300 Hours"];
+const PRICES = ["All", "Free", "Under ₹5,000", "₹5,000–₹10,000", "₹10,000–₹20,000", "₹20,000+"];
+const RATINGS = ["All", "4+ Stars", "4.5+ Stars", "5 Stars"];
+const SORT_OPTIONS = ["Most Popular", "Trending", "Newest", "Highest Rated", "Price: Low to High", "Price: High to Low"];
+
+const typeLabel = (t: string) => (t === "all" ? "All" : t.charAt(0).toUpperCase() + t.slice(1));
+
+// ===== STAR RATING =====
+const StarRating: React.FC<{ rating: number }> = ({ rating }) => (
+  <div className={styles.stars}>
+    {[...Array(5)].map((_, i) => {
+      if (i < Math.floor(rating)) return <FaStar key={i} />;
+      if (i < Math.ceil(rating) && rating % 1 !== 0) return <FaStarHalfAlt key={i} />;
+      return <FaRegStar key={i} />;
+    })}
+  </div>
+);
+
+// ===== COURSE CARD =====
+const CourseCard: React.FC<{ course: Course; index: number; onPreview: (c: Course) => void }> = ({ course, index, onPreview }) => (
+  <motion.div
+    className={styles.courseCard}
+    initial={{ opacity: 0, y: 24 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.4, delay: Math.min(index, 8) * 0.06 }}
+    whileHover={{ y: -6, transition: { duration: 0.25 } }}
+  >
+    <div className={styles.cardImage}>
+      <img src={course.image} alt={course.title} loading="lazy" />
+      <div className={styles.cardBadges}>
+        {course.trending && <span className={styles.badgeTrending}>🔥 Trending</span>}
+        {course.popular && <span className={styles.badgePopular}>⭐ Popular</span>}
+        {course.featured && <span className={styles.badgeFeatured}>✨ Featured</span>}
+        {course.type === "live" && <span className={styles.badgeLive}>🔴 Live</span>}
+        {course.type === "recorded" && <span className={styles.badgeRecorded}>📹 Recorded</span>}
+      </div>
+      <div className={styles.cardOverlay}>
+        <button className={styles.previewBtn} onClick={() => onPreview(course)}>
+          <FaPlay /> Preview
+        </button>
+      </div>
+    </div>
+    <div className={styles.cardContent}>
+      <div className={styles.cardCategory}>{course.category}</div>
+      <h3 className={styles.cardTitle}>{course.title}</h3>
+      <p className={styles.cardDescription}>{course.description}</p>
+      <div className={styles.cardInstructor}>
+        <img src={course.instructor.image} alt={course.instructor.name} />
+        <span>{course.instructor.name}</span>
+      </div>
+      <div className={styles.cardRating}>
+        <StarRating rating={course.rating} />
+        <span className={styles.ratingValue}>{course.rating}</span>
+        <span className={styles.studentCount}>({course.students.toLocaleString()})</span>
+      </div>
+      <div className={styles.cardDetails}>
+        <span><FaClock /> {course.durationDays}d</span>
+        <span><FaBook /> {course.lessons}L</span>
+        <span><FaUser /> {course.level}</span>
+      </div>
+      <div className={styles.cardFooter}>
+        <div className={styles.cardPrice}>
+          <span className={styles.currentPrice}>₹{course.price.toLocaleString()}</span>
+          {course.originalPrice && (
+            <>
+              <span className={styles.originalPrice}>₹{course.originalPrice.toLocaleString()}</span>
+              <span className={styles.discount}>-{course.discount}%</span>
+            </>
+          )}
+        </div>
+        <motion.button
+          className={styles.viewCourseBtn}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          View Course
+        </motion.button>
+      </div>
+    </div>
+  </motion.div>
+);
+
+// ===== SECTION SLIDER (each instance owns its own scroll ref) =====
+const SectionSlider: React.FC<{
+  title: string;
+  subtitle?: string;
+  courses: Course[];
+  badge?: string;
+  onPreview: (c: Course) => void;
+}> = ({ title, subtitle, courses, badge, onPreview }) => {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const autoplayRef = useRef<NodeJS.Timeout | null>(null);
+
+  if (courses.length === 0) return null;
+
+  const getStep = () => {
+    const container = trackRef.current;
+    if (!container) return 300;
+
+    const card = container.querySelector<HTMLElement>(
+      `.${styles.sliderItem}`
+    );
+
+    return card ? card.offsetWidth + 24 : 300;
+  };
+
+  const scroll = (direction: "left" | "right") => {
+    const container = trackRef.current;
+    if (!container) return;
+
+    const step = getStep();
+
+    container.scrollBy({
+      left: direction === "left" ? -step : step,
+      behavior: "smooth",
+    });
+  };
+
+  // ===== AUTOPLAY =====
+  const startAutoplay = () => {
+    if (autoplayRef.current) {
+      clearInterval(autoplayRef.current);
+    }
+
+    autoplayRef.current = setInterval(() => {
+      const container = trackRef.current;
+
+      if (!container) return;
+
+      const maxScroll =
+        container.scrollWidth - container.clientWidth;
+
+      const step = getStep();
+
+      // Reached end → smoothly go back to beginning
+      if (container.scrollLeft >= maxScroll - 10) {
+        container.scrollTo({
+          left: 0,
+          behavior: "smooth",
+        });
+      } else {
+        container.scrollBy({
+          left: step,
+          behavior: "smooth",
+        });
+      }
+    }, 3000);
+  };
+
+  const stopAutoplay = () => {
+    if (autoplayRef.current) {
+      clearInterval(autoplayRef.current);
+      autoplayRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    startAutoplay();
+
+    return () => {
+      stopAutoplay();
+    };
+  }, [courses]);
+
+  return (
+    <section className={styles.sliderSection}>
+      <div className={styles.sliderHeader}>
+        <div>
+          <h2 className={styles.sliderTitle}>{title}</h2>
+
+          {subtitle && (
+            <p className={styles.sliderSubtitle}>
+              {subtitle}
+            </p>
+          )}
+        </div>
+
+        {badge && (
+          <span className={styles.sliderBadge}>
+            {badge}
+          </span>
+        )}
+      </div>
+
+      <div
+        className={styles.sliderContainer}
+        onMouseEnter={stopAutoplay}
+        onMouseLeave={startAutoplay}
+      >
+        <button
+          className={styles.sliderArrowLeft}
+          onClick={() => scroll("left")}
+          aria-label="Scroll left"
+        >
+          <FaChevronLeft />
+        </button>
+
+        <div
+          className={styles.sliderTrack}
+          ref={trackRef}
+        >
+          {courses.map((course, index) => (
+            <div
+              key={`${course.id}-${index}`}
+              className={styles.sliderItem}
+            >
+              <CourseCard
+                course={course}
+                index={index}
+                onPreview={onPreview}
+              />
+            </div>
+          ))}
+        </div>
+
+        <button
+          className={styles.sliderArrowRight}
+          onClick={() => scroll("right")}
+          aria-label="Scroll right"
+        >
+          <FaChevronRight />
+        </button>
+      </div>
+    </section>
+  );
+};
+
+// ===== FILTER GROUP (shared pill-style control for desktop + mobile) =====
+const FilterGroup: React.FC<{
+  label: string;
+  options: string[];
+  selected: string;
+  onSelect: (v: string) => void;
+  formatLabel?: (v: string) => string;
+}> = ({ label, options, selected, onSelect, formatLabel }) => (
+  <div className={styles.filterGroup}>
+    <h5>{label}</h5>
+    <div className={styles.filterOptionsGrid}>
+      {options.map((opt) => (
+        <button
+          key={opt}
+          type="button"
+          className={`${styles.filterChip} ${selected === opt ? styles.active : ""}`}
+          onClick={() => onSelect(opt)}
+        >
+          {formatLabel ? formatLabel(opt) : opt}
+        </button>
+      ))}
+    </div>
+  </div>
+);
+
+// ===== DESKTOP FILTER SIDEBAR =====
+const FilterSidebar: React.FC<{
+  filters: FilterState;
+  setFilters: {
+    setSelectedCategory: (v: string) => void;
+    setSelectedType: (v: string) => void;
+    setSelectedLevel: (v: string) => void;
+    setSelectedDuration: (v: string) => void;
+    setSelectedPrice: (v: string) => void;
+    setSelectedRating: (v: string) => void;
+  };
+  activeCount: number;
+  onClearAll: () => void;
+}> = ({ filters, setFilters, activeCount, onClearAll }) => (
+  <div className={styles.filterSection}>
+    <div className={styles.filterSectionHeader}>
+      <h4>Filters {activeCount > 0 && <span className={styles.filterCountBadge}>{activeCount}</span>}</h4>
+      {activeCount > 0 && (
+        <button className={styles.clearAllBtn} onClick={onClearAll}>Clear all</button>
+      )}
+    </div>
+
+    <FilterGroup label="Category" options={CATEGORIES} selected={filters.selectedCategory} onSelect={setFilters.setSelectedCategory} />
+    <FilterGroup label="Course Type" options={TYPES} selected={filters.selectedType} onSelect={setFilters.setSelectedType} formatLabel={typeLabel} />
+    <FilterGroup label="Level" options={LEVELS} selected={filters.selectedLevel} onSelect={setFilters.setSelectedLevel} formatLabel={(l) => (l === "all" ? "All Levels" : typeLabel(l))} />
+    <FilterGroup label="Duration" options={DURATIONS} selected={filters.selectedDuration} onSelect={setFilters.setSelectedDuration} />
+    <FilterGroup label="Price" options={PRICES} selected={filters.selectedPrice} onSelect={setFilters.setSelectedPrice} />
+    <FilterGroup label="Rating" options={RATINGS} selected={filters.selectedRating} onSelect={setFilters.setSelectedRating} />
+  </div>
+);
+
+// ===== MOBILE FILTER DRAWER =====
+const MobileFilterDrawer: React.FC<{
+  isOpen: boolean;
+  onClose: () => void;
+  sortBy: string;
+  setSortBy: (v: string) => void;
+  filters: FilterState;
+  setFilters: {
+    setSelectedCategory: (v: string) => void;
+    setSelectedType: (v: string) => void;
+    setSelectedLevel: (v: string) => void;
+    setSelectedDuration: (v: string) => void;
+    setSelectedPrice: (v: string) => void;
+    setSelectedRating: (v: string) => void;
+  };
+  activeCount: number;
+  onClearAll: () => void;
+}> = ({ isOpen, onClose, sortBy, setSortBy, filters, setFilters, activeCount, onClearAll }) => (
+  <AnimatePresence>
+    {isOpen && (
+      <>
+        <motion.div
+          className={styles.drawerBackdrop}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+        />
+        <motion.div
+          className={styles.drawer}
+          initial={{ y: "100%" }}
+          animate={{ y: 0 }}
+          exit={{ y: "100%" }}
+          transition={{ type: "spring", damping: 28, stiffness: 300 }}
+        >
+          <div className={styles.drawerHeader}>
+            <h3>Filter &amp; Sort {activeCount > 0 && <span className={styles.filterCountBadge}>{activeCount}</span>}</h3>
+            <button onClick={onClose} aria-label="Close filters"><FaTimes /></button>
+          </div>
+          <div className={styles.drawerContent}>
+            <div className={styles.filterGroup}>
+              <h5>Sort By</h5>
+              <select className={styles.sortSelectMobile} value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                {SORT_OPTIONS.map((opt) => (
+                  <option key={opt} value={opt}>{opt}</option>
+                ))}
+              </select>
+            </div>
+
+            <FilterGroup label="Category" options={CATEGORIES} selected={filters.selectedCategory} onSelect={setFilters.setSelectedCategory} />
+            <FilterGroup label="Course Type" options={TYPES} selected={filters.selectedType} onSelect={setFilters.setSelectedType} formatLabel={typeLabel} />
+            <FilterGroup label="Level" options={LEVELS} selected={filters.selectedLevel} onSelect={setFilters.setSelectedLevel} formatLabel={(l) => (l === "all" ? "All Levels" : typeLabel(l))} />
+            <FilterGroup label="Duration" options={DURATIONS} selected={filters.selectedDuration} onSelect={setFilters.setSelectedDuration} />
+            <FilterGroup label="Price" options={PRICES} selected={filters.selectedPrice} onSelect={setFilters.setSelectedPrice} />
+            <FilterGroup label="Rating" options={RATINGS} selected={filters.selectedRating} onSelect={setFilters.setSelectedRating} />
+
+            <div className={styles.drawerFooterActions}>
+              {activeCount > 0 && (
+                <button className={styles.clearAllBtnFull} onClick={onClearAll}>Clear all filters</button>
+              )}
+              <button className={styles.applyFiltersBtn} onClick={onClose}>
+                Show results
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      </>
+    )}
+  </AnimatePresence>
+);
+
+// ===== COURSE PREVIEW MODAL (fixed centering — no transform conflict with framer motion) =====
+const CoursePreviewModal: React.FC<{ course: Course | null; onClose: () => void }> = ({ course, onClose }) => (
+  <AnimatePresence>
+    {course && (
+      <motion.div
+        className={styles.modalBackdrop}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+      >
+        <motion.div
+          className={styles.modal}
+          initial={{ scale: 0.92, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.92, opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button className={styles.modalClose} onClick={onClose} aria-label="Close preview">
+            <FaTimes />
+          </button>
+          <div className={styles.modalContent}>
+            <div className={styles.modalVideo}>
+              <img src={course.image} alt={course.title} />
+              <div className={styles.modalPlayBtn}>
+                <FaPlay />
+              </div>
+            </div>
+            <div className={styles.modalInfo}>
+              <h2>{course.title}</h2>
+              <p>{course.description}</p>
+              <div className={styles.modalDetails}>
+                <div><FaUser /> Instructor: {course.instructor.name}</div>
+                <div><FaClock /> Duration: {course.durationDays} days</div>
+                <div><FaBook /> {course.lessons} lessons</div>
+                <div><FaUsers /> {course.students.toLocaleString()} students</div>
+                <div><FaCertificate /> {course.certificate ? "Certificate Included" : "No Certificate"}</div>
+                <div><FaGlobe /> {course.language}</div>
+              </div>
+              <div className={styles.modalPrice}>
+                <span className={styles.currentPrice}>₹{course.price.toLocaleString()}</span>
+                {course.originalPrice && (
+                  <>
+                    <span className={styles.originalPrice}>₹{course.originalPrice.toLocaleString()}</span>
+                    <span className={styles.discount}>-{course.discount}%</span>
+                  </>
+                )}
+              </div>
+              <button className={styles.enrollBtn}>Enroll Now</button>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+);
 
 // ===== MAIN COMPONENT =====
 const AllCourses: React.FC = () => {
@@ -378,60 +1052,54 @@ const AllCourses: React.FC = () => {
   const [selectedRating, setSelectedRating] = useState("All");
   const [sortBy, setSortBy] = useState("Most Popular");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [visibleCourses, setVisibleCourses] = useState(8);
+  const [visibleCourses, setVisibleCourses] = useState(6);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
-  const [trendingIndex, setTrendingIndex] = useState(0);
-  const trendingRef = useRef<HTMLDivElement>(null);
 
-  const categories = ["All", "Yoga", "Meditation", "Pranayama", "Yoga Philosophy", "Anatomy", "Teacher Training", "Wellness"];
-  const types = ["All", "live", "recorded", "live-recorded"];
-  const levels = ["All", "beginner", "intermediate", "advanced", "all"];
-  const durations = ["All", "7 Days", "14 Days", "21 Days", "30 Days", "45 Days", "100 Hours", "200 Hours", "300 Hours"];
-  const prices = ["All", "Free", "Under ₹5,000", "₹5,000–₹10,000", "₹10,000–₹20,000", "₹20,000+"];
-  const ratings = ["All", "4+ Stars", "4.5+ Stars", "5 Stars"];
-  const sortOptions = ["Most Popular", "Trending", "Newest", "Highest Rated", "Price: Low to High", "Price: High to Low"];
+  const trendingCourses = useMemo(() => courseData.filter((c) => c.trending), []);
+  const liveCourses = useMemo(() => courseData.filter((c) => c.type === "live"), []);
+  const recordedCourses = useMemo(() => courseData.filter((c) => c.type === "recorded"), []);
+  const shortCourses = useMemo(() => courseData.filter((c) => c.durationDays && c.durationDays <= 30), []);
+  const longCourses = useMemo(() => courseData.filter((c) => c.durationHours && c.durationHours >= 100), []);
 
-  // Get trending courses
-  const trendingCourses = useMemo(() => courseData.filter(c => c.trending), []);
-  
-  // Get featured courses
-  const featuredCourses = useMemo(() => courseData.filter(c => c.featured), []);
-  
-  // Get live courses
-  const liveCourses = useMemo(() => courseData.filter(c => c.type === "live"), []);
-  
-  // Get recorded courses
-  const recordedCourses = useMemo(() => courseData.filter(c => c.type === "recorded"), []);
-  
-  // Get short courses (7-30 days)
-  const shortCourses = useMemo(() => courseData.filter(c => c.durationDays && c.durationDays <= 30), []);
-  
-  // Get long courses (100+ hours)
-  const longCourses = useMemo(() => courseData.filter(c => c.durationHours && c.durationHours >= 100), []);
+  const activeFilterCount = useMemo(() => {
+    return [selectedCategory, selectedType, selectedLevel, selectedDuration, selectedPrice, selectedRating]
+      .filter((v) => v !== "All").length;
+  }, [selectedCategory, selectedType, selectedLevel, selectedDuration, selectedPrice, selectedRating]);
 
-  // Filter and sort courses
+  const clearAllFilters = () => {
+    setSelectedCategory("All");
+    setSelectedType("All");
+    setSelectedLevel("All");
+    setSelectedDuration("All");
+    setSelectedPrice("All");
+    setSelectedRating("All");
+    setVisibleCourses(6);
+  };
+
   const filteredCourses = useMemo(() => {
     let filtered = [...courseData];
 
-    if (searchTerm) {
-      filtered = filtered.filter(course =>
-        course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        course.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        course.category.toLowerCase().includes(searchTerm.toLowerCase())
+    if (searchTerm.trim()) {
+      const q = searchTerm.toLowerCase();
+      filtered = filtered.filter(
+        (course) =>
+          course.title.toLowerCase().includes(q) ||
+          course.description.toLowerCase().includes(q) ||
+          course.category.toLowerCase().includes(q)
       );
     }
 
     if (selectedCategory !== "All") {
-      filtered = filtered.filter(course => course.category === selectedCategory);
+      filtered = filtered.filter((course) => course.category === selectedCategory);
     }
 
     if (selectedType !== "All") {
-      filtered = filtered.filter(course => course.type === selectedType);
+      filtered = filtered.filter((course) => course.type === selectedType);
     }
 
     if (selectedLevel !== "All") {
-      filtered = filtered.filter(course => course.level === selectedLevel);
+      filtered = filtered.filter((course) => course.level === selectedLevel);
     }
 
     if (selectedDuration !== "All") {
@@ -439,13 +1107,9 @@ const AllCourses: React.FC = () => {
       if (durationMatch) {
         const value = parseInt(durationMatch[0]);
         if (selectedDuration.includes("Hours")) {
-          filtered = filtered.filter(course => 
-            course.durationHours && course.durationHours === value
-          );
+          filtered = filtered.filter((course) => course.durationHours && course.durationHours === value);
         } else {
-          filtered = filtered.filter(course => 
-            course.durationDays && course.durationDays === value
-          );
+          filtered = filtered.filter((course) => course.durationDays && course.durationDays === value);
         }
       }
     }
@@ -453,19 +1117,19 @@ const AllCourses: React.FC = () => {
     if (selectedPrice !== "All") {
       switch (selectedPrice) {
         case "Free":
-          filtered = filtered.filter(course => course.price === 0);
+          filtered = filtered.filter((course) => course.price === 0);
           break;
         case "Under ₹5,000":
-          filtered = filtered.filter(course => course.price > 0 && course.price < 5000);
+          filtered = filtered.filter((course) => course.price > 0 && course.price < 5000);
           break;
         case "₹5,000–₹10,000":
-          filtered = filtered.filter(course => course.price >= 5000 && course.price <= 10000);
+          filtered = filtered.filter((course) => course.price >= 5000 && course.price <= 10000);
           break;
         case "₹10,000–₹20,000":
-          filtered = filtered.filter(course => course.price > 10000 && course.price <= 20000);
+          filtered = filtered.filter((course) => course.price > 10000 && course.price <= 20000);
           break;
         case "₹20,000+":
-          filtered = filtered.filter(course => course.price > 20000);
+          filtered = filtered.filter((course) => course.price > 20000);
           break;
       }
     }
@@ -473,7 +1137,7 @@ const AllCourses: React.FC = () => {
     if (selectedRating !== "All") {
       const minRating = parseFloat(selectedRating);
       if (!isNaN(minRating)) {
-        filtered = filtered.filter(course => course.rating >= minRating);
+        filtered = filtered.filter((course) => course.rating >= minRating);
       }
     }
 
@@ -482,7 +1146,7 @@ const AllCourses: React.FC = () => {
         filtered.sort((a, b) => b.students - a.students);
         break;
       case "Trending":
-        filtered.sort((a, b) => (a.trending ? 1 : 0) - (b.trending ? 1 : 0));
+        filtered.sort((a, b) => (b.trending ? 1 : 0) - (a.trending ? 1 : 0));
         break;
       case "Newest":
         filtered.sort((a, b) => parseInt(b.id) - parseInt(a.id));
@@ -501,423 +1165,31 @@ const AllCourses: React.FC = () => {
     return filtered;
   }, [searchTerm, selectedCategory, selectedType, selectedLevel, selectedDuration, selectedPrice, selectedRating, sortBy]);
 
-  const visibleFilteredCourses = useMemo(() => {
-    return filteredCourses.slice(0, visibleCourses);
-  }, [filteredCourses, visibleCourses]);
+  const visibleFilteredCourses = useMemo(
+    () => filteredCourses.slice(0, visibleCourses),
+    [filteredCourses, visibleCourses]
+  );
 
   const handleLoadMore = () => {
     setIsLoading(true);
     setTimeout(() => {
-      setVisibleCourses(prev => prev + 8);
+      setVisibleCourses((prev) => prev + 6);
       setIsLoading(false);
-    }, 500);
+    }, 400);
   };
 
-  const handleTrendingScroll = (direction: 'left' | 'right') => {
-    const container = trendingRef.current;
-    if (container) {
-      const scrollAmount = 300;
-      const newScroll = direction === 'left' 
-        ? container.scrollLeft - scrollAmount 
-        : container.scrollLeft + scrollAmount;
-      container.scrollTo({ left: newScroll, behavior: 'smooth' });
-    }
+  const filterState: FilterState = {
+    selectedCategory, selectedType, selectedLevel, selectedDuration, selectedPrice, selectedRating,
   };
-
-  // Course Card Component
-  const CourseCard = ({ course, index }: { course: Course; index: number }) => (
-    <motion.div
-      className={styles.courseCard}
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.08 }}
-      whileHover={{ y: -8, transition: { duration: 0.3 } }}
-    >
-      <div className={styles.cardImage}>
-        <img src={course.image} alt={course.title} loading="lazy" />
-        <div className={styles.cardBadges}>
-          {course.trending && <span className={styles.badgeTrending}>🔥 Trending</span>}
-          {course.popular && <span className={styles.badgePopular}>⭐ Popular</span>}
-          {course.featured && <span className={styles.badgeFeatured}>✨ Featured</span>}
-          {course.type === "live" && <span className={styles.badgeLive}>🔴 Live</span>}
-          {course.type === "recorded" && <span className={styles.badgeRecorded}>📹 Recorded</span>}
-        </div>
-        <div className={styles.cardOverlay}>
-          <button className={styles.previewBtn} onClick={() => setSelectedCourse(course)}>
-            <FaPlay /> Preview
-          </button>
-        </div>
-      </div>
-      <div className={styles.cardContent}>
-        <div className={styles.cardCategory}>{course.category}</div>
-        <h3 className={styles.cardTitle}>{course.title}</h3>
-        <p className={styles.cardDescription}>{course.description}</p>
-        <div className={styles.cardInstructor}>
-          <img src={course.instructor.image} alt={course.instructor.name} />
-          <span>{course.instructor.name}</span>
-        </div>
-        <div className={styles.cardRating}>
-          <div className={styles.stars}>
-            {[...Array(5)].map((_, i) => {
-              if (i < Math.floor(course.rating)) return <FaStar key={i} />;
-              if (i < Math.ceil(course.rating) && course.rating % 1 !== 0) return <FaStarHalfAlt key={i} />;
-              return <FaRegStar key={i} />;
-            })}
-          </div>
-          <span className={styles.ratingValue}>{course.rating}</span>
-          <span className={styles.studentCount}>({course.students.toLocaleString()})</span>
-        </div>
-        <div className={styles.cardDetails}>
-          <span><FaClock /> {course.durationDays}d</span>
-          <span><FaBook /> {course.lessons}L</span>
-          <span><FaUser /> {course.level}</span>
-        </div>
-        <div className={styles.cardFooter}>
-          <div className={styles.cardPrice}>
-            <span className={styles.currentPrice}>₹{course.price.toLocaleString()}</span>
-            {course.originalPrice && (
-              <>
-                <span className={styles.originalPrice}>₹{course.originalPrice.toLocaleString()}</span>
-                <span className={styles.discount}>-{course.discount}%</span>
-              </>
-            )}
-          </div>
-          <motion.button 
-            className={styles.viewCourseBtn}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            View Course
-          </motion.button>
-        </div>
-      </div>
-    </motion.div>
-  );
-
-  // Section Slider Component
-  const SectionSlider = ({ title, subtitle, courses, badge }: { title: string; subtitle?: string; courses: Course[]; badge?: string }) => {
-    if (courses.length === 0) return null;
-
-    return (
-      <section className={styles.sliderSection}>
-        <div className={styles.sliderHeader}>
-          <div>
-            <h2 className={styles.sliderTitle}>{title}</h2>
-            {subtitle && <p className={styles.sliderSubtitle}>{subtitle}</p>}
-          </div>
-          {badge && <span className={styles.sliderBadge}>{badge}</span>}
-        </div>
-        <div className={styles.sliderContainer}>
-          <button className={styles.sliderArrowLeft} onClick={() => handleTrendingScroll('left')}>
-            <FaChevronLeft />
-          </button>
-          <div className={styles.sliderTrack} ref={trendingRef}>
-            {courses.map((course, index) => (
-              <div key={course.id} className={styles.sliderItem}>
-                <CourseCard course={course} index={index} />
-              </div>
-            ))}
-          </div>
-          <button className={styles.sliderArrowRight} onClick={() => handleTrendingScroll('right')}>
-            <FaChevronRight />
-          </button>
-        </div>
-      </section>
-    );
+  const filterSetters = {
+    setSelectedCategory, setSelectedType, setSelectedLevel, setSelectedDuration, setSelectedPrice, setSelectedRating,
   };
-
-  // Desktop Filter Section
-  const FilterSection = () => (
-    <div className={styles.filterSection}>
-      <h4>Filters</h4>
-      
-      <div className={styles.filterGroup}>
-        <h5>Category</h5>
-        {categories.map(cat => (
-          <label key={cat} className={styles.filterOption}>
-            <input
-              type="radio"
-              name="category"
-              checked={selectedCategory === cat}
-              onChange={() => setSelectedCategory(cat)}
-            />
-            <span>{cat}</span>
-          </label>
-        ))}
-      </div>
-
-      <div className={styles.filterGroup}>
-        <h5>Course Type</h5>
-        {types.map(type => (
-          <label key={type} className={styles.filterOption}>
-            <input
-              type="radio"
-              name="type"
-              checked={selectedType === type}
-              onChange={() => setSelectedType(type)}
-            />
-            <span>{type === "all" ? "All" : type.charAt(0).toUpperCase() + type.slice(1)}</span>
-          </label>
-        ))}
-      </div>
-
-      <div className={styles.filterGroup}>
-        <h5>Level</h5>
-        {levels.map(level => (
-          <label key={level} className={styles.filterOption}>
-            <input
-              type="radio"
-              name="level"
-              checked={selectedLevel === level}
-              onChange={() => setSelectedLevel(level)}
-            />
-            <span>{level === "all" ? "All Levels" : level.charAt(0).toUpperCase() + level.slice(1)}</span>
-          </label>
-        ))}
-      </div>
-
-      <div className={styles.filterGroup}>
-        <h5>Duration</h5>
-        {durations.map(dur => (
-          <label key={dur} className={styles.filterOption}>
-            <input
-              type="radio"
-              name="duration"
-              checked={selectedDuration === dur}
-              onChange={() => setSelectedDuration(dur)}
-            />
-            <span>{dur}</span>
-          </label>
-        ))}
-      </div>
-
-      <div className={styles.filterGroup}>
-        <h5>Price</h5>
-        {prices.map(price => (
-          <label key={price} className={styles.filterOption}>
-            <input
-              type="radio"
-              name="price"
-              checked={selectedPrice === price}
-              onChange={() => setSelectedPrice(price)}
-            />
-            <span>{price}</span>
-          </label>
-        ))}
-      </div>
-
-      <div className={styles.filterGroup}>
-        <h5>Rating</h5>
-        {ratings.map(rating => (
-          <label key={rating} className={styles.filterOption}>
-            <input
-              type="radio"
-              name="rating"
-              checked={selectedRating === rating}
-              onChange={() => setSelectedRating(rating)}
-            />
-            <span>{rating}</span>
-          </label>
-        ))}
-      </div>
-    </div>
-  );
-
-  // Mobile Filter Drawer
-  const MobileFilterDrawer = () => (
-    <AnimatePresence>
-      {isFilterOpen && (
-        <>
-          <motion.div
-            className={styles.drawerBackdrop}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsFilterOpen(false)}
-          />
-          <motion.div
-            className={styles.drawer}
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "100%" }}
-            transition={{ type: "spring", damping: 25 }}
-          >
-            <div className={styles.drawerHeader}>
-              <h3>Filter & Sort</h3>
-              <button onClick={() => setIsFilterOpen(false)}><FaTimes /></button>
-            </div>
-            <div className={styles.drawerContent}>
-              <div className={styles.filterGroup}>
-                <h5>Sort By</h5>
-                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-                  {sortOptions.map(opt => (
-                    <option key={opt} value={opt}>{opt}</option>
-                  ))}
-                </select>
-              </div>
-
-              <div className={styles.filterGroup}>
-                <h5>Category</h5>
-                <div className={styles.filterOptionsGrid}>
-                  {categories.map(cat => (
-                    <button
-                      key={cat}
-                      className={`${styles.filterChip} ${selectedCategory === cat ? styles.active : ""}`}
-                      onClick={() => setSelectedCategory(cat)}
-                    >
-                      {cat}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className={styles.filterGroup}>
-                <h5>Course Type</h5>
-                <div className={styles.filterOptionsGrid}>
-                  {types.map(type => (
-                    <button
-                      key={type}
-                      className={`${styles.filterChip} ${selectedType === type ? styles.active : ""}`}
-                      onClick={() => setSelectedType(type)}
-                    >
-                      {type === "all" ? "All" : type.charAt(0).toUpperCase() + type.slice(1)}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className={styles.filterGroup}>
-                <h5>Level</h5>
-                <div className={styles.filterOptionsGrid}>
-                  {levels.map(level => (
-                    <button
-                      key={level}
-                      className={`${styles.filterChip} ${selectedLevel === level ? styles.active : ""}`}
-                      onClick={() => setSelectedLevel(level)}
-                    >
-                      {level === "all" ? "All Levels" : level.charAt(0).toUpperCase() + level.slice(1)}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className={styles.filterGroup}>
-                <h5>Duration</h5>
-                <div className={styles.filterOptionsGrid}>
-                  {durations.map(dur => (
-                    <button
-                      key={dur}
-                      className={`${styles.filterChip} ${selectedDuration === dur ? styles.active : ""}`}
-                      onClick={() => setSelectedDuration(dur)}
-                    >
-                      {dur}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className={styles.filterGroup}>
-                <h5>Price</h5>
-                <div className={styles.filterOptionsGrid}>
-                  {prices.map(price => (
-                    <button
-                      key={price}
-                      className={`${styles.filterChip} ${selectedPrice === price ? styles.active : ""}`}
-                      onClick={() => setSelectedPrice(price)}
-                    >
-                      {price}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className={styles.filterGroup}>
-                <h5>Rating</h5>
-                <div className={styles.filterOptionsGrid}>
-                  {ratings.map(rating => (
-                    <button
-                      key={rating}
-                      className={`${styles.filterChip} ${selectedRating === rating ? styles.active : ""}`}
-                      onClick={() => setSelectedRating(rating)}
-                    >
-                      {rating}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <button className={styles.applyFiltersBtn} onClick={() => setIsFilterOpen(false)}>
-                Apply Filters
-              </button>
-            </div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
-  );
-
-  // Course Preview Modal
-  const CoursePreviewModal = () => (
-    <AnimatePresence>
-      {selectedCourse && (
-        <>
-          <motion.div
-            className={styles.modalBackdrop}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelectedCourse(null)}
-          />
-          <motion.div
-            className={styles.modal}
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-          >
-            <button className={styles.modalClose} onClick={() => setSelectedCourse(null)}>
-              <FaTimes />
-            </button>
-            <div className={styles.modalContent}>
-              <div className={styles.modalVideo}>
-                <img src={selectedCourse.image} alt={selectedCourse.title} />
-                <div className={styles.modalPlayBtn}>
-                  <FaPlay />
-                </div>
-              </div>
-              <div className={styles.modalInfo}>
-                <h2>{selectedCourse.title}</h2>
-                <p>{selectedCourse.description}</p>
-                <div className={styles.modalDetails}>
-                  <div><FaUser /> Instructor: {selectedCourse.instructor.name}</div>
-                  <div><FaClock /> Duration: {selectedCourse.durationDays} days</div>
-                  <div><FaBook /> {selectedCourse.lessons} lessons</div>
-                  <div><FaUsers /> {selectedCourse.students.toLocaleString()} students</div>
-                  <div><FaCertificate /> {selectedCourse.certificate ? "Certificate Included" : "No Certificate"}</div>
-                  <div><FaGlobe /> {selectedCourse.language}</div>
-                </div>
-                <div className={styles.modalPrice}>
-                  <span className={styles.currentPrice}>₹{selectedCourse.price.toLocaleString()}</span>
-                  {selectedCourse.originalPrice && (
-                    <>
-                      <span className={styles.originalPrice}>₹{selectedCourse.originalPrice.toLocaleString()}</span>
-                      <span className={styles.discount}>-{selectedCourse.discount}%</span>
-                    </>
-                  )}
-                </div>
-                <button className={styles.enrollBtn}>Enroll Now</button>
-              </div>
-            </div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
-  );
 
   return (
     <div className={styles.pageContainer}>
       {/* ===== HERO SECTION ===== */}
       <section className={styles.heroSection}>
-        <motion.div 
+        <motion.div
           className={styles.heroContent}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -937,7 +1209,7 @@ const AllCourses: React.FC = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            Learn from experienced yoga teachers through structured online courses, live classes 
+            Learn from experienced yoga teachers through structured online courses, live classes
             and recorded learning programs designed for every level.
           </motion.p>
           <motion.div
@@ -949,19 +1221,12 @@ const AllCourses: React.FC = () => {
             <button className={styles.btnPrimary}>Explore Courses</button>
             <button className={styles.btnSecondary}>Start Learning</button>
           </motion.div>
-          <motion.div
-            className={styles.scrollIndicator}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-          >
-            Scroll to Explore ↓
-          </motion.div>
+        
         </motion.div>
         <div className={styles.heroBackground}>
           <div className={styles.heroImageWrapper}>
-            <img 
-              src="https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg" 
+            <img
+              src="https://images.pexels.com/photos/3822724/pexels-photo-3822724.jpeg"
               alt="Yoga hero"
               className={styles.heroImage}
             />
@@ -985,14 +1250,25 @@ const AllCourses: React.FC = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
               className={styles.searchInput}
             />
+            {searchTerm && (
+              <button
+                type="button"
+                className={styles.searchClearBtn}
+                onClick={() => setSearchTerm("")}
+                aria-label="Clear search"
+              >
+                <FaTimes />
+              </button>
+            )}
           </div>
         </div>
       </section>
 
+     
       {/* ===== CATEGORY TABS ===== */}
       <section className={styles.tabsSection}>
         <div className={styles.tabsContainer}>
-          {categories.map((cat) => (
+          {CATEGORIES.map((cat) => (
             <button
               key={cat}
               className={`${styles.tab} ${selectedCategory === cat ? styles.activeTab : ""}`}
@@ -1010,66 +1286,16 @@ const AllCourses: React.FC = () => {
           ))}
         </div>
       </section>
-
-      {/* ===== SLIDERS ===== */}
-      {trendingCourses.length > 0 && (
-        <SectionSlider 
-          title="Trending Courses" 
-          subtitle="Popular right now"
-          courses={trendingCourses}
-          badge="🔥 Popular"
-        />
-      )}
-
-      {featuredCourses.length > 0 && (
-        <SectionSlider 
-          title="Featured Yoga Programs" 
-          subtitle="Our most comprehensive programs"
-          courses={featuredCourses}
-          badge="✨ Featured"
-        />
-      )}
-
-      {shortCourses.length > 0 && (
-        <SectionSlider 
-          title="Short Yoga Programs" 
-          subtitle="7-30 day programs to get started"
-          courses={shortCourses}
-        />
-      )}
-
-      {longCourses.length > 0 && (
-        <SectionSlider 
-          title="Advanced & Long-Term Programs" 
-          subtitle="100-300 hour professional programs"
-          courses={longCourses}
-          badge="🎓 Professional"
-        />
-      )}
-
-      {liveCourses.length > 0 && (
-        <SectionSlider 
-          title="Learn Live With Our Teachers" 
-          subtitle="Interactive live sessions with instructors"
-          courses={liveCourses}
-          badge="🔴 Live"
-        />
-      )}
-
-      {recordedCourses.length > 0 && (
-        <SectionSlider 
-          title="Learn Anytime With Recorded Courses" 
-          subtitle="On-demand learning at your own pace"
-          courses={recordedCourses}
-          badge="📹 Recorded"
-        />
-      )}
-
-      {/* ===== MAIN CONTENT ===== */}
+ {/* ===== MAIN CONTENT ===== */}
       <section className={styles.mainContent}>
         {/* Desktop Filter Sidebar */}
         <aside className={styles.desktopFilters}>
-          <FilterSection />
+          <FilterSidebar
+            filters={filterState}
+            setFilters={filterSetters}
+            activeCount={activeFilterCount}
+            onClearAll={clearAllFilters}
+          />
         </aside>
 
         {/* Course Grid */}
@@ -1080,38 +1306,41 @@ const AllCourses: React.FC = () => {
               <span>{filteredCourses.length} Courses Available</span>
             </div>
             <div className={styles.topBarControls}>
-              <select 
+              <select
                 className={styles.sortSelect}
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
               >
-                {sortOptions.map(opt => (
+                {SORT_OPTIONS.map((opt) => (
                   <option key={opt} value={opt}>{opt}</option>
                 ))}
               </select>
-              <button 
+              <button
                 className={styles.mobileFilterBtn}
                 onClick={() => setIsFilterOpen(true)}
               >
                 <FaFilter /> Filter
+                {activeFilterCount > 0 && <span className={styles.filterCountBadgeSmall}>{activeFilterCount}</span>}
               </button>
             </div>
           </div>
 
-          <AnimatePresence>
-            <motion.div 
-              className={styles.courseGrid}
-              layout
-            >
+          {visibleFilteredCourses.length > 0 ? (
+            <motion.div className={styles.courseGrid} layout>
               {visibleFilteredCourses.map((course, index) => (
-                <CourseCard key={course.id} course={course} index={index} />
+                <CourseCard key={course.id} course={course} index={index} onPreview={setSelectedCourse} />
               ))}
             </motion.div>
-          </AnimatePresence>
+          ) : (
+            <div className={styles.noResults}>
+              <p>No courses match your filters.</p>
+              <button className={styles.clearAllBtnFull} onClick={clearAllFilters}>Clear all filters</button>
+            </div>
+          )}
 
           {visibleFilteredCourses.length < filteredCourses.length && (
             <div className={styles.loadMoreContainer}>
-              <button 
+              <button
                 className={styles.loadMoreBtn}
                 onClick={handleLoadMore}
                 disabled={isLoading}
@@ -1122,6 +1351,16 @@ const AllCourses: React.FC = () => {
           )}
         </div>
       </section>
+
+      {/* ===== SLIDERS ===== */}
+      <SectionSlider title="Trending Courses" subtitle="Popular right now" courses={trendingCourses} badge="🔥 Popular" onPreview={setSelectedCourse} />
+      
+      <SectionSlider title="Short Yoga Programs" subtitle="7-30 day programs to get started" courses={shortCourses} onPreview={setSelectedCourse} />
+      <SectionSlider title="Advanced & Long-Term Programs" subtitle="100-300 hour professional programs" courses={longCourses} badge="🎓 Professional" onPreview={setSelectedCourse} />
+      <SectionSlider title="Learn Live With Our Teachers" subtitle="Interactive live sessions with instructors" courses={liveCourses} badge="🔴 Live" onPreview={setSelectedCourse} />
+      <SectionSlider title="Learn Anytime With Recorded Courses" subtitle="On-demand learning at your own pace" courses={recordedCourses} badge="📹 Recorded" onPreview={setSelectedCourse} />
+
+      
 
       {/* ===== LMS FEATURES ===== */}
       <section className={styles.featuresSection}>
@@ -1279,10 +1518,19 @@ const AllCourses: React.FC = () => {
       </section>
 
       {/* ===== MOBILE FILTER DRAWER ===== */}
-      <MobileFilterDrawer />
+      <MobileFilterDrawer
+        isOpen={isFilterOpen}
+        onClose={() => setIsFilterOpen(false)}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        filters={filterState}
+        setFilters={filterSetters}
+        activeCount={activeFilterCount}
+        onClearAll={clearAllFilters}
+      />
 
       {/* ===== COURSE PREVIEW MODAL ===== */}
-      <CoursePreviewModal />
+      <CoursePreviewModal course={selectedCourse} onClose={() => setSelectedCourse(null)} />
     </div>
   );
 };

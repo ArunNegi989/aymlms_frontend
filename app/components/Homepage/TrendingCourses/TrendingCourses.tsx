@@ -1,4 +1,3 @@
-// TrendingCourses.tsx
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -211,6 +210,15 @@ function ChevronIcon({ open }: { open: boolean }) {
   );
 }
 
+function SparkleIcon() {
+  return (
+    <svg className={styles.sparkleIcon} viewBox="0 0 20 20">
+      <path d="M10 1l1.5 5.5L17 8l-5.5 1.5L10 15l-1.5-5.5L3 8l5.5-1.5L10 1z" />
+      <path d="M10 5l1 3.5L14.5 10l-3.5 1L10 14.5l-1-3.5L5.5 10l3.5-1L10 5z" fill="currentColor" opacity="0.6" />
+    </svg>
+  );
+}
+
 const POPOVER_WIDTH = 336;
 const POPOVER_MARGIN = 16;
 const GAP = 24;
@@ -226,7 +234,6 @@ type PopoverState = {
   flipped: boolean;
 };
 
-// How many cards are visible at once, per breakpoint.
 function getCardsPerView(width: number) {
   if (width >= 1280) return 4;
   if (width >= 980) return 3;
@@ -253,16 +260,12 @@ export default function TrendingCourses() {
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const touchMoved = useRef(false);
 
-  // Infinite loop: clone the full list before and after itself, so there's
-  // always a full buffer of real-looking cards on either side of the
-  // visible viewport, no matter how many are shown at once.
   const CLONE = courses.length;
   const slides = useMemo(() => [...courses, ...courses, ...courses], []);
-  const [index, setIndex] = useState(CLONE); // start at the first "real" copy
+  const [index, setIndex] = useState(CLONE);
 
   useEffect(() => setMounted(true), []);
 
-  // Recalculate cardsPerView + pixel card width + mobile flag on mount/resize.
   const recalc = useCallback(() => {
     const width = window.innerWidth;
     const perView = getCardsPerView(width);
@@ -282,8 +285,6 @@ export default function TrendingCourses() {
     return () => window.removeEventListener("resize", recalc);
   }, [recalc]);
 
-  // Re-measure after fonts/images settle and after expand/collapse changes
-  // card heights (doesn't affect width, but keeps things accurate on rotate).
   useEffect(() => {
     const id = requestAnimationFrame(recalc);
     return () => cancelAnimationFrame(id);
@@ -293,13 +294,12 @@ export default function TrendingCourses() {
     setWithTransition(true);
     setIndex((i) => i + 1);
   }, []);
+  
   const prev = useCallback(() => {
     setWithTransition(true);
     setIndex((i) => i - 1);
   }, []);
 
-  // Silently snap back into the middle copy once we drift into a clone set,
-  // so the loop feels endless with no visible jump.
   const handleTransitionEnd = () => {
     if (index >= CLONE * 2) {
       setWithTransition(false);
@@ -317,15 +317,12 @@ export default function TrendingCourses() {
     }
   }, [withTransition]);
 
-  // Autoplay, paused on hover / while a popover is open / while a mobile
-  // card is expanded (so the user isn't reading and the card yanked away).
   useEffect(() => {
     if (isHovering || popover || expandedId) return;
     const id = setInterval(next, AUTOPLAY_MS);
     return () => clearInterval(id);
   }, [isHovering, popover, expandedId, next]);
 
-  // Collapse any expanded mobile card whenever the slide changes.
   useEffect(() => {
     setExpandedId(null);
   }, [index]);
@@ -343,11 +340,11 @@ export default function TrendingCourses() {
     [router]
   );
 
-  // ---- touch: swipe to change slide, tap to expand (mobile only) ----
   const onTouchStart = (e: React.TouchEvent) => {
     touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
     touchMoved.current = false;
   };
+  
   const onTouchMove = (e: React.TouchEvent) => {
     if (!touchStart.current) return;
     const dx = Math.abs(e.touches[0].clientX - touchStart.current.x);
@@ -356,6 +353,7 @@ export default function TrendingCourses() {
       touchMoved.current = true;
     }
   };
+  
   const onTouchEnd = (e: React.TouchEvent) => {
     if (!touchStart.current) return;
     const delta = e.changedTouches[0].clientX - touchStart.current.x;
@@ -368,14 +366,10 @@ export default function TrendingCourses() {
 
   const handleCardTap = (course: Course, slideKey: string) => {
     if (!isMobile) return;
-    // A real swipe shouldn't also toggle the card open/closed.
     if (touchMoved.current) return;
     setExpandedId((cur) => (cur === slideKey ? null : slideKey));
   };
 
-  // Desktop: clicking a card (outside its enroll button) navigates straight
-  // to the course description page. Mobile: tapping the card expands it
-  // in place instead (handled by handleCardTap / detailsToggle button).
   const handleCardClick = (course: Course, slideKey: string) => {
     if (isMobile) {
       handleCardTap(course, slideKey);
@@ -384,7 +378,6 @@ export default function TrendingCourses() {
     }
   };
 
-  // ---- desktop hover popover (unchanged behaviour, disabled on mobile) ----
   useEffect(() => {
     if (!popover || !popoverRef.current) return;
     const rect = popoverRef.current.getBoundingClientRect();
@@ -400,7 +393,6 @@ export default function TrendingCourses() {
       changed = true;
     }
     if (changed) setPopover((prev) => (prev ? { ...prev, top, left } : prev));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [popover?.course.id]);
 
   const clearCloseTimer = () => {
@@ -409,10 +401,12 @@ export default function TrendingCourses() {
       closeTimer.current = null;
     }
   };
+  
   const scheduleClose = () => {
     clearCloseTimer();
     closeTimer.current = setTimeout(() => setPopover(null), 120);
   };
+  
   const openPopover = (course: Course, cardEl: HTMLElement) => {
     if (isMobile) return;
     clearCloseTimer();
@@ -423,6 +417,7 @@ export default function TrendingCourses() {
     const top = rect.top - 14;
     setPopover({ course, top, left, flipped });
   };
+  
   const handleMouseLeave = () => {
     if (isMobile) return;
     scheduleClose();
@@ -442,176 +437,205 @@ export default function TrendingCourses() {
   const translateX = cardWidth ? -(index * (cardWidth + GAP)) : 0;
 
   return (
-    <section className={styles.section} aria-label="AYM Yoga School courses">
-      <div className={styles.headerRow}>
-        <h2 className={styles.heading}>Trending Courses</h2>
-      </div>
-
-      <div
-        className={styles.carouselWrap}
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-      >
-        <div
-          className={styles.viewport}
-          ref={viewportRef}
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-        >
-          <div
-            className={styles.track}
-            ref={trackRef}
-            onTransitionEnd={handleTransitionEnd}
-            style={{
-              transform: `translateX(${translateX}px)`,
-              transition: withTransition
-                ? `transform ${TRANSITION_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`
-                : "none",
-              alignItems: "flex-start",
-            }}
-          >
-            {slides.map((course, i) => {
-              const slideKey = `${course.id}-${i}`;
-              const isExpanded = isMobile && expandedId === slideKey;
-              return (
-                <div
-                  key={slideKey}
-                  className={`${styles.cardWrap} ${
-                    popover?.course.id === course.id && !isMobile
-                      ? styles.isHovered
-                      : ""
-                  }`}
-                  style={{
-                    width: cardWidth ? `${cardWidth}px` : undefined,
-                    cursor: isMobile ? undefined : "pointer",
-                  }}
-                  onMouseEnter={(e) => openPopover(course, e.currentTarget)}
-                  onMouseLeave={handleMouseLeave}
-                  onClick={() => handleCardClick(course, slideKey)}
-                >
-                  <article
-                    className={`${styles.card} ${
-                      isExpanded ? styles.cardExpanded : ""
-                    }`}
-                  >
-                    <div className={styles.thumbWrap}>
-                      <img
-                        className={styles.thumb}
-                        src={course.image}
-                        alt={course.title}
-                        draggable={false}
-                      />
-                      <span className={styles.thumbScrim} />
-                    </div>
-                    <div className={styles.body}>
-                      <h3 className={styles.title}>{course.title}</h3>
-                      <p className={styles.instructor}>{course.instructor}</p>
-                      <div className={styles.metaRow}>
-                        <span className={styles.badge}>Bestseller</span>
-                        <span className={styles.rating}>
-                          <StarIcon />
-                          {course.rating}
-                        </span>
-                        <span className={styles.studentsCount}>
-                          {course.students} students
-                        </span>
-                      </div>
-                      <div className={styles.priceRow}>
-                        <span className={styles.price}>
-                          ₹{course.price.toLocaleString("en-IN")}
-                        </span>
-                        <span className={styles.originalPrice}>
-                          ₹{course.originalPrice.toLocaleString("en-IN")}
-                        </span>
-                      </div>
-
-                      {/* Mobile-only: tap-to-expand affordance + inline details */}
-                      {isMobile && (
-                        <>
-                          <button
-                            type="button"
-                            className={styles.detailsToggle}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleCardTap(course, slideKey);
-                            }}
-                            aria-expanded={isExpanded}
-                          >
-                            {isExpanded ? "Hide details" : "View details"}
-                            <ChevronIcon open={isExpanded} />
-                          </button>
-
-                          <div
-                            className={styles.expandPanel}
-                            style={{
-                              maxHeight: isExpanded ? "600px" : "0px",
-                            }}
-                          >
-                            <div className={styles.expandInner}>
-                              <p className={styles.popoverSub}>
-                                {course.hours} · All Levels · Live + Recorded
-                              </p>
-                              <p className={styles.popoverDesc}>
-                                {course.description}
-                              </p>
-                              <ul className={styles.bulletList}>
-                                {course.bullets.map((bullet) => (
-                                  <li key={bullet}>
-                                    <CheckIcon />
-                                    <span>{bullet}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                              <p className={styles.nextBatch}>
-                                Next batch{" "}
-                                <strong>{course.nextBatch}</strong>
-                              </p>
-                              <button
-                                className={styles.enrollBtn}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  goToCourse(course);
-                                }}
-                              >
-                                Enroll Now
-                              </button>
-                            </div>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </article>
-                </div>
-              );
-            })}
+    <section className={styles.section}>
+      <div className={styles.decorativeBg} />
+      
+      <div className={styles.container}>
+        <div className={styles.headerRow}>
+          <div className={styles.headerLeft}>
+            <div className={styles.eyebrow}>
+              <SparkleIcon />
+              <span>Popular Now</span>
+            </div>
+            <h2 className={styles.heading}>
+              Trending <span className={styles.headingHighlight}>Courses</span>
+            </h2>
+            <p className={styles.subheading}>
+              Most popular courses loved by our students worldwide
+            </p>
+          </div>
+          <div className={styles.stats}>
+            <div className={styles.statItem}>
+              <span className={styles.statNumber}>50+</span>
+              <span className={styles.statLabel}>Courses</span>
+            </div>
+            <div className={styles.statDivider} />
+            <div className={styles.statItem}>
+              <span className={styles.statNumber}>10k+</span>
+              <span className={styles.statLabel}>Students</span>
+            </div>
           </div>
         </div>
 
-        <button
-          className={`${styles.navBtn} ${styles.prevBtn}`}
-          onClick={prev}
-          aria-label="Previous courses"
+        <div
+          className={styles.carouselWrap}
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
         >
-          &#8249;
-        </button>
-        <button
-          className={`${styles.navBtn} ${styles.nextBtn}`}
-          onClick={next}
-          aria-label="Next courses"
-        >
-          &#8250;
-        </button>
+          <div
+            className={styles.viewport}
+            ref={viewportRef}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
+            <div
+              className={styles.track}
+              ref={trackRef}
+              onTransitionEnd={handleTransitionEnd}
+              style={{
+                transform: `translateX(${translateX}px)`,
+                transition: withTransition
+                  ? `transform ${TRANSITION_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`
+                  : "none",
+                alignItems: "flex-start",
+              }}
+            >
+              {slides.map((course, i) => {
+                const slideKey = `${course.id}-${i}`;
+                const isExpanded = isMobile && expandedId === slideKey;
+                return (
+                  <div
+                    key={slideKey}
+                    className={`${styles.cardWrap} ${
+                      popover?.course.id === course.id && !isMobile
+                        ? styles.isHovered
+                        : ""
+                    }`}
+                    style={{
+                      width: cardWidth ? `${cardWidth}px` : undefined,
+                      cursor: isMobile ? undefined : "pointer",
+                    }}
+                    onMouseEnter={(e) => openPopover(course, e.currentTarget)}
+                    onMouseLeave={handleMouseLeave}
+                    onClick={() => handleCardClick(course, slideKey)}
+                  >
+                    <article
+                      className={`${styles.card} ${
+                        isExpanded ? styles.cardExpanded : ""
+                      }`}
+                    >
+                      <div className={styles.thumbWrap}>
+                        <img
+                          className={styles.thumb}
+                          src={course.image}
+                          alt={course.title}
+                          draggable={false}
+                        />
+                        <div className={styles.thumbScrim} />
+                        <div className={styles.cardBadge}>
+                          <span className={styles.bestsellerBadge}>⭐ Bestseller</span>
+                          <span className={styles.discountBadge}>
+                            {Math.round((1 - course.price / course.originalPrice) * 100)}% OFF
+                          </span>
+                        </div>
+                      </div>
+                      <div className={styles.body}>
+                        <h3 className={styles.title}>{course.title}</h3>
+                        <p className={styles.instructor}>{course.instructor}</p>
+                        <div className={styles.metaRow}>
+                          <span className={styles.rating}>
+                            <StarIcon />
+                            {course.rating}
+                          </span>
+                          <span className={styles.studentsCount}>
+                            {course.students} students
+                          </span>
+                        </div>
+                        <div className={styles.priceRow}>
+                          <span className={styles.price}>
+                            ₹{course.price.toLocaleString("en-IN")}
+                          </span>
+                          <span className={styles.originalPrice}>
+                            ₹{course.originalPrice.toLocaleString("en-IN")}
+                          </span>
+                        </div>
 
-        <div className={styles.dots}>
-          {courses.map((c, i) => (
-            <button
-              key={c.id}
-              className={`${styles.dot} ${i === activeDot ? styles.dotActive : ""}`}
-              onClick={() => goToDot(i)}
-              aria-label={`Go to ${c.title}`}
-            />
-          ))}
+                        {isMobile && (
+                          <>
+                            <button
+                              type="button"
+                              className={styles.detailsToggle}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleCardTap(course, slideKey);
+                              }}
+                              aria-expanded={isExpanded}
+                            >
+                              {isExpanded ? "Hide details" : "View details"}
+                              <ChevronIcon open={isExpanded} />
+                            </button>
+
+                            <div
+                              className={styles.expandPanel}
+                              style={{
+                                maxHeight: isExpanded ? "600px" : "0px",
+                              }}
+                            >
+                              <div className={styles.expandInner}>
+                                <p className={styles.popoverSub}>
+                                  {course.hours} · All Levels · Live + Recorded
+                                </p>
+                                <p className={styles.popoverDesc}>
+                                  {course.description}
+                                </p>
+                                <ul className={styles.bulletList}>
+                                  {course.bullets.map((bullet) => (
+                                    <li key={bullet}>
+                                      <CheckIcon />
+                                      <span>{bullet}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                                <p className={styles.nextBatch}>
+                                  Next batch <strong>{course.nextBatch}</strong>
+                                </p>
+                                <button
+                                  className={styles.enrollBtn}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    goToCourse(course);
+                                  }}
+                                >
+                                  Enroll Now →
+                                </button>
+                              </div>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </article>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <button
+            className={`${styles.navBtn} ${styles.prevBtn}`}
+            onClick={prev}
+            aria-label="Previous courses"
+          >
+            ‹
+          </button>
+          <button
+            className={`${styles.navBtn} ${styles.nextBtn}`}
+            onClick={next}
+            aria-label="Next courses"
+          >
+            ›
+          </button>
+
+          <div className={styles.dots}>
+            {courses.map((c, i) => (
+              <button
+                key={c.id}
+                className={`${styles.dot} ${i === activeDot ? styles.dotActive : ""}`}
+                onClick={() => goToDot(i)}
+                aria-label={`Go to ${c.title}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
@@ -621,24 +645,20 @@ export default function TrendingCourses() {
         createPortal(
           <div
             ref={popoverRef}
-            className={styles.popover}
+            className={`${styles.popover} ${popover.flipped ? styles.popoverFlipped : ""}`}
             style={{ top: popover.top, left: popover.left }}
             role="dialog"
             onMouseEnter={clearCloseTimer}
             onMouseLeave={scheduleClose}
           >
-            <span
-              className={`${styles.popoverArrow} ${
-                popover.flipped ? styles.arrowRight : styles.arrowLeft
-              }`}
-            />
-            <h4 className={styles.popoverTitle}>{popover.course.title}</h4>
-            <div className={styles.popoverMetaRow}>
-              <span className={styles.badge}>Bestseller</span>
-              <span className={styles.nextBatch}>
-                Next batch <strong>{popover.course.nextBatch}</strong>
+            <div className={styles.popoverArrow} />
+            <div className={styles.popoverHeader}>
+              <span className={styles.popoverBadge}>⭐ Bestseller</span>
+              <span className={styles.popoverDate}>
+                📅 {popover.course.nextBatch}
               </span>
             </div>
+            <h4 className={styles.popoverTitle}>{popover.course.title}</h4>
             <p className={styles.popoverSub}>
               {popover.course.hours} · All Levels · Live + Recorded
             </p>
@@ -658,7 +678,7 @@ export default function TrendingCourses() {
                 goToCourse(popover.course);
               }}
             >
-              Enroll Now
+              Enroll Now →
             </button>
           </div>,
           document.body
