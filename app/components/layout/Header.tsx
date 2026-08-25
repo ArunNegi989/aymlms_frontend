@@ -80,7 +80,7 @@ export default function Header({
             </form>
 
             <div className={styles.navLinks}>
-              <Link href="/courses" className={styles.navLink} onClick={() => setMenuOpen(false)}>
+              <Link href="/AllCourses" className={styles.navLink} onClick={() => setMenuOpen(false)}>
                 All Courses
               </Link>
               <Link href="/free-lessons" className={styles.navLink} onClick={() => setMenuOpen(false)}>
