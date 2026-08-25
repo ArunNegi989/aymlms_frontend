@@ -23,8 +23,8 @@ import styles from "./Sidebar.module.css";
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "My Courses", href: "/my-courses", icon: BookOpen },
-  { label: "Live Classes", href: "/live-classess", icon: Video },
-  { label: "Recorded Classes", href: "/recorded-classess", icon: PlayCircle },
+  { label: "Live Classes", href: "/live-classes", icon: Video },
+  { label: "Recorded Classes", href: "/recorded-classes", icon: PlayCircle },
   { label: "Notes", href: "/notes", icon: FileText },
   { label: "Assignments", href: "/assignments", icon: ClipboardList },
   { label: "Quizzes", href: "/quizzes", icon: HelpCircle },
