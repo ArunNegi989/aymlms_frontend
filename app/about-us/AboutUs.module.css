@@ -58,7 +58,6 @@
 
 /* ===== HERO ===== */
 .heroSection {
-  min-height: 90vh;
   display: flex;
   align-items: center;
   padding: 2rem 0;
