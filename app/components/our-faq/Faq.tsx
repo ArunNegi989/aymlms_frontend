@@ -1,12 +1,4 @@
-// File location: app/components/faq/Faq.tsx
-// Reusable anywhere in the project:
-//
-//   import FAQ from "@/app/components/faq/Faq";
-//   <FAQ items={someFaqs} title="Frequently asked questions" />
-//
-// Works standalone (own CSS variables, no dependency on a parent page's
-// theme tokens) so it can be dropped into the homepage, a course detail
-// page, the contact page, or its own /faq page without extra setup.
+// File: app/components/faq/Faq.tsx
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -22,27 +14,14 @@ export type FAQItem = {
 };
 
 type FAQProps = {
-  /** Optional - defaults to the full question set in app/data/Faqs.ts.
-   *  Pass a filtered array only if you want a subset (e.g. one category)
-   *  on a specific page; most usages can just do <FAQ />. */
   items?: FAQItem[];
   title?: string;
   subtitle?: string;
-  /** Allow more than one answer open at once. Default: false (accordion). */
   allowMultipleOpen?: boolean;
-  /** id of an item to open by default. */
   defaultOpenId?: string;
-  /** Preset the category dropdown - useful for deep-linking from a
-   *  "browse by topic" grid elsewhere on the page. Pass a category name
-   *  or "All". Re-mount with a new `key` prop if you need to change this
-   *  after the initial render. */
   initialCategory?: string;
-  /** Show the search box. Default: true. */
   searchable?: boolean;
-  /** Show the category dropdown. Auto-hides if items have no categories.
-   *  Default: true (shown whenever 2+ distinct categories exist). */
   showCategoryFilter?: boolean;
-  /** Optional className to extend/override outer wrapper styling. */
   className?: string;
 };
 
@@ -72,12 +51,10 @@ export default function FAQ({
   const hasCategories = showCategoryFilter && categories.length > 1;
 
   useEffect(() => {
-    // Reset category filter if the item set changes and no longer includes it.
     if (category !== "All" && !categories.includes(category)) {
       setCategory("All");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items]);
+  }, [items, category, categories]);
 
   const filtered = useMemo(() => {
     let list = items;
@@ -110,7 +87,7 @@ export default function FAQ({
   };
 
   return (
-    <div className={`${styles.faqWrap} ${className ?? ""}`}>
+    <div className={`${styles.faqWrap} ${className || ""}`}>
       {(title || subtitle) && (
         <div className={styles.faqHeader}>
           {title && <h2 className={styles.faqTitle}>{title}</h2>}

@@ -1,8 +1,9 @@
+// File: app/blog/page.tsx
 "use client";
 
 import { useEffect, useMemo, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Search, Clock, ArrowRight, X, Filter, ChevronDown } from "lucide-react";
+import { Search, Clock, ArrowRight, X, Filter, ChevronDown, Calendar } from "lucide-react";
 import { blogPosts, BLOG_CATEGORIES, type BlogCategory } from "@/app/data/blogs";
 import styles from "./blog.module.css";
 
@@ -77,37 +78,40 @@ export default function BlogPage() {
 
   return (
     <div className={styles.page}>
-      {/* ---------------- Banner ---------------- */}
-      <div className={styles.banner}>
-        <svg
-          className={styles.bannerPattern}
-          viewBox="0 0 600 160"
-          preserveAspectRatio="xMidYMid slice"
-          aria-hidden="true"
-        >
-          <g stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5">
-            <path d="M40 80 Q 90 40 140 80 Q 90 120 40 80 Z" />
-            <path d="M460 40 Q 510 10 545 45 Q 510 75 460 40 Z" />
-            <circle cx="300" cy="30" r="16" />
-            <circle cx="300" cy="30" r="8" />
-          </g>
-        </svg>
+      {/* ===== BANNER / HERO ===== */}
+      <section className={styles.hero}>
+        <div className={styles.heroOverlay}></div>
+        <div className={styles.heroPattern}>
+          <svg viewBox="0 0 600 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <g stroke="#ffffff" strokeWidth="1.5" fill="none" opacity="0.2">
+              <path d="M40 80 Q 90 40 140 80 Q 90 120 40 80 Z" />
+              <path d="M460 40 Q 510 10 545 45 Q 510 75 460 40 Z" />
+              <circle cx="300" cy="30" r="20" />
+              <circle cx="300" cy="30" r="10" />
+              <path d="M180 130 Q 200 110 220 130 Q 200 150 180 130 Z" />
+              <path d="M380 130 Q 400 110 420 130 Q 400 150 380 130 Z" />
+            </g>
+          </svg>
+        </div>
 
-        <div className={styles.bannerInner}>
-          <h1 className={styles.bannerTitle}>AYM Yoga Blogs</h1>
-          <p className={styles.bannerSubtitle}>
+        <div className={styles.heroContent}>
+          <span className={styles.heroBadge}>🧘 AYM Yoga School</span>
+          <h1 className={styles.heroTitle}>
+            Yoga &amp; <span className={styles.highlight}>Wellness Blog</span>
+          </h1>
+          <p className={styles.heroSubtitle}>
             Notes on teacher training, practice, and everything in between — written by
             our instructors and faculty.
           </p>
         </div>
-      </div>
+      </section>
 
-      {/* ---------------- Body ---------------- */}
+      {/* ===== BODY ===== */}
       <div className={styles.body}>
-        {/* Search + filters */}
+        {/* Controls Row */}
         <div className={styles.controlsRow}>
           <div className={styles.searchBox}>
-            <Search size={16} />
+            <Search size={18} className={styles.searchIcon} />
             <input
               type="text"
               placeholder="Search articles..."
@@ -120,23 +124,23 @@ export default function BlogPage() {
                 onClick={() => setQuery("")}
                 aria-label="Clear search"
               >
-                <X size={14} />
+                <X size={16} />
               </button>
             )}
           </div>
 
           <div className={styles.filterGroup}>
-            {/* Category dropdown */}
+            {/* Category */}
             <div className={styles.selectWrap} ref={categoryRef}>
-              <Filter size={14} className={styles.selectIcon} />
+              <Filter size={16} className={styles.selectIcon} />
               <div 
                 className={styles.selectDisplay}
                 onClick={() => setIsCategoryOpen(!isCategoryOpen)}
               >
-                {category}
+                {category === "All" ? "All Categories" : category}
               </div>
               <ChevronDown 
-                size={14} 
+                size={16} 
                 className={`${styles.selectChevron} ${isCategoryOpen ? styles.chevronOpen : ''}`}
                 onClick={() => setIsCategoryOpen(!isCategoryOpen)}
               />
@@ -149,7 +153,7 @@ export default function BlogPage() {
                       setIsCategoryOpen(false);
                     }}
                   >
-                    All categories
+                    All Categories
                   </div>
                   {BLOG_CATEGORIES.map((cat) => (
                     <div 
@@ -167,7 +171,7 @@ export default function BlogPage() {
               )}
             </div>
 
-            {/* Sort dropdown */}
+            {/* Sort */}
             <div className={styles.selectWrap} ref={sortRef}>
               <div 
                 className={styles.selectDisplay}
@@ -176,7 +180,7 @@ export default function BlogPage() {
                 {sort}
               </div>
               <ChevronDown 
-                size={14} 
+                size={16} 
                 className={`${styles.selectChevron} ${isSortOpen ? styles.chevronOpen : ''}`}
                 onClick={() => setIsSortOpen(!isSortOpen)}
               />
@@ -200,20 +204,23 @@ export default function BlogPage() {
 
             {category !== "All" && (
               <button className={styles.clearCategory} onClick={() => setCategory("All")}>
-                <X size={12} /> {category}
+                <X size={14} /> {category}
               </button>
             )}
           </div>
         </div>
 
+        {/* Results Count */}
         <p className={styles.resultsCount}>
-          {filtered.length} article{filtered.length === 1 ? "" : "s"}
+          <span className={styles.countNumber}>{filtered.length}</span> 
+          article{filtered.length === 1 ? "" : "s"}
           {category !== "All" ? ` in ${category}` : ""}
         </p>
 
         {/* Grid */}
         {visible.length === 0 ? (
           <div className={styles.empty}>
+            <div className={styles.emptyIcon}>📖</div>
             <p className={styles.emptyTitle}>No articles match your filters</p>
             <p className={styles.emptyText}>Try a different category or search term.</p>
             <button
@@ -241,9 +248,12 @@ export default function BlogPage() {
 
                 <div className={styles.cardBody}>
                   <div className={styles.metaRow}>
-                    <span>{formatDate(post.date)}</span>
+                    <span className={styles.metaItem}>
+                      <Calendar size={12} />
+                      {formatDate(post.date)}
+                    </span>
                     <span className={styles.dotSep}>·</span>
-                    <span className={styles.readTime}>
+                    <span className={styles.metaItem}>
                       <Clock size={12} /> {post.readTime} min read
                     </span>
                   </div>
@@ -261,7 +271,7 @@ export default function BlogPage() {
                       <span>{post.author}</span>
                     </div>
                     <span className={styles.readMore}>
-                      Read <ArrowRight size={14} />
+                      Read <ArrowRight size={16} />
                     </span>
                   </div>
                 </div>
