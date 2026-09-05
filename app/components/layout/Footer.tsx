@@ -217,17 +217,14 @@ export default function Footer() {
           © {new Date().getFullYear()} AYM Yoga School. All rights reserved.
         </p>
         <div className={styles.legalLinks}>
-          <Link href="/privacy" className={styles.legalLink}>
+          <Link href="/privacy-policy" className={styles.legalLink}>
             Privacy Policy
           </Link>
           <span className={styles.dot}>•</span>
-          <Link href="/terms" className={styles.legalLink}>
+          <Link href="/terms-of-service" className={styles.legalLink}>
             Terms of Service
           </Link>
-          <span className={styles.dot}>•</span>
-          <Link href="/cookies" className={styles.legalLink}>
-            Cookies
-          </Link>
+         
         </div>
       </div>
     </footer>

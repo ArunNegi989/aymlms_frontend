@@ -6,7 +6,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 72px;
   align-items: center;
-  padding: 110px 6%;
+  padding: 110px 9%;
   background: linear-gradient(180deg, #faf8f5 0%, #ffffff 100%);
   overflow: hidden;
 }
@@ -526,7 +526,7 @@
     max-width: 400px;
   }
   .floatCard {
-    top: -16px;
+    top: 14px;
     right: 14px;
     padding: 10px 14px;
   }
@@ -574,7 +574,7 @@
   .floatCard {
     gap: 8px;
     padding: 9px 13px;
-    top: -14px;
+    top: 12px;
     right: 10px;
   }
   .floatIcon {
@@ -643,7 +643,7 @@
     font-size: 11px;
   }
   .floatCard {
-    top: -12px;
+    top: 8px;
     right: 6px;
     padding: 7px 11px;
     border-radius: 11px;

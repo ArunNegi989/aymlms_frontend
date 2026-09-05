@@ -8,10 +8,11 @@
 }
 
 .container {
-  max-width: 1540px;
+  max-width: 1640px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
+   padding: 0 20px;
 }
 
 /* ===== Decorative Background ===== */

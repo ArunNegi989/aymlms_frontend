@@ -554,8 +554,7 @@
 @media (max-width: 768px) {
   .hero { 
     height: auto; 
-    min-height: 100vh; 
-    min-height: 100dvh;
+    min-height: 65dvh;
   }
   
   .inner {
@@ -646,7 +645,7 @@
 
 /* Mobile Portrait */
 @media (max-width: 480px) {
-  .hero { min-height: 100vh; min-height: 100dvh; }
+  .hero { min-height: 65dvh; }
   
   .inner {
     padding: 0 4%;

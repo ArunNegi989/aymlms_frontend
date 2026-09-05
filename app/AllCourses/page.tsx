@@ -389,6 +389,18 @@ const AllCourses: React.FC = () => {
   const [trendingIndex, setTrendingIndex] = useState(0);
   const trendingRef = useRef<HTMLDivElement>(null);
 
+  // Lock body scroll while the preview modal is open (prevents background
+  // page from scrolling behind the modal, especially on mobile full-screen mode).
+  useEffect(() => {
+    if (selectedCourse) {
+      const previousOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = previousOverflow;
+      };
+    }
+  }, [selectedCourse]);
+
   const categories = ["All", "Yoga", "Meditation", "Pranayama", "Yoga Philosophy", "Anatomy", "Teacher Training", "Wellness"];
   const types = ["All", "live", "recorded", "live-recorded"];
   const levels = ["All", "beginner", "intermediate", "advanced", "all"];
@@ -579,7 +591,7 @@ const AllCourses: React.FC = () => {
                 setSelectedCourse(course);
               }}
             >
-              <FaPlay /> Preview
+              <FaPlay /> <span>Preview</span>
             </button>
           </div>
         </div>
@@ -910,9 +922,9 @@ const AllCourses: React.FC = () => {
           />
           <motion.div
             className={styles.modal}
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
+            initial={{ scale: 0.9, opacity: 0, x: "-50%", y: "-50%" }}
+            animate={{ scale: 1, opacity: 1, x: "-50%", y: "-50%" }}
+            exit={{ scale: 0.9, opacity: 0, x: "-50%", y: "-50%" }}
           >
             <button className={styles.modalClose} onClick={() => setSelectedCourse(null)}>
               <FaTimes />

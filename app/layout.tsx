@@ -3,8 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "./context/CartContext";
 import CartDrawer from "./components/cart/CartDrawer";
-import LayoutWrapper from "./components/LayoutWrapper"; // ✅ Add this import
+import LayoutWrapper from "./components/LayoutWrapper";
 import { WishlistProvider } from "./context/WishlistContext";
+import FloatingActions from "./components/FloatingActions/page"; // ✅ Add this import
+import ScrollToTop from "./scroll-to-top";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,20 +43,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           async
         />
       </head>
-      <body 
-        className="min-h-full flex flex-col" 
-        style={{ 
-          backgroundColor: '#ffffff', 
-          color: '#000000' 
+      <body
+        className="min-h-full flex flex-col"
+        style={{
+          backgroundColor: '#ffffff',
+          color: '#000000'
         }}
-      >
+      ><ScrollToTop />
         <WishlistProvider>
-        <CartProvider>
-          <LayoutWrapper> {/* ✅ Wrap children with LayoutWrapper */}
-            {children}
-          </LayoutWrapper>
-          <CartDrawer />
-        </CartProvider>
+          <CartProvider>
+            <LayoutWrapper>
+              {children}
+            </LayoutWrapper>
+            <CartDrawer />
+            <FloatingActions
+  whatsappNumber="919876543210"
+  whatsappMessage="Hi, I have a query about AYM Yoga courses!"
+/> {/* ✅ Add this */}
+          </CartProvider>
         </WishlistProvider>
       </body>
     </html>
