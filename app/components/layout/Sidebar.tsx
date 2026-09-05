@@ -27,14 +27,14 @@ const navItems = [
   { label: "Recorded Classes", href: "/recorded-classes", icon: PlayCircle },
   { label: "Notes", href: "/notes", icon: FileText },
   { label: "Assignments", href: "/assignments", icon: ClipboardList },
-  { label: "Quizzes", href: "/quizzes", icon: HelpCircle },
-  { label: "Community", href: "/community", icon: Users },
+  // { label: "Quizzes", href: "/quizzes", icon: HelpCircle },
+  // { label: "Community", href: "/community", icon: Users },
   { label: "Calendar", href: "/calendar", icon: Calendar },
-  { label: "My Certificates", href: "/my-certificates", icon: Award },
+  // { label: "My Certificates", href: "/my-certificates", icon: Award },
 ];
 
 const bottomItems = [
-  { label: "Profile", href: "/", icon: User },
+  { label: "Profile", href: "/profile", icon: User },
   { label: "Settings", href: "/settings", icon: Settings },
 ];
 

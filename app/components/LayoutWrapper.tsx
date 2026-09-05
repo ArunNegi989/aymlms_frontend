@@ -8,7 +8,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   const pathname = usePathname();
   
   // Pages where header/footer should NOT appear
-  const hideHeaderFooter = ['/login', '/signup', '/dashboard'];
+  const hideHeaderFooter = ['/login', '/signup', '/dashboard' , '/my-courses', '/live-classes', '/recorded-classes', '/notes', '/assignments', '/quizzes', '/community', '/calendar', '/my-certificates', '/profile', '/settings'];
   const shouldHide = hideHeaderFooter.includes(pathname);
 
   return (
