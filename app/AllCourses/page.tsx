@@ -47,7 +47,7 @@ interface Course {
 // ===== COURSE DATA =====
 const courseData: Course[] = [
   {
-    id: "1",
+    id: "list-c1",
     slug: "200-hour-yoga-teacher-training",
     title: "200 Hour Yoga Teacher Training",
     description: "Complete teacher training program covering asanas, philosophy, anatomy, and teaching methodology.",
@@ -75,7 +75,7 @@ const courseData: Course[] = [
     popular: true,
   },
   {
-    id: "2",
+    id: "list-c2",
     slug: "hatha-yoga-foundations",
     title: "Hatha Yoga Foundations",
     description: "Learn the fundamentals of Hatha Yoga including asanas, pranayama, and meditation.",
@@ -101,7 +101,7 @@ const courseData: Course[] = [
     trending: true,
   },
   {
-    id: "3",
+    id: "list-c3",
     slug: "vinyasa-flow-mastery",
     title: "Vinyasa Flow Mastery",
     description: "Master dynamic Vinyasa sequences with proper alignment and breathing techniques.",
@@ -129,7 +129,7 @@ const courseData: Course[] = [
     sessions: 21,
   },
   {
-    id: "4",
+    id: "list-c4",
     slug: "meditation-mindfulness",
     title: "Meditation & Mindfulness",
     description: "Discover the art of meditation and mindfulness for inner peace and mental clarity.",
@@ -156,7 +156,7 @@ const courseData: Course[] = [
     popular: true,
   },
   {
-    id: "5",
+    id: "list-c5",
     slug: "pranayama-breath-control",
     title: "Pranayama & Breath Control",
     description: "Master the ancient science of pranayama for physical and mental well-being.",
@@ -184,7 +184,7 @@ const courseData: Course[] = [
     sessions: 14,
   },
   {
-    id: "6",
+    id: "list-c6",
     slug: "yoga-philosophy-deep-dive",
     title: "Yoga Philosophy Deep Dive",
     description: "Explore the philosophical foundations of yoga including Patanjali's Yoga Sutras.",
@@ -209,7 +209,7 @@ const courseData: Course[] = [
     discount: 30,
   },
   {
-    id: "7",
+    id: "list-c7",
     slug: "yoga-anatomy-physiology",
     title: "Yoga Anatomy & Physiology",
     description: "Understand the human body's anatomy and physiology for safe and effective yoga practice.",
@@ -234,7 +234,7 @@ const courseData: Course[] = [
     discount: 30,
   },
   {
-    id: "8",
+    id: "list-c8",
     slug: "100-hour-yoga-teacher-training",
     title: "100 Hour Yoga Teacher Training",
     description: "Foundation teacher training program for aspiring yoga teachers.",
@@ -262,7 +262,7 @@ const courseData: Course[] = [
     sessions: 15,
   },
   {
-    id: "9",
+    id: "list-c9",
     slug: "beginners-yoga-journey",
     title: "Beginner's Yoga Journey",
     description: "Start your yoga journey with this comprehensive beginner-friendly course.",
@@ -288,7 +288,7 @@ const courseData: Course[] = [
     popular: true,
   },
   {
-    id: "10",
+    id: "list-c10",
     slug: "advanced-asana-practice",
     title: "Advanced Asana Practice",
     description: "Master advanced yoga poses with proper alignment and technique.",
@@ -316,7 +316,7 @@ const courseData: Course[] = [
     sessions: 14,
   },
   {
-    id: "11",
+    id: "list-c11",
     slug: "yoga-for-wellness",
     title: "Yoga for Wellness & Stress Relief",
     description: "Discover yoga practices for mental health, stress relief, and overall wellness.",
@@ -341,7 +341,7 @@ const courseData: Course[] = [
     discount: 25,
   },
   {
-    id: "12",
+    id: "list-c12",
     slug: "300-hour-advanced-teacher-training",
     title: "300 Hour Advanced Teacher Training",
     description: "Advanced teacher training program for experienced yoga teachers.",
@@ -410,8 +410,11 @@ const AllCourses: React.FC = () => {
   const sortOptions = ["Most Popular", "Trending", "Newest", "Highest Rated", "Price: Low to High", "Price: High to Low"];
 
   // Navigate to the course description page.
+  // Using course.id here (same scheme as the home page cards) so both places
+  // open the same /course/[id] details page. Swap to a different key later
+  // once real dynamic data (from the API/CMS) decides the final param.
   const goToCourse = (course: Course) => {
-    router.push(`/course/${course.slug}`);
+    router.push(`/course/${course.id}`);
   };
 
   // Add/remove a course from the shared wishlist (used by the wishlist page too).
