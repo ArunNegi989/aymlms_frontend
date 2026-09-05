@@ -1,6 +1,11 @@
 /* ClassCalendar.module.css */
 /* Clean white theme, single orange accent, normal system/sans font-family. */
 
+.container,
+.container * {
+  box-sizing: border-box;
+}
+
 .container {
   --ink: #1a1a1a;
   --ink-soft: #888;
@@ -16,7 +21,9 @@
   background: var(--paper);
   border-radius: 16px;
   padding: 24px;
+  width: 100%;
   max-width: 100%;
+  overflow-x: hidden; /* safety net — no horizontal scroll ever */
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   color: var(--ink);
 }
@@ -29,6 +36,7 @@
   gap: 16px;
   margin-bottom: 20px;
   flex-wrap: wrap;
+  min-width: 0;
 }
 
 .eyebrow {
@@ -48,6 +56,7 @@
   font-weight: 700;
   color: var(--ink);
   margin: 0 0 4px;
+  flex-wrap: wrap;
 }
 
 .titleIcon {
@@ -63,8 +72,10 @@
 
 .legend {
   display: flex;
-  gap: 16px;
-  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .legendItem {
@@ -74,6 +85,7 @@
   font-size: 12px;
   font-weight: 500;
   color: var(--ink-soft);
+  white-space: nowrap;
 }
 
 .dot {
@@ -97,6 +109,8 @@
   align-items: center;
   gap: 10px;
   margin-bottom: 16px;
+  flex-wrap: wrap;
+  min-width: 0;
 }
 
 .navBtn {
@@ -111,6 +125,7 @@
   color: #444;
   cursor: pointer;
   transition: all 0.2s;
+  flex-shrink: 0;
 }
 
 .navBtn:hover {
@@ -122,7 +137,9 @@
   font-size: 16px;
   font-weight: 700;
   color: var(--ink);
-  min-width: 160px;
+  min-width: 0;
+  flex: 1 1 auto;
+  white-space: nowrap;
 }
 
 .todayBtn {
@@ -136,6 +153,8 @@
   color: #666;
   cursor: pointer;
   transition: all 0.2s;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .todayBtn:hover {
@@ -146,7 +165,7 @@
 /* Weekday row */
 .weekdayRow {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 8px;
   margin-bottom: 8px;
 }
@@ -159,13 +178,19 @@
   text-transform: uppercase;
   color: #aaa;
   padding: 4px 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Calendar grid */
 .grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 8px;
+  width: 100%;
+  min-width: 0;
 }
 
 .dayCell {
@@ -173,6 +198,8 @@
   border: 1px solid var(--border);
   border-radius: 10px;
   min-height: 96px;
+  min-width: 0;
+  width: 100%;
   padding: 8px;
   text-align: left;
   display: flex;
@@ -181,6 +208,7 @@
   cursor: default;
   font-family: inherit;
   transition: all 0.15s;
+  overflow: hidden;
 }
 
 .dayCellClickable {
@@ -213,6 +241,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  min-width: 0;
 }
 
 .todayPill {
@@ -224,12 +253,15 @@
   padding: 1px 6px;
   border-radius: 8px;
   text-transform: uppercase;
+  flex-shrink: 0;
 }
 
 .eventList {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
+  width: 100%;
 }
 
 .eventChip {
@@ -244,6 +276,8 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   border-left: 3px solid transparent;
+  min-width: 0;
+  width: 100%;
 }
 
 .chipIcon {
@@ -292,6 +326,7 @@
   justify-content: flex-end;
   z-index: 100;
   animation: fadeIn 0.15s ease-out;
+  overflow: hidden;
 }
 
 @keyframes fadeIn {
@@ -309,6 +344,7 @@
   flex-direction: column;
   animation: slideIn 0.2s ease-out;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 @keyframes slideIn {
@@ -325,6 +361,8 @@
   background: var(--paper);
   position: sticky;
   top: 0;
+  gap: 10px;
+  min-width: 0;
 }
 
 .drawerEyebrow {
@@ -341,6 +379,7 @@
   font-weight: 700;
   color: var(--ink);
   margin: 0;
+  word-break: break-word;
 }
 
 .closeBtn {
@@ -368,6 +407,7 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+  min-width: 0;
 }
 
 /* Event card inside drawer */
@@ -376,6 +416,7 @@
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 16px;
+  min-width: 0;
 }
 
 .eventCardTop {
@@ -383,6 +424,8 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .typeBadge {
@@ -393,6 +436,7 @@
   font-weight: 700;
   padding: 4px 9px;
   border-radius: 12px;
+  white-space: nowrap;
 }
 
 .typeBadgeLive {
@@ -412,6 +456,7 @@
   color: #777;
   padding: 3px 9px;
   border-radius: 10px;
+  white-space: nowrap;
 }
 
 .eventTitle {
@@ -419,6 +464,7 @@
   font-weight: 700;
   color: var(--ink);
   margin: 0 0 4px;
+  word-break: break-word;
 }
 
 .eventCourse {
@@ -428,6 +474,7 @@
   font-size: 12px;
   color: var(--ink-soft);
   margin: 0 0 10px;
+  word-break: break-word;
 }
 
 .eventMetaRow {
@@ -444,6 +491,7 @@
   font-size: 12.5px;
   color: #555;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .eventDescription {
@@ -451,6 +499,7 @@
   color: var(--ink-soft);
   line-height: 1.5;
   margin: 0 0 14px;
+  word-break: break-word;
 }
 
 .eventFooter {
@@ -468,6 +517,7 @@
   background: #f5f2ec;
   padding: 4px 10px;
   border-radius: 8px;
+  white-space: nowrap;
 }
 
 .joinBtn {
@@ -482,6 +532,7 @@
   border-radius: 8px;
   text-decoration: none;
   transition: background 0.2s;
+  white-space: nowrap;
 }
 
 .joinBtn:hover {
@@ -501,6 +552,7 @@
   border-radius: 8px;
   text-decoration: none;
   transition: all 0.2s;
+  white-space: nowrap;
 }
 
 .joinBtnOutline:hover {
@@ -510,6 +562,12 @@
 
 /* ============ RESPONSIVE ============ */
 
+@media (max-width: 1024px) {
+  .container {
+    padding: 20px;
+  }
+}
+
 @media (max-width: 900px) {
   .drawer {
     width: 380px;
@@ -518,7 +576,7 @@
 
 @media (max-width: 768px) {
   .container {
-    padding: 18px;
+    padding: 16px;
   }
 
   .header {
@@ -534,21 +592,56 @@
   .eventChip {
     font-size: 9.5px;
   }
+
+  .monthLabel {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 640px) {
+  .monthNav {
+    gap: 8px;
+  }
+
+  .todayBtn {
+    margin-left: 0;
+    order: 1;
+  }
+
+  .monthLabel {
+    order: 0;
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  .navBtn {
+    order: -1;
+  }
 }
 
 @media (max-width: 600px) {
+  .container {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
   .weekdayCell {
     font-size: 9px;
   }
 
   .monthLabel {
-    min-width: unset;
     font-size: 14px;
+  }
+
+  .grid,
+  .weekdayRow {
+    gap: 4px;
   }
 
   .dayCell {
     min-height: 72px;
     gap: 4px;
+    padding: 4px;
   }
 
   .dayNumber {
@@ -571,15 +664,58 @@
 @media (max-width: 420px) {
   .grid,
   .weekdayRow {
-    gap: 4px;
+    gap: 3px;
   }
 
   .dayCell {
-    min-height: 60px;
+    min-height: 56px;
     border-radius: 8px;
+    padding: 3px;
   }
 
   .todayPill {
     display: none;
+  }
+
+  .legend {
+    gap: 8px 12px;
+  }
+
+  .legendItem {
+    font-size: 11px;
+  }
+
+  .navBtn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .todayBtn {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 340px) {
+  .container {
+    padding: 8px;
+  }
+
+  .grid,
+  .weekdayRow {
+    gap: 2px;
+  }
+
+  .dayCell {
+    min-height: 48px;
+    border-radius: 6px;
+  }
+
+  .dayNumber {
+    font-size: 10px;
+  }
+
+  .monthLabel {
+    font-size: 12px;
   }
 }
