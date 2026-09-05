@@ -13,9 +13,6 @@ import {
   Users,
   Calendar,
   Award,
-  User,
-  Settings,
-  LogOut,
   X,
 } from "lucide-react";
 import styles from "./Sidebar.module.css";
@@ -31,11 +28,6 @@ const navItems = [
   // { label: "Community", href: "/community", icon: Users },
   { label: "Calendar", href: "/calendar", icon: Calendar },
   // { label: "My Certificates", href: "/my-certificates", icon: Award },
-];
-
-const bottomItems = [
-  { label: "Profile", href: "/profile", icon: User },
-  { label: "Settings", href: "/settings", icon: Settings },
 ];
 
 export default function Sidebar({
@@ -84,26 +76,6 @@ export default function Sidebar({
             );
           })}
         </nav>
-
-        <div className={styles.bottomNav}>
-          {bottomItems.map(({ label, href, icon: Icon }) => {
-            const active = pathname === href;
-            return (
-              <Link
-                key={href}
-                href={href}
-                className={`${styles.navItem} ${active ? styles.active : ""}`}
-              >
-                <Icon size={18} />
-                <span>{label}</span>
-              </Link>
-            );
-          })}
-          <button className={styles.navItem} onClick={() => console.log("logout")}>
-            <LogOut size={18} />
-            <span>Logout</span>
-          </button>
-        </div>
       </aside>
     </>
   );
