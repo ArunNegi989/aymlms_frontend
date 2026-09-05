@@ -21,8 +21,8 @@ import {
 import styles from "./Sidebar.module.css";
 
 const navItems = [
-  { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { label: "My Courses", href: "/my-courses", icon: BookOpen },
+  // { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { label: "Dashboard", href: "/my-courses", icon: BookOpen },
   { label: "Live Classes", href: "/live-classes", icon: Video },
   { label: "Recorded Classes", href: "/recorded-classes", icon: PlayCircle },
   { label: "Notes", href: "/notes", icon: FileText },
