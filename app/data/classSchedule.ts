@@ -21,12 +21,13 @@ export interface ClassEvent {
   description: string;
 }
 
-// NOTE: Dates below are set in August 2026 so the calendar has data to show
-// out of the box. Update / generate dynamically once wired to the backend.
+// NOTE: Dates below are set in the current month (September 2026) so the
+// calendar has data to show out of the box. Update / generate dynamically
+// once wired to the backend.
 export const CLASS_SCHEDULE: ClassEvent[] = [
   {
     id: "cls-001",
-    date: "2026-08-03",
+    date: "2026-09-03",
     title: "Hatha Yoga Flow – Morning Session",
     type: "live",
     startTime: "06:00 AM",
@@ -41,7 +42,7 @@ export const CLASS_SCHEDULE: ClassEvent[] = [
   },
   {
     id: "cls-002",
-    date: "2026-08-03",
+    date: "2026-09-03",
     title: "Pranayama Basics",
     type: "recorded",
     startTime: "08:00 PM",
@@ -55,7 +56,7 @@ export const CLASS_SCHEDULE: ClassEvent[] = [
   },
   {
     id: "cls-003",
-    date: "2026-08-05",
+    date: "2026-09-05",
     title: "Ashtanga Primary Series",
     type: "live",
     startTime: "06:30 AM",
@@ -69,7 +70,7 @@ export const CLASS_SCHEDULE: ClassEvent[] = [
   },
   {
     id: "cls-004",
-    date: "2026-08-07",
+    date: "2026-09-07",
     title: "Meditation & Mindfulness Q&A",
     type: "live",
     startTime: "07:00 PM",
@@ -83,7 +84,7 @@ export const CLASS_SCHEDULE: ClassEvent[] = [
   },
   {
     id: "cls-005",
-    date: "2026-08-10",
+    date: "2026-09-10",
     title: "Yin Yoga – Deep Stretch",
     type: "recorded",
     startTime: "05:00 PM",
@@ -97,7 +98,7 @@ export const CLASS_SCHEDULE: ClassEvent[] = [
   },
   {
     id: "cls-006",
-    date: "2026-08-12",
+    date: "2026-09-12",
     title: "Anatomy for Yoga Teachers",
     type: "live",
     startTime: "06:00 PM",
@@ -111,7 +112,7 @@ export const CLASS_SCHEDULE: ClassEvent[] = [
   },
   {
     id: "cls-007",
-    date: "2026-08-14",
+    date: "2026-09-14",
     title: "Vinyasa Flow – Power Session",
     type: "live",
     startTime: "06:00 AM",
@@ -125,7 +126,7 @@ export const CLASS_SCHEDULE: ClassEvent[] = [
   },
   {
     id: "cls-008",
-    date: "2026-08-14",
+    date: "2026-09-14",
     title: "Yoga Nidra – Deep Relaxation",
     type: "recorded",
     startTime: "09:00 PM",
@@ -139,7 +140,7 @@ export const CLASS_SCHEDULE: ClassEvent[] = [
   },
   {
     id: "cls-009",
-    date: "2026-08-18",
+    date: "2026-09-18",
     title: "Adjustments & Alignment Workshop",
     type: "live",
     startTime: "10:00 AM",
@@ -153,7 +154,7 @@ export const CLASS_SCHEDULE: ClassEvent[] = [
   },
   {
     id: "cls-010",
-    date: "2026-08-21",
+    date: "2026-09-21",
     title: "Restorative Yoga Evening",
     type: "recorded",
     startTime: "06:30 PM",
@@ -167,7 +168,7 @@ export const CLASS_SCHEDULE: ClassEvent[] = [
   },
   {
     id: "cls-011",
-    date: "2026-08-24",
+    date: "2026-09-24",
     title: "Philosophy of Yoga – Patanjali Sutras",
     type: "live",
     startTime: "05:30 PM",
@@ -181,7 +182,7 @@ export const CLASS_SCHEDULE: ClassEvent[] = [
   },
   {
     id: "cls-012",
-    date: "2026-08-27",
+    date: "2026-09-27",
     title: "Ashtanga Primary Series",
     type: "live",
     startTime: "06:30 AM",
@@ -195,7 +196,7 @@ export const CLASS_SCHEDULE: ClassEvent[] = [
   },
   {
     id: "cls-013",
-    date: "2026-08-27",
+    date: "2026-09-27",
     title: "Beginner Basics – Sun Salutations",
     type: "recorded",
     startTime: "07:00 PM",
