@@ -1,5 +1,5 @@
 // File location: app/data/faqs.ts
-import type { FAQItem } from "@/app/components/faq/faq";
+import type { FAQItem } from "@/app/components/our-faq/Faq";
 
 export const faqItems: FAQItem[] = [
   // Courses & Enrollment
