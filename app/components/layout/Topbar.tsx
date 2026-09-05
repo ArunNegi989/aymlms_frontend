@@ -36,9 +36,7 @@ export default function Topbar({
           )}
         </button>
 
-        <Link href="/" className={styles.iconBtn} aria-label="Profile">
-          <User size={19} />
-        </Link>
+      
 
         <div className={styles.divider} />
 
