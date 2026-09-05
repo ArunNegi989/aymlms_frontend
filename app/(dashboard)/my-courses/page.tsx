@@ -12,13 +12,7 @@ import {
   Award,
 } from "lucide-react";
 
-const quickAccess = [
-  { label: "Recorded Classes", icon: PlayCircle },
-  { label: "Notes", icon: FileText },
-  { label: "Assignments", icon: ClipboardList },
-  { label: "Quizzes", icon: HelpCircle },
-  { label: "My Certificates", icon: Award },
-];
+
 
 const dummyCourses: Course[] = [
   {
@@ -81,17 +75,7 @@ export default function MyCoursesPage() {
         </div>
       )}
 
-      <div className={styles.quickAccessSection}>
-        <h4 className={styles.sectionTitle}>Quick Access</h4>
-        <div className={styles.quickGrid}>
-          {quickAccess.map(({ label, icon: Icon }) => (
-            <button key={label} className={styles.quickItem}>
-              <Icon size={20} />
-              <span>{label}</span>
-            </button>
-          ))}
-        </div>
-      </div>
+      
 
       <div className={styles.activitySection}>
         <h4 className={styles.sectionTitle}>Recent Activity</h4>
