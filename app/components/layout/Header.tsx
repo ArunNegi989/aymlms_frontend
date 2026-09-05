@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { ShoppingCart, Heart, Menu, X, Search, User } from "lucide-react";
+import { useCart } from "@/app/context/CartContext";
 import styles from "./Header.module.css";
 
 function FacebookIcon() {
@@ -35,12 +36,18 @@ export default function Header({
   const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState("");
   const router = useRouter();
+  const { openCart } = useCart();
 
   function handleSearch(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const trimmed = query.trim();
     if (!trimmed) return;
     router.push(`/courses?search=${encodeURIComponent(trimmed)}`);
+    setMenuOpen(false);
+  }
+
+  function handleCartClick() {
+    openCart();
     setMenuOpen(false);
   }
 
@@ -104,24 +111,24 @@ export default function Header({
                 {wishlistCount > 0 && <span className={styles.cartBadge}>{wishlistCount}</span>}
               </Link>
 
-              <Link
-                href="/cart"
+              <button
+                type="button"
                 className={styles.iconBtn}
                 aria-label="Cart"
-                onClick={() => setMenuOpen(false)}
+                onClick={handleCartClick}
               >
                 <ShoppingCart size={19} />
                 {cartCount > 0 && <span className={styles.cartBadge}>{cartCount}</span>}
-              </Link>
+              </button>
 
-               <Link
-    href="/admin/login"
-    className={styles.iconBtn}
-    aria-label="Login"
-    onClick={() => setMenuOpen(false)}
-  >
-    <User size={19} />
-  </Link>
+              <Link
+                href="/admin/login"
+                className={styles.iconBtn}
+                aria-label="Login"
+                onClick={() => setMenuOpen(false)}
+              >
+                <User size={19} />
+              </Link>
               {/* <Link href="/admin/register" className={styles.signupBtn} onClick={() => setMenuOpen(false)}>
                 Sign Up
               </Link> */}

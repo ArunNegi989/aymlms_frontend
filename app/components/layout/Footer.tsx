@@ -8,7 +8,7 @@ import styles from "./Footer.module.css";
 const quickLinks = [
   { label: "About Us", href: "/about-us" },
   { label: "Our Courses", href: "/AllCourses" },
-  { label: "Contact", href: "/contact" },
+  { label: "Contact", href: "/contact-us" },
   { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/faq" },
 ];
